@@ -7,7 +7,12 @@ class AnswersController < ApplicationController
 
   def create
     @answer = @question.answers.create(answer_params)
-    redirect_to @question
+
+    if @answer.save
+      redirect_to @question
+    else
+      render :new
+    end
   end
 
   private

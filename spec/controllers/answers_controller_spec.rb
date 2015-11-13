@@ -22,7 +22,8 @@ RSpec.describe AnswersController, type: :controller do
   describe 'POST #create' do
     context 'with valid attributes' do
       it 'saves a new answer to the database' do
-        expect { post :create, question_id: question, answer: attributes_for(:answer, question_id: question) }.to change(Answer, :count).by(1)
+        expect { post :create, question_id: question,
+          answer: attributes_for(:answer, question_id: question) }.to change(Answer, :count).by(1)
       end
 
       it 'redirect to answer question show view' do
@@ -32,6 +33,18 @@ RSpec.describe AnswersController, type: :controller do
     end
 
     context 'with invalid attributes' do
+      it 'does not save an answer' do
+        expect {
+         post :create, question_id: question, 
+         answer: attributes_for(:invalid_answer, question_id: question)
+        }.to_not change(Answer, :count)
+      end
+
+      it 'render new view' do
+        post :create, question_id: question,
+          answer: attributes_for(:invalid_answer, question_id: question)
+        expect(response).to render_template :new
+      end
     end
   end
 end
