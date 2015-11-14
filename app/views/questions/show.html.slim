@@ -1,0 +1,8 @@
+p
+  strong = @question.title
+p = @question.body
+
+.col-lg-1
+  = link_to t('links.back'), questions_path
+.col-lg-1
+  = link_to t('links.edit'), edit_question_path(@question)

@@ -23,6 +23,8 @@ en:
   hello: "Hello world"
   links:
     show: "Show"
+    back: "Back"
+    edit: "Edit"
   questions:
     form:
       submit: "Submit"
