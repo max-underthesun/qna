@@ -6,7 +6,7 @@ class AnswersController < ApplicationController
   end
 
   def create
-    @answer = @question.answers.create(answer_params)
+    @answer = @question.answers.new(answer_params)
 
     if @answer.save
       redirect_to @question
