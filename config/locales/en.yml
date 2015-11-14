@@ -21,8 +21,11 @@
 
 en:
   hello: "Hello world"
-  common:
+  links:
+    show: "Show"
   questions:
+    form:
+      submit: "Submit"
     index:
       header: "All questions"
       title: "Question title"

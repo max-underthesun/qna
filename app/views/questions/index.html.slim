@@ -10,8 +10,9 @@ table class='table table-hover'
     - @questions.each do |question|
       tr
         td = question.title
-      / - end
-
+        td = link_to t('links.show'), question
+        td
+        td
 br
 
 = link_to t('.new'), new_question_path
