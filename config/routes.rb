@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
-  root 'application#hello'
+  root 'questions#index'
+  resources :questions do
+    resources :answers
+  end
 
 
   # The priority is based upon order of creation: first created -> highest priority.
