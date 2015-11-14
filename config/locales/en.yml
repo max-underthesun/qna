@@ -32,3 +32,5 @@ en:
       header: "All questions"
       title: "Question title"
       new: "New question"
+    show:
+      answer: "Answer the question"
