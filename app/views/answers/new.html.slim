@@ -1,0 +1,15 @@
+p
+  strong = @question.title
+
+.col-lg-12
+  p = @question.body
+
+= form_for [@question, @answer] do |f|
+
+  / = render 'common/errors', resource: @question
+
+  .form-group
+    = f.label :body
+    = f.text_area :body, class: 'form-control'
+
+  = f.submit t('.submit'), class: 'btn btn-primary'

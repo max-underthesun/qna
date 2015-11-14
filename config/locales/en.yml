@@ -34,3 +34,7 @@ en:
       new: "New question"
     show:
       answer: "Answer the question"
+      answers_list: "List of answers"
+  answers:
+    new:
+      submit: "Post your answer"

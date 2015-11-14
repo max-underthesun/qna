@@ -1,8 +1,7 @@
 p
   strong = @question.title
 
-.col-lg-1
-.col-lg-11
+.col-lg-12
   p = @question.body
 
 .col-lg-11.right
@@ -10,7 +9,12 @@ p
 .col-lg-1.right
   = link_to t('links.edit'), edit_question_path(@question)
 
-.col-lg-1
-.col-lg-11.top-buffer
+.col-lg-12.top-buffer
   = button_to t('.answer'), new_question_answer_path(@question),
     method: :get, class: 'btn btn-primary'
+
+.col-lg-12.top-buffer
+  h4 = t('.answers_list')
+  ul
+    - @question.answers.each do |answer|
+      li = answer.body
