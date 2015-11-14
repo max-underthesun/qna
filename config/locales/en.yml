@@ -21,3 +21,9 @@
 
 en:
   hello: "Hello world"
+  common:
+  questions:
+    index:
+      header: "All questions"
+      title: "Question title"
+      new: "New question"
