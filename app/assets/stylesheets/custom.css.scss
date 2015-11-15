@@ -4,14 +4,21 @@ body {
   padding-top: 60px;
   background-color: black;
   color: silver;
+  font-family: verdana, arial, helvetica, sans-serif;
+  font-size: 13px;
+  line-height: 18px;
 }
 
-section {
-  overflow: auto;
-}
+// section {
+//   overflow: auto;
+// }
 
 textarea {
   resize: vertical;
+}
+
+.right  {
+  text-align: right;
 }
 
 .center {
@@ -29,6 +36,22 @@ textarea {
 .top-buffer {
   margin-top:20px;
 }
+
+/* tables */
+
+.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+  background-color: #333;
+}
+
+td, th {
+  padding: 5px;
+}
+
+thead {
+  font-weight: bold;
+  font-size: 1.3em;
+}
+
 
 /* typography */
 
@@ -56,6 +79,12 @@ p {
   line-height: 1.7em;
 }
 
+a {
+  color: #0174DF;
+  &:hover {
+    color: #DF7401;
+  }
+}
 
 /* errors */
 

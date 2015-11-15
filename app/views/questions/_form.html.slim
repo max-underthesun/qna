@@ -1,12 +1,10 @@
-p
-  strong = @question.title
-
-.col-lg-12
-  p = @question.body
-
-= form_for [@question, @answer] do |f|
+= form_for(@question) do |f|
 
   / = render 'common/errors', resource: @question
+
+  .form-group
+    = f.label :title
+    = f.text_field :title, class: 'form-control'
 
   .form-group
     = f.label :body

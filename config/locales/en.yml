@@ -21,3 +21,20 @@
 
 en:
   hello: "Hello world"
+  links:
+    show: "Show"
+    back: "Back"
+    edit: "Edit"
+  questions:
+    form:
+      submit: "Submit"
+    index:
+      header: "All questions"
+      title: "Question title"
+      new: "New question"
+    show:
+      answer: "Answer the question"
+      answers_list: "List of answers"
+  answers:
+    new:
+      submit: "Post your answer"
