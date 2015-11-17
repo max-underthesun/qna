@@ -28,11 +28,7 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'GET #new' do
-    before do
-      @user = create(:user)
-      @request.env['devise.mapping'] = Devise.mappings[:user]
-      sign_in @user
-    end
+    sign_in_user
     before { get :new }
 
     it 'puts a new question to the variable @question' do
@@ -45,6 +41,7 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'POST #create' do
+    sign_in_user
     context 'with valid attributes' do
       it 'saves a new question to the database' do
         expect { post :create, question: attributes_for(:question) }
