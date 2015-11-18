@@ -1,9 +1,7 @@
 require 'rails_helper'
 
 feature 'Signing in', %q{
-  In order to be able to ask questions
-  As a user
-  I want to be able to sing in
+  in order to be able to ask questions as a user I want to be able to sign in
 } do
   given(:user) { create(:user) }
 

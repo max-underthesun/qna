@@ -9,6 +9,7 @@ class AnswersController < ApplicationController
     @answer = @question.answers.new(answer_params)
 
     if @answer.save
+      flash[:notice] = I18n.t('confirmations.answers.create')
       redirect_to @question
     else
       render :new

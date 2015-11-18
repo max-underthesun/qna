@@ -38,3 +38,8 @@ en:
   answers:
     new:
       submit: "Post your answer"
+  confirmations:
+    answers:
+      create: "Your answer successfully created."
+    questions:
+      create: "Your question successfully created."
