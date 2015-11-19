@@ -25,6 +25,8 @@ en:
     show: "Show"
     back: "Back"
     edit: "Edit"
+    sign_in: "Sign in"
+    sign_out: "Sign out"
   questions:
     form:
       submit: "Submit"

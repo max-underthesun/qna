@@ -1,12 +1,12 @@
 require 'rails_helper'
 
-feature 'See all questions', %q{
-  any user can see the questions index view page
+feature 'See question and answers', %q{
+  any user can see the question and all answers for it
 } do
   given!(:question) { create(:question) }
   given!(:answer) { create(:answer, question: question) }
 
-  scenario 'user visit questions index' do
+  scenario 'user visit question show' do
     visit question_path(question)
 
     expect(page).to have_content question.title
