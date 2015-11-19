@@ -45,3 +45,6 @@ en:
       create: "Your answer successfully created."
     questions:
       create: "Your question successfully created."
+  errors:
+    error: "error"
+    title: " prohibited you from continuing"

@@ -1,7 +1,11 @@
-- if resource.errors.any?
-  #error_explanation
-    h2 = pluralize(resource.errors.count, "error") 
-       = t('errors.title')
-         ul
-           - resource.errors.full_messages.each do |message|
-             li = message.downcase
+- unless resource.errors.blank?
+  .alert.fade.in.alert-danger
+    button.close data-dismiss="alert"  ×
+    #error_explanation
+      h2
+        = pluralize(resource.errors.count, t('errors.error'))
+        = t('errors.title')
+        |
+      ul
+        - resource.errors.full_messages.each do |message|
+          li= message.downcase
