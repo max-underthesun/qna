@@ -25,6 +25,8 @@ en:
     show: "Show"
     back: "Back"
     edit: "Edit"
+    sign_in: "Sign in"
+    sign_out: "Sign out"
   questions:
     form:
       submit: "Submit"
@@ -43,3 +45,6 @@ en:
       create: "Your answer successfully created."
     questions:
       create: "Your question successfully created."
+  errors:
+    error: "error"
+    title: " prohibited you from continuing"
