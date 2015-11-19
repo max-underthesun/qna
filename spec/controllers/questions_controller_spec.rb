@@ -42,6 +42,7 @@ RSpec.describe QuestionsController, type: :controller do
 
   describe 'POST #create' do
     sign_in_user
+
     context 'with valid attributes' do
       it 'saves a new question to the database' do
         expect { post :create, question: attributes_for(:question) }
