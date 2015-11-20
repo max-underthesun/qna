@@ -4,10 +4,12 @@ p
 .col-lg-12
   p = @question.body
 
-.col-lg-11.right
+.col-lg-12.right
   = link_to t('links.back'), questions_path
-.col-lg-1.right
+.col-lg-12.right
   = link_to t('links.edit'), edit_question_path(@question)
+.col-lg-12.right
+  = link_to t('links.destroy'), question_path(@question), method: :delete
 
 .col-lg-12.top-buffer
   = button_to t('.answer'), new_question_answer_path(@question),

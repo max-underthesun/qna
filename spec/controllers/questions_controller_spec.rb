@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
+  let(:question) { create(:question) }
+
   describe 'GET #index' do
     let(:questions) { create_list(:question, 2) }
     before { get :index }
@@ -15,7 +17,6 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'GET #show' do
-    let(:question) { create(:question) }
     before { get :show, id: question }
 
     it 'puts the question to the variable @question' do
@@ -65,6 +66,20 @@ RSpec.describe QuestionsController, type: :controller do
         post :create, question: attributes_for(:invalid_question)
         expect(response).to render_template :new
       end
+    end
+  end
+
+  describe 'DELETE #destroy' do
+    sign_in_user
+    before { question }
+
+    it 'delete the question from the database' do
+      expect { delete :destroy, id: question }.to change(Question, :count).by(-1)
+    end
+
+    it 'redirect to questions path' do
+      delete :destroy, id: question
+      expect(response).to redirect_to questions_path
     end
   end
 end

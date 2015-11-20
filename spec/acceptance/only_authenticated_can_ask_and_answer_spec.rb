@@ -1,8 +1,7 @@
 require 'rails_helper'
 
-feature 'Create question', %q{
-  in order to get answer as an authenticated user
-  I want to be able to ask questions
+feature 'Create question and answer', %q{
+  authenticated user has to be able to ask questions and to give answers
 } do
   given(:user) { create(:user) }
   given!(:question) { create(:question) }
@@ -88,9 +87,6 @@ feature 'Create question', %q{
     click_on I18n.t('links.show')
 
     click_on I18n.t('questions.show.answer')
-
-    fill_in I18n.t('activerecord.attributes.answer.body'), with: answer.body
-    click_on I18n.t('answers.new.submit')
 
     expect(page).to have_content I18n.t('devise.failure.unauthenticated')
   end

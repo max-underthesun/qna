@@ -25,6 +25,7 @@ en:
     show: "Show"
     back: "Back"
     edit: "Edit"
+    destroy: "Destroy"
     sign_in: "Sign in"
     sign_out: "Sign out"
   questions:
@@ -42,9 +43,10 @@ en:
       submit: "Post your answer"
   confirmations:
     answers:
-      create: "Your answer successfully created."
+      create: "Your answer was successfully created."
     questions:
-      create: "Your question successfully created."
+      create: "Your question was successfully created."
+      destroy: "Your question was successfully destroyed."
   errors:
     error: "error"
     title: " prohibited you from continuing"
