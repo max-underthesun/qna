@@ -16,8 +16,8 @@ feature 'Create question', %q{
     visit questions_path
     click_on I18n.t('questions.index.new')
 
-    fill_in 'Title', with: question.title
-    fill_in 'Body', with: question.body
+    fill_in I18n.t('activerecord.attributes.question.title'), with: question.title
+    fill_in I18n.t('activerecord.attributes.question.body'), with: question.body
     click_on I18n.t('questions.form.submit')
 
     expect(page).to have_content I18n.t('confirmations.questions.create')
@@ -29,13 +29,19 @@ feature 'Create question', %q{
     visit questions_path
     click_on I18n.t('questions.index.new')
 
-    fill_in 'Title', with: invalid_question.title
-    fill_in 'Body', with: invalid_question.body
+    fill_in I18n.t('activerecord.attributes.question.title'), with: invalid_question.title
+    fill_in I18n.t('activerecord.attributes.question.body'), with: invalid_question.body
     click_on I18n.t('questions.form.submit')
 
     expect(current_path).to eq questions_path
-    expect(page).to have_content "title can't be blank"
-    expect(page).to have_content "body can't be blank"
+    expect(page).to have_content(
+      "#{I18n.t('activerecord.attributes.question.title')} "\
+      "#{I18n.t('activerecord.errors.messages.blank')}"
+    )
+    expect(page).to have_content(
+      "#{I18n.t('activerecord.attributes.question.body')} "\
+      "#{I18n.t('activerecord.errors.messages.blank')}"
+    )
   end
 
   scenario 'unauthenticated user try to create a question' do
@@ -53,7 +59,7 @@ feature 'Create question', %q{
 
     click_on I18n.t('questions.show.answer')
 
-    fill_in 'Body', with: answer.body
+    fill_in I18n.t('activerecord.attributes.answer.body'), with: answer.body
     click_on I18n.t('answers.new.submit')
 
     expect(page).to have_content I18n.t('confirmations.answers.create')
@@ -67,11 +73,14 @@ feature 'Create question', %q{
 
     click_on I18n.t('questions.show.answer')
 
-    fill_in 'Body', with: invalid_answer.body
+    fill_in I18n.t('activerecord.attributes.answer.body'), with: invalid_answer.body
     click_on I18n.t('answers.new.submit')
 
     expect(current_path).to eq question_answers_path(question)
-    expect(page).to have_content "body can't be blank"
+    expect(page).to have_content(
+      "#{I18n.t('activerecord.attributes.answer.body')} "\
+      "#{I18n.t('activerecord.errors.messages.blank')}"
+    )
   end
 
   scenario 'unauthenticated user try to create an answer' do
@@ -80,7 +89,7 @@ feature 'Create question', %q{
 
     click_on I18n.t('questions.show.answer')
 
-    fill_in 'Body', with: answer.body
+    fill_in I18n.t('activerecord.attributes.answer.body'), with: answer.body
     click_on I18n.t('answers.new.submit')
 
     expect(page).to have_content I18n.t('devise.failure.unauthenticated')
