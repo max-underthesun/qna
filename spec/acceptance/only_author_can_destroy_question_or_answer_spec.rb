@@ -46,4 +46,24 @@ feature 'Destroy question or answer', %q{
     expect(page).to have_content I18n.t('failure.questions.destroy')
     expect(current_path).to eq questions_path
   end
+
+  scenario 'author destroying his answer' do
+    sign_in(user)
+
+    visit questions_path
+    click_on I18n.t('questions.index.new')
+
+    fill_in I18n.t('activerecord.attributes.question.title'), with: question.title
+    fill_in I18n.t('activerecord.attributes.question.body'), with: question.body
+    click_on I18n.t('questions.form.submit')
+
+    click_on I18n.t('questions.show.answer')
+
+    fill_in I18n.t('activerecord.attributes.answer.body'), with: answer.body
+    click_on I18n.t('answers.new.submit')
+
+    click_on I18n.t('questions.show.destroy_answer')
+
+    expect(page).to have_content I18n.t('confirmations.answers.destroy')
+  end
 end

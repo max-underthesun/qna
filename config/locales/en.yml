@@ -45,18 +45,22 @@ en:
     show:
       answer: "Answer the question"
       answers_list: "List of answers"
+      destroy_answer: "Destroy answer"
   answers:
     new:
       submit: "Post your answer"
   confirmations:
     answers:
       create: "Your answer was successfully created."
+      destroy: "Your answer was successfully destroyed."
     questions:
       create: "Your question was successfully created."
       destroy: "Your question was successfully destroyed."
   failure:
     questions:
       destroy: "Your have no rights to destroy this question"
+    answers:
+      destroy: "Your have no rights to destroy this answer"
   errors:
     error: "error"
     title: " prohibited you from continuing"
