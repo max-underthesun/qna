@@ -4,14 +4,15 @@ table class='table table-hover'
   thead
     tr
       th = t('.title')
-      th colspan="3"
+      th = t('common.user')
+      th colspan="2"
 
   tbody
     - @questions.each do |question|
       tr
         td = question.title
+        td = question.user ? question.user.email : t('common.not_defined')
         td = link_to t('links.show'), question
-        td
         td
 br
 

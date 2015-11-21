@@ -21,6 +21,13 @@
 
 en:
   hello: "Hello world"
+  common:
+    user: "User"
+    current_user: "Current user: "
+    not_logged: "not logged in"
+    not_defined: "Not defined"
+    author: "Author: "
+    sure: "Are you sure?"
   links:
     show: "Show"
     back: "Back"

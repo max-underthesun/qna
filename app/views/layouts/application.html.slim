@@ -38,6 +38,11 @@ html lang="en"
 
     .container
       .row
+        .col-lg-9.right
+          strong
+            = t('common.current_user') 
+          = current_user ? current_user.email : t('common.not_logged')
+      .row.top-buffer
         .col-lg-9
           = bootstrap_flash
           = yield
