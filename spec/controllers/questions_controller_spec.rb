@@ -47,7 +47,7 @@ RSpec.describe QuestionsController, type: :controller do
     context 'with valid attributes' do
       it 'saves a new question to the database' do
         expect { post :create, question: attributes_for(:question) }
-          .to change(Question, :count).by(1)
+          .to change(@user.questions, :count).by(1)
       end
 
       it 'redirect to show' do
@@ -71,15 +71,34 @@ RSpec.describe QuestionsController, type: :controller do
 
   describe 'DELETE #destroy' do
     sign_in_user
-    before { question }
 
-    it 'delete the question from the database' do
-      expect { delete :destroy, id: question }.to change(Question, :count).by(-1)
+    context 'question.user == current_user' do
+      let(:question) { create(:question, user: @user) }
+      before { question }
+
+      it 'delete the question from the database' do
+        expect { delete :destroy, id: question }.to change(@user.questions, :count).by(-1)
+      end
+
+      it 'redirect to questions path' do
+        delete :destroy, id: question
+        expect(response).to redirect_to questions_path
+      end
     end
 
-    it 'redirect to questions path' do
-      delete :destroy, id: question
-      expect(response).to redirect_to questions_path
+    context 'question.user != current_user' do
+      let(:user) { create(:user) }
+      let(:question) { create(:question, user: user) }
+      before { question }
+
+      it 'not delete the question from the database' do
+        expect { delete :destroy, id: question }.to_not change(Question, :count)
+      end
+
+      it 'redirect to questions path' do
+        delete :destroy, id: question
+        expect(response).to redirect_to questions_path
+      end
     end
   end
 end

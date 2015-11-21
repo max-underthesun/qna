@@ -14,7 +14,7 @@ class QuestionsController < ApplicationController
   end
 
   def create
-    @question = Question.new(question_params)
+    @question = current_user.questions.new(question_params)
 
     if @question.save
       flash[:notice] = I18n.t('confirmations.questions.create')
@@ -25,8 +25,12 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
-    flash[:warning] = I18n.t('confirmations.questions.destroy')
-    @question.destroy
+    if current_user == @question.user
+      flash[:warning] = I18n.t('confirmations.questions.destroy')
+      @question.destroy
+    else
+      flash[:alert] = I18n.t('failure.questions.destroy')
+    end
     redirect_to questions_path
   end
 

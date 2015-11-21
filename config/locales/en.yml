@@ -47,6 +47,9 @@ en:
     questions:
       create: "Your question was successfully created."
       destroy: "Your question was successfully destroyed."
+  failure:
+    questions:
+      destroy: "Your have no rights to destroy this question"
   errors:
     error: "error"
     title: " prohibited you from continuing"
