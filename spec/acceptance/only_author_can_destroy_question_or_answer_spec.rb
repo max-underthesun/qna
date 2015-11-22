@@ -66,4 +66,31 @@ feature 'Destroy question or answer', %q{
 
     expect(page).to have_content I18n.t('confirmations.answers.destroy')
   end
+
+  scenario 'user trying to destroy answer of other user' do
+    sign_in(user)
+
+    visit questions_path
+    click_on I18n.t('questions.index.new')
+
+    fill_in I18n.t('activerecord.attributes.question.title'), with: question.title
+    fill_in I18n.t('activerecord.attributes.question.body'), with: question.body
+    click_on I18n.t('questions.form.submit')
+
+    click_on I18n.t('questions.show.answer')
+
+    fill_in I18n.t('activerecord.attributes.answer.body'), with: answer.body
+    click_on I18n.t('answers.new.submit')
+
+    click_on I18n.t('links.sign_out')
+
+    sign_in(other_user)
+
+    visit questions_path
+    first(:link, I18n.t('links.show')).click
+    # click_on I18n.t('links.show')
+    click_on I18n.t('questions.show.destroy_answer')
+
+    expect(page).to have_content I18n.t('failure.answers.destroy')
+  end
 end

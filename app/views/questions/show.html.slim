@@ -23,8 +23,9 @@ p
   h4 = t('.answers_list')
   - @question.answers.each do |answer|
     p.top-buffer = answer.body
-    .right = t('common.author')
+    .right
+      = t('common.author')
+      = answer.user ? answer.user.email : t('common.not_defined')
     .right
       = link_to t('.destroy_answer'), question_answer_path(@question, answer), method: :delete,
         data: { confirm: t('common.sure') }
-    / .right = answer.user ? answer.user.email : t('common.not_defined')
