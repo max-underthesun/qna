@@ -21,10 +21,18 @@
 
 en:
   hello: "Hello world"
+  common:
+    user: "User"
+    current_user: "Current user: "
+    not_logged: "not logged in"
+    not_defined: "Not defined"
+    author: "Author: "
+    sure: "Are you sure?"
   links:
     show: "Show"
     back: "Back"
     edit: "Edit"
+    destroy: "Destroy"
     sign_in: "Sign in"
     sign_out: "Sign out"
   questions:
@@ -37,14 +45,66 @@ en:
     show:
       answer: "Answer the question"
       answers_list: "List of answers"
+      destroy_answer: "Destroy answer"
   answers:
     new:
       submit: "Post your answer"
   confirmations:
     answers:
-      create: "Your answer successfully created."
+      create: "Your answer was successfully created."
+      destroy: "Your answer was successfully destroyed."
     questions:
-      create: "Your question successfully created."
+      create: "Your question was successfully created."
+      destroy: "Your question was successfully destroyed."
+  failure:
+    questions:
+      destroy: "Your have no rights to destroy this question"
+    answers:
+      destroy: "Your have no rights to destroy this answer"
   errors:
     error: "error"
     title: " prohibited you from continuing"
+
+  activerecord:
+    attributes:
+      question:
+        title: Question Title
+        body: Question Body
+      answer:
+        title: Answer Title
+        body: Answer Body
+    errors:
+      format: "%{attribute} %{message}"
+      messages:
+        accepted: must be accepted
+        blank: can't be blank
+        present: must be blank
+        confirmation: doesn't match %{attribute}
+        empty: can't be empty
+        equal_to: must be equal to %{count}
+        even: must be even
+        exclusion: is reserved
+        greater_than: must be greater than %{count}
+        greater_than_or_equal_to: must be greater than or equal to %{count}
+        inclusion: is not included in the list
+        invalid: is invalid
+        less_than: must be less than %{count}
+        less_than_or_equal_to: must be less than or equal to %{count}
+        not_a_number: is not a number
+        not_an_integer: must be an integer
+        odd: must be odd
+        record_invalid: 'Validation failed: %{errors}'
+        restrict_dependent_destroy:
+          one: Cannot delete record because a dependent %{record} exists
+          many: Cannot delete record because dependent %{record} exist
+        taken: has already been taken
+        too_long:
+          one: is too long (maximum is 1 character)
+          other: is too long (maximum is %{count} characters)
+        too_short:
+          one: is too short (minimum is 1 character)
+          other: is too short (minimum is %{count} characters)
+        wrong_length:
+          one: is the wrong length (should be 1 character)
+          other: is the wrong length (should be %{count} characters)
+        other_than: must be other than %{count}
