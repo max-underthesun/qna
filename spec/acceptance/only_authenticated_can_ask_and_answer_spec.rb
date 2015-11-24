@@ -20,6 +20,8 @@ feature 'Create question and answer', %q{
     click_on I18n.t('questions.form.submit')
 
     expect(page).to have_content I18n.t('confirmations.questions.create')
+    expect(page).to have_content question.title
+    expect(page).to have_content question.body
   end
 
   scenario 'authenticated user try to create invalid question' do
@@ -62,6 +64,7 @@ feature 'Create question and answer', %q{
     click_on I18n.t('answers.new.submit')
 
     expect(page).to have_content I18n.t('confirmations.answers.create')
+    expect(page).to have_content answer.body
   end
 
   scenario 'authenticated user try to create invalid answer' do

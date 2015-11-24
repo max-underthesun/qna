@@ -25,7 +25,7 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
-    if current_user == @question.user
+    if current_user.id == @question.user_id
       flash[:warning] = I18n.t('confirmations.questions.destroy')
       @question.destroy
     else
