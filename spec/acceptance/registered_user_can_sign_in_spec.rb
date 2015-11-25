@@ -1,19 +1,19 @@
 require 'rails_helper'
 
-feature 'Signing in', %q{
+feature 'SIGNING IN', %q(
   in order to be able to ask questions as a user I want to be able to sign in
-} do
+) do
   given(:user) { create(:user) }
   given(:unregistered_user) { build(:user) }
 
-  scenario 'registered user try to sign in' do
+  scenario '- registered user try to sign in' do
     sign_in(user)
 
     expect(page).to have_content I18n.t('devise.sessions.signed_in')
     expect(current_path).to eq root_path
   end
 
-  scenario 'unregistered user try to sign in' do
+  scenario '- unregistered user try to sign in' do
     sign_in(unregistered_user)
 
     expect(page).to have_content I18n.t('devise.failure.invalid', authentication_keys: 'email')

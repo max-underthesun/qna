@@ -11,9 +11,10 @@ p
   = link_to t('links.back'), questions_path
 .col-lg-12.right
   = link_to t('links.edit'), edit_question_path(@question)
-.col-lg-12.right
-  = link_to t('links.destroy'), question_path(@question), method: :delete,
-    data: { confirm: t('common.sure') } 
+- if current_user && current_user.author_of?(@question)
+  .col-lg-12.right
+    = link_to t('links.destroy'), question_path(@question), method: :delete,
+      data: { confirm: t('common.sure') } 
 
 .col-lg-12.top-buffer
   = button_to t('.answer'), new_question_answer_path(@question),
@@ -26,6 +27,7 @@ p
     .right
       = t('common.author')
       = answer.user ? answer.user.email : t('common.not_defined')
-    .right
-      = link_to t('.destroy_answer'), question_answer_path(@question, answer), method: :delete,
-        data: { confirm: t('common.sure') }
+    - if current_user && current_user.author_of?(answer)
+      .right
+        = link_to t('.destroy_answer'), answer, method: :delete,
+          data: { confirm: t('common.sure') }

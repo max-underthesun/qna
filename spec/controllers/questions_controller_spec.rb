@@ -46,7 +46,7 @@ RSpec.describe QuestionsController, type: :controller do
 
     context 'with valid attributes' do
       it 'saves a new question to the database' do
-        expect { post :create, question: attributes_for(:question) }
+        expect { post :create, question: attributes_for(:question, user: @user) }
           .to change(@user.questions, :count).by(1)
       end
 
@@ -58,7 +58,7 @@ RSpec.describe QuestionsController, type: :controller do
 
     context 'with invalid attributes' do
       it 'does not save the question in the database' do
-        expect { post :create, question: attributes_for(:invalid_question) }
+        expect { post :create, question: attributes_for(:invalid_question, user: @user) }
           .to_not change(Question, :count)
       end
 

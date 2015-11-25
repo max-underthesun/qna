@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-feature 'See question and answers', %q{
+feature 'SEE QUESTION AND ANSWERS', %q(
   any user can see the question and all answers for it
-} do
+) do
   given!(:question) { create(:question) }
-  given!(:answer) { create(:answer, question: question) }
+  given!(:answers) { create_list(:answer, 5, question: question) }
 
   scenario 'user visit question show' do
     visit question_path(question)
@@ -12,6 +12,6 @@ feature 'See question and answers', %q{
     expect(page).to have_content question.title
     expect(page).to have_content question.body
     expect(page).to have_content I18n.t('questions.show.answers_list')
-    expect(page).to have_content answer.body
+    answers.each { |answer| expect(page).to have_content answer.body }
   end
 end
