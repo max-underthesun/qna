@@ -1,11 +1,11 @@
 require 'rails_helper'
 
-feature 'Signing out', %q{
+feature 'SIGNING OUT', %q(
   signed in user can sign out to finish the session
-} do
+) do
   given(:user) { create(:user) }
 
-  scenario 'registered signing in and signing out' do
+  scenario '- registered user signing in and signing out' do
     sign_in(user)
 
     expect(page).to have_content I18n.t('devise.sessions.signed_in')

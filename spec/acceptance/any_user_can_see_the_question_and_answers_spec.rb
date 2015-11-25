@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-feature 'See question and answers', %q{
+feature 'SEE QUESTION AND ANSWERS', %q(
   any user can see the question and all answers for it
-} do
+) do
   given!(:question) { create(:question) }
   given!(:answers) { create_list(:answer, 5, question: question) }
 

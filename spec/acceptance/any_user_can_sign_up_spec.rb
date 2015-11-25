@@ -1,12 +1,12 @@
 require 'rails_helper'
 
-feature 'Signing up', %q{
+feature 'SIGNING UP', %q(
   in order to be able to sign in any user have to be able to sign up
-} do
+) do
   given(:user) { build(:user) }
   given(:registered_user) { create(:user) }
 
-  scenario 'user sign up successfully with valid data' do
+  scenario '- user sign up successfully with valid data' do
     visit new_user_registration_path
 
     fill_in 'Email', with: user.email
@@ -18,7 +18,7 @@ feature 'Signing up', %q{
     expect(page).to have_content I18n.t('devise.registrations.signed_up')
   end
 
-  scenario 'user try to sign up with already registered email' do
+  scenario '- user try to sign up with already registered email' do
     visit new_user_registration_path
 
     fill_in 'Email', with: registered_user.email
