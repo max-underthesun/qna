@@ -20,7 +20,7 @@ class AnswersController < ApplicationController
 
   def destroy
     @answer = Answer.find(params[:id])
-    if @answer.user_id == current_user.id
+    if current_user.author_of?(@answer)
       flash[:warning] = I18n.t('confirmations.answers.destroy')
       @answer.destroy
     else
