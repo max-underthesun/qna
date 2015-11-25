@@ -1,4 +1,5 @@
 class AnswersController < ApplicationController
+  before_action :authenticate_user!, except: [:index, :show]
   before_action :set_question, only: [:new, :create]
 
   def new
@@ -7,12 +8,25 @@ class AnswersController < ApplicationController
 
   def create
     @answer = @question.answers.new(answer_params)
+    @answer.user = current_user
 
     if @answer.save
+      flash[:notice] = I18n.t('confirmations.answers.create')
       redirect_to @question
     else
       render :new
     end
+  end
+
+  def destroy
+    @answer = Answer.find(params[:id])
+    if current_user.author_of?(@answer)
+      flash[:warning] = I18n.t('confirmations.answers.destroy')
+      @answer.destroy
+    else
+      flash[:alert] = I18n.t('failure.answers.destroy')
+    end
+    redirect_to @answer.question
   end
 
   private

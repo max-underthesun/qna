@@ -17,3 +17,5 @@ qna.sublime-workspace
 qna.sublime-project
 
 config/database.yml
+
+questions.txt
