@@ -8,7 +8,7 @@ feature 'CREATE ANSWER', %q(
   given(:answer) { build(:answer) }
   given(:invalid_answer) { build(:invalid_answer) }
 
-  scenario 'Authenticated user creates an answer' do
+  scenario 'Authenticated user creates an answer', js: true do
     sign_in(user)
 
     visit question_path(question)
@@ -24,7 +24,7 @@ feature 'CREATE ANSWER', %q(
     within('.answers') { expect(page).to have_content answer.body }
   end
 
-  scenario 'Authenticated user try to create invalid answer' do
+  scenario 'Authenticated user try to create invalid answer', js: true do
     sign_in(user)
 
     visit question_path(question)
@@ -35,7 +35,7 @@ feature 'CREATE ANSWER', %q(
     fill_in I18n.t('activerecord.attributes.answer.body'), with: invalid_answer.body
     click_on I18n.t('questions.show.submit_answer')
 
-    expect(current_path).to eq question_answers_path(question)
+    expect(current_path).to eq question_path(question)
     expect(page).to_not have_content answer.body
     expect(page).to have_content(
       "#{I18n.t('activerecord.attributes.answer.body')} "\

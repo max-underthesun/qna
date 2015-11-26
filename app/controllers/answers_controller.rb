@@ -10,11 +10,11 @@ class AnswersController < ApplicationController
     @answer = @question.answers.new(answer_params)
     @answer.user = current_user
 
-    if @answer.save
+    if @success = @answer.save
       flash[:notice] = I18n.t('confirmations.answers.create')
-      redirect_to @question
-    else
-      render 'questions/show'
+      # redirect_to @question
+    # else
+    #   render 'questions/show'
     end
   end
 

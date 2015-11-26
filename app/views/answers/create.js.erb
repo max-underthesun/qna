@@ -1,0 +1,9 @@
+<% if @success %>
+  $('.errors').empty();
+  $('.form-group').removeClass('field_with_errors');
+  $('.answers').append('<%= j render 'questions/answer', answer: @answer %>');
+  $('#answer_body').val('');
+<% else %>
+  $('.errors').html('<%= j render 'common/errors', resource: @answer %>');
+  $('.form-group').addClass('field_with_errors');
+<% end %>

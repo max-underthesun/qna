@@ -23,20 +23,12 @@ p
 .col-lg-12.top-buffer
   h4 = t('.answers_list')
   .answers
-    - @question.answers.each do |answer|
-      - unless answer.new_record?
-        p.top-buffer = answer.body
-        .right
-          = t('common.author')
-          = answer.user ? answer.user.email : t('common.not_defined')
-        - if current_user && current_user.author_of?(answer)
-          .right
-            = link_to t('.destroy_answer'), answer, method: :delete,
-              data: { confirm: t('common.sure') }
+    = render 'answers'
   .top-buffer
-    = form_for [@question, @answer] do |f|
+    .errors
+    = form_for [@question, @answer], remote: true do |f|
 
-      = render 'common/errors', resource: @answer
+      / = render 'common/errors', resource: @answer
 
       .form-group
         = f.label :body
