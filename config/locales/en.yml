@@ -46,6 +46,7 @@ en:
       answer: "Answer the question"
       answers_list: "List of answers"
       destroy_answer: "Destroy answer"
+      submit_answer: "Submit answer"
   answers:
     new:
       submit: "Post your answer"

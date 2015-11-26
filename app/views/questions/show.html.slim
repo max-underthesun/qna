@@ -16,18 +16,30 @@ p
     = link_to t('links.destroy'), question_path(@question), method: :delete,
       data: { confirm: t('common.sure') } 
 
-.col-lg-12.top-buffer
-  = button_to t('.answer'), new_question_answer_path(@question),
-    method: :get, class: 'btn btn-primary'
+/ .col-lg-12.top-buffer
+/   = button_to t('.answer'), new_question_answer_path(@question),
+/     method: :get, class: 'btn btn-primary'
 
 .col-lg-12.top-buffer
   h4 = t('.answers_list')
-  - @question.answers.each do |answer|
-    p.top-buffer = answer.body
-    .right
-      = t('common.author')
-      = answer.user ? answer.user.email : t('common.not_defined')
-    - if current_user && current_user.author_of?(answer)
-      .right
-        = link_to t('.destroy_answer'), answer, method: :delete,
-          data: { confirm: t('common.sure') }
+  .answers
+    - @question.answers.each do |answer|
+      - unless answer.new_record?
+        p.top-buffer = answer.body
+        .right
+          = t('common.author')
+          = answer.user ? answer.user.email : t('common.not_defined')
+        - if current_user && current_user.author_of?(answer)
+          .right
+            = link_to t('.destroy_answer'), answer, method: :delete,
+              data: { confirm: t('common.sure') }
+  .top-buffer
+    = form_for [@question, @answer] do |f|
+
+      = render 'common/errors', resource: @answer
+
+      .form-group
+        = f.label :body
+        = f.text_area :body, class: 'form-control'
+
+      = f.submit t('.submit_answer'), class: 'btn btn-primary'
