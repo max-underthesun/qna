@@ -1,21 +1,14 @@
 class AnswersController < ApplicationController
-  before_action :authenticate_user!, except: [:index, :show]
-  before_action :set_question, only: [:new, :create]
-
-  def new
-    @answer = Answer.new
-  end
+  before_action :authenticate_user!
+  before_action :set_question, only: :create
 
   def create
     @answer = @question.answers.new(answer_params)
     @answer.user = current_user
 
-    if @answer.save
-      flash[:notice] = I18n.t('confirmations.answers.create')
-      redirect_to @question
-    else
-      render :new
-    end
+    return unless @answer.save
+    @success = true
+    flash[:notice] = I18n.t('confirmations.answers.create')
   end
 
   def destroy
