@@ -24,10 +24,6 @@ feature 'CREATE ANSWER', %q(
     sign_in(user)
 
     visit question_path(question)
-    # click_on I18n.t('links.show')
-
-    # click_on I18n.t('questions.show.answer')
-
     fill_in I18n.t('activerecord.attributes.answer.body'), with: invalid_answer.body
     click_on I18n.t('questions.show.submit_answer')
 
