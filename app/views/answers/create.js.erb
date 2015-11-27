@@ -1,4 +1,5 @@
 <% if @success %>
+  $('.flash').html('<%= bootstrap_flash %>');
   $('.errors').empty();
   $('.form-group').removeClass('field_with_errors');
   $('.answers').append('<%= j render 'questions/answer', answer: @answer %>');

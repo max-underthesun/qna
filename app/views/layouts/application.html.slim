@@ -44,7 +44,8 @@ html lang="en"
           = current_user ? current_user.email : t('common.not_logged')
       .row.top-buffer
         .col-lg-9
-          = bootstrap_flash
+          .flash
+            = bootstrap_flash
           = yield
         .col-lg-3
           .well.sidebar-nav
