@@ -14,7 +14,7 @@ feature 'DESTROY ANSWER', %q(
 
     visit question_path(question)
     expect(page).to have_content answer.body
-    click_on I18n.t('questions.answer.destroy_answer')
+    click_on I18n.t('answers.answer.destroy_answer')
 
     expect(page).to_not have_content answer.body
     expect(page).to have_content I18n.t('confirmations.answers.destroy')
@@ -25,7 +25,7 @@ feature 'DESTROY ANSWER', %q(
 
     visit questions_path
     click_on I18n.t('links.show')
-    expect(page).to_not have_link(I18n.t('questions.answer.destroy_answer'),
+    expect(page).to_not have_link(I18n.t('answers.answer.destroy_answer'),
                                   href: answer_path(answer))
   end
 end
