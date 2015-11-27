@@ -49,8 +49,6 @@ en:
   answers:
     answer:
       destroy_answer: "Destroy answer"
-    # new:
-    #   submit: "Post your answer"
   confirmations:
     answers:
       create: "Your answer was successfully created."
