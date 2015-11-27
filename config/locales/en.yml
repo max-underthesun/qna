@@ -46,11 +46,11 @@ en:
       answer: "Answer the question"
       answers_list: "List of answers"
       submit_answer: "Submit answer"
+  answers:
     answer:
       destroy_answer: "Destroy answer"
-  answers:
-    new:
-      submit: "Post your answer"
+    # new:
+    #   submit: "Post your answer"
   confirmations:
     answers:
       create: "Your answer was successfully created."
