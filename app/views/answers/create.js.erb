@@ -1,0 +1,12 @@
+<% if @success %>
+  $('.flash').html('<%= bootstrap_flash %>');
+  $('.errors').empty();
+  $('.form-group').removeClass('field_with_errors');
+  $('.answers').append('<%= j render @answer %>');
+  $('#answer_body').val('');
+  <% flash.discard(:notice) %>
+<% else %>
+  $('.flash').empty();
+  $('.errors').html('<%= j render 'common/errors', resource: @answer %>');
+  $('.form-group').addClass('field_with_errors');
+<% end %>
