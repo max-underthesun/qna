@@ -1,4 +1,4 @@
-require 'rails_helper'
+require_relative 'acceptance_helper'
 
 feature 'SIGNING OUT', %q(
   signed in user can sign out to finish the session

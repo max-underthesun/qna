@@ -1,4 +1,4 @@
-require 'rails_helper'
+require_relative 'acceptance_helper'
 
 feature 'SEE QUESTION AND ANSWERS', %q(
   any user can see the question and all answers for it

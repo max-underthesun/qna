@@ -49,14 +49,16 @@ group :development, :test do
   gem 'spring-commands-rspec'
   gem 'guard-rspec'
 
-  gem 'selenium-webdriver'
+  # gem 'selenium-webdriver'
   gem 'database_cleaner'
+
+  gem 'capybara'
+  gem 'capybara-webkit'
+  gem 'launchy'
 end
 
 group :test do
   gem 'shoulda-matchers'
-  gem 'capybara'
-  gem 'launchy'
 end
 
 group :development do
