@@ -5,10 +5,7 @@ class AnswersController < ApplicationController
   def create
     @answer = @question.answers.new(answer_params)
     @answer.user = current_user
-
-    return unless @answer.save
-    @success = true
-    flash[:notice] = I18n.t('confirmations.answers.create')
+    @answer.save
   end
 
   def destroy
