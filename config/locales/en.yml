@@ -56,9 +56,11 @@ en:
     questions:
       create: "Your question was successfully created."
       destroy: "Your question was successfully destroyed."
+      update: "Your question was successfully updated"
   failure:
     questions:
-      destroy: "Your have no rights to destroy this question"
+      destroy: "Your have no rights to destroy this question. Only author can do it."
+      update: "Your have no rights to update this question. Only author can do it."
     answers:
       destroy: "Your have no rights to destroy this answer"
   errors:
