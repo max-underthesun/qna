@@ -74,11 +74,24 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'PATCH #update' do
+    let(:question_author) { create(:user) }
+    let(:question) { create(:question, user: question_author) }
+    let(:updated_question) { build(:question) }
+
     describe 'for not signed in user: ' do
       it '- should not update question' do
         expect {
-          patch :update, id: question, question: attributes_for(:question), format: :js
-        }.to_not change { question } # change(Question.find(question.id))
+          patch :update, id: question,
+            question: { title: updated_question.title, body: updated_question.body }, format: :js
+        }.to_not change { question }
+      end
+
+      it '- should not update question title' do
+        original_title = question.title
+        patch :update, id: question, question: { title: updated_question.title }, format: :js
+        expect(assigns(:question).title).to eq original_title
+        # question.reload
+        # expect(question.title).to eq original_title # ?????
       end
 
       it '- should return 401 (unauthorized) status' do
@@ -90,16 +103,14 @@ RSpec.describe QuestionsController, type: :controller do
 
     describe 'for user signed in but not the author: ' do
       sign_in_user
-      let(:question_author) { create(:user) }
-      let(:question) { create(:question, user: question_author) }
 
       it '- should not update question' do
         expect {
           patch :update, id: question, question: attributes_for(:question), format: :js
-        }.to_not change { question }
+        }.to_not change{question}
       end
 
-      it '- should return 302 status' do
+      it '- should return 401 (unauthorized) status' do
         patch :update, id: question, question: attributes_for(:question), format: :js
         expect(response).to have_http_status(:unauthorized)
         # expect(response).to redirect_to question_path(question)
@@ -111,8 +122,6 @@ RSpec.describe QuestionsController, type: :controller do
 
       context 'with valid attributes' do
         let(:question) { create(:question, user: @user) }
-        let(:updated_question) { build(:question) }
-        # before { question }
 
         it '- assigns question to @question' do
           patch :update, id: question,
@@ -132,13 +141,30 @@ RSpec.describe QuestionsController, type: :controller do
           expect(assigns(:question).body).to eq updated_question.body
         end
 
+        it '- change the question' do
+          expect {
+            patch :update, id: question,
+              question: { title: updated_question.title, body: updated_question.body }, format: :js
+          }.to change { question } #{ Question.where(id: question).first }
+        end
+
         it '- render question update template' do
-          patch :update,id: question, question: attributes_for(:question, user: @user), format: :js
+          patch :update, id: question,
+            question: attributes_for(:question, user: @user), format: :js
           expect(response).to render_template :update
         end
       end
 
       context 'with invalid attributes' do
+        it '- should not update question' do
+          expect {
+            patch :update, id: question, question: attributes_for(:invalid_question), format: :js
+          }.to_not change { question }
+        end
+
+        it '- should return / render ???' do
+          
+        end
       end
     end
   end

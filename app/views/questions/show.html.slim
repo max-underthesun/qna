@@ -9,12 +9,13 @@ p
 
 .col-lg-12.right
   = link_to t('links.back'), questions_path
-.col-lg-12.right
-  = link_to t('links.edit'), edit_question_path(@question)
 - if current_user && current_user.author_of?(@question)
   .col-lg-12.right
+    = link_to t('links.edit')
+  .col-lg-12.right
     = link_to t('links.destroy'), question_path(@question), method: :delete,
-      data: { confirm: t('common.sure') } 
+      data: { confirm: t('common.sure') }
+  = render 'form'
 
 .col-lg-12.top-buffer
   h4 = t('.answers_list')

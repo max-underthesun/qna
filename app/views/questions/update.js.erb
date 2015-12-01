@@ -1,0 +1,12 @@
+<% if @question.errors.present? %>
+  $('.flash').empty();
+  $('.errors').html('<%= j render 'common/errors', resource: @question %>');
+  $('.form-group').addClass('field_with_errors');
+<% else %>
+  <% flash[:notice] = I18n.t('confirmations.question.create') %>
+  $('.flash').html('<%= bootstrap_flash %>');
+  $('.errors').empty();
+  $('.form-group').removeClass('field_with_errors');
+  // $('.answers').append('<%= j render @answer %>');
+  <% flash.discard(:notice) %>
+<% end %>
