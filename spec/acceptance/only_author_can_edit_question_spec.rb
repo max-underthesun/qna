@@ -28,7 +28,7 @@ feature 'EDIT QUESTION', %q(
       expect(page).to have_link(I18n.t('links.edit'))
     end
 
-    scenario '-- author fill and submit the form' do
+    scenario '-- author fill and submit the form', js: true do
       click_on I18n.t('links.edit')
       fill_in I18n.t('activerecord.attributes.question.title'), with: question.title
       fill_in I18n.t('activerecord.attributes.question.body'), with: question.body

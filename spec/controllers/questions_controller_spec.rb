@@ -79,19 +79,20 @@ RSpec.describe QuestionsController, type: :controller do
     let(:updated_question) { build(:question) }
 
     describe 'for not signed in user: ' do
-      it '- should not update question' do
-        expect {
-          patch :update, id: question,
-            question: { title: updated_question.title, body: updated_question.body }, format: :js
-        }.to_not change { question }
-      end
+      # it '- should not update question' do
+      #   expect {
+      #     patch :update, id: question,
+      #       question: { title: updated_question.title, body: updated_question.body }, format: :js
+      #   }.to_not change { question.reload }
+      # end
 
       it '- should not update question title' do
-        original_title = question.title
-        patch :update, id: question, question: { title: updated_question.title }, format: :js
-        expect(assigns(:question).title).to eq original_title
+        original_question = question
+        patch :update, id: question,
+          question: { title: updated_question.title, body: updated_question.body }, format: :js
+        # expect(assigns(:question).title).to eq original_title
         # question.reload
-        # expect(question.title).to eq original_title # ?????
+        expect(question.reload).to eq original_question # ?????
       end
 
       it '- should return 401 (unauthorized) status' do
@@ -105,9 +106,13 @@ RSpec.describe QuestionsController, type: :controller do
       sign_in_user
 
       it '- should not update question' do
-        expect {
-          patch :update, id: question, question: attributes_for(:question), format: :js
-        }.to_not change{question}
+        original_question = question
+        patch :update, id: question,
+          question: { title: updated_question.title, body: updated_question.body }, format: :js
+        expect(question.reload).to eq original_question
+        # expect {
+        #   patch :update, id: question, question: attributes_for(:question), format: :js
+        # }.to_not change { question.reload }
       end
 
       it '- should return 401 (unauthorized) status' do
@@ -124,8 +129,7 @@ RSpec.describe QuestionsController, type: :controller do
         let(:question) { create(:question, user: @user) }
 
         it '- assigns question to @question' do
-          patch :update, id: question,
-            question: attributes_for(:question, user: @user), format: :js
+          patch :update, id: question, question: attributes_for(:question), format: :js
           expect(assigns(:question)).to eq question
         end
 
@@ -141,29 +145,33 @@ RSpec.describe QuestionsController, type: :controller do
           expect(assigns(:question).body).to eq updated_question.body
         end
 
-        it '- change the question' do
-          expect {
-            patch :update, id: question,
-              question: { title: updated_question.title, body: updated_question.body }, format: :js
-          }.to change { question } #{ Question.where(id: question).first }
-        end
+        # it '- change the question' do
+        #   expect {
+        #     patch :update, id: question,
+        #       question: { title: updated_question.title }, format: :js
+        #   }.to change { question.reload }
+        # end
 
         it '- render question update template' do
-          patch :update, id: question,
-            question: attributes_for(:question, user: @user), format: :js
+          patch :update, id: question, question: attributes_for(:question), format: :js
           expect(response).to render_template :update
         end
       end
 
       context 'with invalid attributes' do
         it '- should not update question' do
-          expect {
-            patch :update, id: question, question: attributes_for(:invalid_question), format: :js
-          }.to_not change { question }
+          # expect {
+          #   patch :update, id: question, question: attributes_for(:invalid_question), format: :js
+          # }.to_not change { question }
+          original_question = question
+          patch :update, id: question, question: attributes_for(:invalid_question), format: :js
+          # expect(question.reload).to_not eq original_question
+          expect(assigns(:question)).to eq original_question
         end
 
-        it '- should return / render ???' do
-          
+        it '- render question update template' do
+          patch :update, id: question, question: attributes_for(:invalid_question), format: :js
+          expect(response).to render_template :update
         end
       end
     end
