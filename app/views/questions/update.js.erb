@@ -9,7 +9,6 @@
   <% flash[:notice] = I18n.t('confirmations.questions.update') %>
   $('.flash').html('<%= bootstrap_flash %>');
   $('.question-errors').empty();
-  $('#question_title').parent().removeClass('field_with_errors');
   $('.question').html('<%= j render @question %>');
   <% flash.discard(:notice) %>
 <% end %>
