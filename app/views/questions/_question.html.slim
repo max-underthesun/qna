@@ -1,0 +1,22 @@
+p.question-title
+  strong = @question.title
+
+.col-lg-12
+  p.question-body
+    = @question.body
+  .right
+    strong = t('common.author')
+    = @question.user ? @question.user.email : t('common.not_defined')
+
+.col-lg-12.right
+  = link_to t('links.back'), questions_path
+- if current_user && current_user.author_of?(@question)
+  .col-lg-12.right
+    = link_to t('links.edit'), '', class: "edit-question-link"
+  .col-lg-12.right
+    = link_to t('links.destroy'), question_path(@question),
+      class: "destroy-question-link", method: :delete, data: { confirm: t('common.sure') }
+.col-lg-12
+  .top-buffer
+    .question-errors
+    = render 'form', hidden: true, remote: true

@@ -73,6 +73,110 @@ RSpec.describe QuestionsController, type: :controller do
     end
   end
 
+  describe 'PATCH #update' do
+    let(:question_author) { create(:user) }
+    let(:question) { create(:question, user: question_author) }
+    let(:updated_question) { build(:question) }
+
+    describe 'for not signed in user: ' do
+      # it '- should not update question' do
+      #   expect {
+      #     patch :update, id: question,
+      #       question: { title: updated_question.title, body: updated_question.body }, format: :js
+      #   }.to_not change { question.reload }
+      # end
+
+      it '- should not update question title' do
+        original_question = question
+        patch :update, id: question,
+          question: { title: updated_question.title, body: updated_question.body }, format: :js
+        # expect(assigns(:question).title).to eq original_title
+        # question.reload
+        expect(question.reload).to eq original_question # ?????
+      end
+
+      it '- should return 401 (unauthorized) status' do
+        patch :update, id: question, question: attributes_for(:question), format: :js
+        expect(response).to have_http_status(:unauthorized)
+        # expect(response).to redirect_to new_user_session_path
+      end
+    end
+
+    describe 'for user signed in but not the author: ' do
+      sign_in_user
+
+      it '- should not update question' do
+        original_question = question
+        patch :update, id: question,
+          question: { title: updated_question.title, body: updated_question.body }, format: :js
+        expect(question.reload).to eq original_question
+        # expect {
+        #   patch :update, id: question, question: attributes_for(:question), format: :js
+        # }.to_not change { question.reload }
+      end
+
+      it '- should return 401 (unauthorized) status' do
+        patch :update, id: question, question: attributes_for(:question), format: :js
+        expect(response).to have_http_status(:unauthorized)
+        # expect(response).to redirect_to question_path(question)
+      end
+    end
+
+    describe 'for user signed in and author: ' do
+      sign_in_user
+
+      context 'with valid attributes' do
+        let(:question) { create(:question, user: @user) }
+
+        it '- assigns question to @question' do
+          patch :update, id: question, question: attributes_for(:question), format: :js
+          expect(assigns(:question)).to eq question
+        end
+
+        it '- change the question title' do
+          patch :update, id: question, question: { title: updated_question.title }, format: :js
+          question.reload
+          expect(assigns(:question).title).to eq updated_question.title
+        end
+
+        it '- change the question body' do
+          patch :update, id: question, question: { body: updated_question.body }, format: :js
+          question.reload
+          expect(assigns(:question).body).to eq updated_question.body
+        end
+
+        # it '- change the question' do
+        #   expect {
+        #     patch :update, id: question,
+        #       question: { title: updated_question.title }, format: :js
+        #   }.to change { question.reload }
+        # end
+
+        it '- render question update template' do
+          patch :update, id: question, question: attributes_for(:question), format: :js
+          expect(response).to render_template :update
+        end
+      end
+
+      context 'with invalid attributes' do
+        it '- should not update question' do
+          # expect {
+          #   patch :update, id: question, question: attributes_for(:invalid_question), format: :js
+          # }.to_not change { question }
+          original_question = question
+          patch :update, id: question, question: attributes_for(:invalid_question), format: :js
+          # expect(question.reload).to_not eq original_question
+          expect(assigns(:question)).to eq original_question
+        end
+
+        it '- render question update template' do
+          patch :update, id: question, question: attributes_for(:invalid_question), format: :js
+          expect(response).to render_template :update
+        end
+      end
+    end
+  end
+
   describe 'DELETE #destroy' do
     sign_in_user
 
