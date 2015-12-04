@@ -1,4 +1,4 @@
-require_relative 'acceptance_helper'
+require_relative '../acceptance_helper'
 
 feature 'EDIT QUESTION', %q(
   author should have abiliti to edit his question

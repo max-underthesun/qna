@@ -1,4 +1,4 @@
-require_relative 'acceptance_helper'
+require_relative '../acceptance_helper'
 
 feature 'SIGNING UP', %q(
   in order to be able to sign in any user have to be able to sign up
