@@ -37,18 +37,19 @@ en:
     sign_out: "Sign out"
   questions:
     form:
-      submit: "Submit"
+      submit: "Submit question"
     index:
       header: "All questions"
       title: "Question title"
       new: "New question"
     show:
-      answer: "Answer the question"
+      # answer: "Answer the question"
       answers_list: "List of answers"
       submit_answer: "Submit answer"
   answers:
     answer:
-      destroy_answer: "Destroy answer"
+      # destroy_answer: "Destroy answer"
+      # edit_answer: "Edit answer"
   confirmations:
     answers:
       create: "Your answer was successfully created."

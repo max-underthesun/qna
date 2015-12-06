@@ -13,7 +13,7 @@ ready = ->
       $(this).removeClass 'cancel'
     $('.edit_question').toggle()
     $('.destroy-question-link').toggle()
-$(document).ready(ready) # "вешаем" функцию ready на событие document.ready
-$(document).on('page:load', ready)  # "вешаем" функцию ready на событие page:load
-$(document).on('page:update', ready) # "вешаем" функцию ready на событие page:update
+$(document).ready(ready)
+$(document).on('page:load', ready)
+$(document).on('page:update', ready)
 $(document).on('page:partial-load', ready)
