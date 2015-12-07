@@ -30,22 +30,3 @@ ready = ->
 $(document).ready(ready)
 $(document).on('page:load', ready)
 $(document).on('page:update', ready)
-
-# ready = ->
-#   $('.edit-question-link').click (e) ->
-#     e.preventDefault();
-#     console.log('ready')
-#     if !$(this).hasClass('cancel')
-#       console.log('if')
-#       $(this).html 'Cancel edit'
-#       $(this).addClass 'cancel'
-#     else
-#       console.log('else')
-#       $(this).html 'Edit'
-#       $(this).removeClass 'cancel'
-#     $('.edit_question').toggle()
-#     $('.destroy-question-link').toggle()
-# $(document).ready(ready)
-# $(document).on('page:load', ready)
-# $(document).on('page:update', ready)
-# $(document).on('page:partial-load', ready)
