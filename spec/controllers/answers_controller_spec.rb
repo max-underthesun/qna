@@ -56,6 +56,111 @@ RSpec.describe AnswersController, type: :controller do
     end
   end
 
+  describe 'PATCH #update' do
+    let(:answer_author) { create(:user) }
+    let(:answer) { create(:answer, question: question, user: answer_author) }
+    let(:updated_answer) { build(:answer) }
+
+    describe 'for not signed in user: ' do
+      # it '- should not update question' do
+      #   expect {
+      #     patch :update, id: question,
+      #       question: { title: updated_question.title, body: updated_question.body }, format: :js
+      #   }.to_not change { question.reload }
+      # end
+
+      it '- should not update answer' do
+        original_answer = answer
+        patch :update, id: answer, answer: { body: updated_answer.body }, format: :js
+        # expect(assigns(:question).title).to eq original_title
+        # question.reload
+
+        expect(answer.reload).to eq original_answer # ?????
+      end
+
+      it '- should return 401 (unauthorized) status' do
+        patch :update, id: answer, answer: { body: updated_answer.body }, format: :js
+        expect(response).to have_http_status(:unauthorized)
+        # expect(response).to redirect_to new_user_session_path
+      end
+    end
+
+    describe 'for user signed in but not the author: ' do
+      sign_in_user
+
+      it '- should not update answer' do
+        original_answer = answer
+        patch :update, id: answer, answer: { body: updated_answer.body }, format: :js
+
+        expect(answer.reload).to eq original_answer # ?????
+        # expect {
+        #   patch :update, id: question, question: attributes_for(:question), format: :js
+        # }.to_not change { question.reload }
+      end
+
+      it '- should return 401 (unauthorized) status' do
+        patch :update, id: answer, answer: { body: updated_answer.body }, format: :js
+
+        expect(response).to have_http_status(:unauthorized)
+        # expect(response).to redirect_to question_path(question)
+      end
+    end
+
+    describe 'for user signed in and author: ' do
+      sign_in_user
+
+      context 'with valid attributes' do
+        let(:answer) { create(:answer, question: question, user: @user) }
+
+        it '- assigns answer to @answer' do
+          patch :update, id: answer, answer: { body: updated_answer.body }, format: :js
+          expect(assigns(:answer)).to eq answer
+        end
+
+        # it '- change the question title' do
+        #   patch :update, id: question, question: { title: updated_question.title }, format: :js
+        #   question.reload
+        #   expect(assigns(:question).title).to eq updated_question.title
+        # end
+
+        it '- change the answer body' do
+          patch :update, id: answer, answer: { body: updated_answer.body }, format: :js
+          answer.reload
+          expect(assigns(:answer).body).to eq updated_answer.body
+        end
+
+        # it '- change the question' do
+        #   expect {
+        #     patch :update, id: question,
+        #       question: { title: updated_question.title }, format: :js
+        #   }.to change { question.reload }
+        # end
+
+        it '- render answer update template' do
+          patch :update, id: answer, answer: { body: updated_answer.body }, format: :js
+          expect(response).to render_template :update
+        end
+      end
+
+      context 'with invalid attributes' do
+        it '- should not update answer' do
+          # expect {
+          #   patch :update, id: question, question: attributes_for(:invalid_question), format: :js
+          # }.to_not change { question }
+          original_answer = answer
+          patch :update, id: answer, answer: attributes_for(:invalid_answer), format: :js
+          # expect(question.reload).to_not eq original_question
+          expect(assigns(:answer)).to eq original_answer
+        end
+
+        it '- render answer update template' do
+          patch :update, id: answer, answer: attributes_for(:invalid_answer), format: :js
+          expect(response).to render_template :update
+        end
+      end
+    end
+  end
+
   describe 'DELETE #destroy' do
     sign_in_user
 
