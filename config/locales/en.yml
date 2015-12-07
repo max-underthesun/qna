@@ -50,6 +50,7 @@ en:
     answer:
       # destroy_answer: "Destroy answer"
       # edit_answer: "Edit answer"
+      update_answer: "Update answer"
   confirmations:
     answers:
       create: "Your answer was successfully created."

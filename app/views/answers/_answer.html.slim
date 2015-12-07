@@ -4,5 +4,16 @@ p.top-buffer = answer.body
   = answer.user ? answer.user.email : t('common.not_defined')
 - if current_user && current_user.author_of?(answer)
   .right
+    = link_to t('links.edit')
+  .right
     = link_to t('links.destroy'), answer, method: :delete,
       data: { confirm: t('common.sure') }
+
+.top-buffer
+  .errors
+  = form_for answer, remote: true do |f|
+    .form-group
+      = f.label :body
+      = f.text_area :body, class: 'form-control'
+
+    = f.submit t('.update_answer'), class: 'btn btn-primary'

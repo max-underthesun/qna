@@ -11,23 +11,30 @@ feature 'EDIT ANSWER', %q(
   given(:updated_answer) { build(:answer) }
   given(:invalid_answer) { build(:invalid_answer) }
 
-  scenario '- unauthenticated user could not edit answer' do
+  scenario '- unauthenticated user do not see edit answer link' do
     visit question_path(question)
+
     within '.answers' do
       expect(page).to_not have_link(I18n.t('links.edit'))
     end
   end
 
-  scenario '- authenticated user could not edit question of other user' do
-    sign_in(other_user)
-    visit question_path(question)
-
-    within ".answer#answer_#{other_answer.id}" do
-      expect(page).to have_link(I18n.t('links.edit'))
+  describe '- authenticated user could not edit question of other user' do
+    before do
+      sign_in(other_user)
+      visit question_path(question)
     end
 
-    within ".answer#answer_#{answer.id}" do
-      expect(page).to_not have_link(I18n.t('links.edit'))
+    scenario '-- can see edit link for own answer' do
+      within ".answer#answer_#{other_answer.id}" do
+        expect(page).to have_link(I18n.t('links.edit'))
+      end
+    end
+
+    scenario '-- do not see edit link for other user answer' do
+      within ".answer#answer_#{answer.id}" do
+        expect(page).to_not have_link(I18n.t('links.edit'))
+      end
     end
   end
 
@@ -47,7 +54,7 @@ feature 'EDIT ANSWER', %q(
       within ".answer#answer_#{answer.id}" do
         click_on I18n.t('links.edit')
         fill_in I18n.t('activerecord.attributes.answer.body'), with: updated_answer.body
-        click_on I18n.t('questions.show.submit_answer')
+        click_on I18n.t('answers.answer.update_answer')
 
         expect(page).to have_content updated_answer.body
         expect(page).to_not have_selector 'textarea'
@@ -58,7 +65,7 @@ feature 'EDIT ANSWER', %q(
       within ".answer#answer_#{answer.id}" do
         click_on I18n.t('links.edit')
         fill_in I18n.t('activerecord.attributes.answer.body'), with: invalid_answer.body
-        click_on I18n.t('questions.show.submit_answer')
+        click_on I18n.t('answers.answer.update_answer')
 
         expect(page).to have_content answer.body
         expect(page).to have_selector 'textarea'
