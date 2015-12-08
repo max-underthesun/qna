@@ -22,7 +22,7 @@ feature 'DESTROY ANSWER', %q(
     expect(page).to have_content I18n.t('confirmations.answers.destroy')
   end
 
-  scenario '- user trying to destroy answer of other user with no success' do
+  scenario '- user do not see destroy answer link for the other user answer' do
     sign_in(other_user)
 
     visit questions_path

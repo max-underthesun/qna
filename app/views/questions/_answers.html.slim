@@ -1,4 +1,3 @@
 - @question.answers.each do |answer|
   - unless answer.new_record?
-    .answer id="answer_#{answer.id}"
-      = render 'answers/answer', answer: answer
+    = render 'answers/answer', answer: answer

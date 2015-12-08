@@ -21,7 +21,7 @@ class AnswersController < ApplicationController
   def destroy
     if current_user.author_of?(@answer)
       @answer.destroy
-      flash[:warning] = I18n.t('confirmations.answers.destroy')
+      # flash[:warning] = I18n.t('confirmations.answers.destroy')
     else
       @answer.errors.add(:base, I18n.t('failure.answers.destroy'))
       render status: :unauthorized
