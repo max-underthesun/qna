@@ -54,7 +54,7 @@ feature 'EDIT ANSWER', %q(
       within ".answer#answer_#{answer.id}" do
         click_on I18n.t('links.edit')
         fill_in I18n.t('activerecord.attributes.answer.body'), with: updated_answer.body
-        click_on I18n.t('answers.answer.update_answer')
+        click_on I18n.t('answers.form.update_answer')
 
         expect(page).to have_content updated_answer.body
         expect(page).to_not have_selector 'textarea'
@@ -65,7 +65,7 @@ feature 'EDIT ANSWER', %q(
       within ".answer#answer_#{answer.id}" do
         click_on I18n.t('links.edit')
         fill_in I18n.t('activerecord.attributes.answer.body'), with: invalid_answer.body
-        click_on I18n.t('answers.answer.update_answer')
+        click_on I18n.t('answers.form.update_answer')
 
         expect(page).to have_content answer.body
         expect(page).to have_selector 'textarea'

@@ -1,0 +1,6 @@
+= form_for answer, html: { style: "display: #{hidden ? 'none' : 'block'}" }, remote: true do |f|
+  .form-group
+    = f.label :body
+    = f.text_area :body, class: 'form-control'
+
+  = f.submit t('.update_answer'), class: 'btn btn-primary'

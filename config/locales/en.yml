@@ -50,11 +50,13 @@ en:
     answer:
       # destroy_answer: "Destroy answer"
       # edit_answer: "Edit answer"
+    form:
       update_answer: "Update answer"
   confirmations:
     answers:
       create: "Your answer was successfully created."
       destroy: "Your answer was successfully destroyed."
+      update: "Your answer was successfully updated"
     questions:
       create: "Your question was successfully created."
       destroy: "Your question was successfully destroyed."
