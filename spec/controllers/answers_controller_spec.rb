@@ -162,34 +162,56 @@ RSpec.describe AnswersController, type: :controller do
   end
 
   describe 'DELETE #destroy' do
-    sign_in_user
+    let(:answer_author) { create(:user) }
+    let(:answer) { create(:answer, question: question, user: answer_author) }
 
-    context 'answer.user == current_user' do
-      let(:answer) { create(:answer, question: question, user: @user) }
+    describe 'for not signed in user: ' do
       before { answer }
-
-      it 'delete the answer from the database' do
-        expect { delete :destroy, question_id: question, id: answer, format: :js }
-          .to change(@user.answers, :count).by(-1)
-      end
-
-      it 'render destroy template' do
-        delete :destroy, question_id: question, id: answer, format: :js
-        expect(response).to render_template :destroy
-      end
-    end
-
-    context 'answer.user != current_user' do
-      let(:user) { create(:user) }
-      let(:answer) { create(:answer, question: question, user: user) }
-      before { answer }
-
-      it 'not delete the answer from the database' do
+      # it '- should not update question' do
+      #   expect {
+      #     patch :update, id: question,
+      #       question: { title: updated_question.title, body: updated_question.body }, format: :js
+      #   }.to_not change { question.reload }
+      # end
+      it '- it should not delete the answer from the database' do
         expect { delete :destroy, question_id: question, id: answer, format: :js }
           .to_not change(Answer, :count)
       end
 
-      it 'render destroy template' do
+      it '- should return 401 (unauthorized) status' do
+        delete :destroy, question_id: question, id: answer, format: :js
+        expect(response).to have_http_status(:unauthorized)
+        # expect(response).to redirect_to new_user_session_path
+      end
+    end
+
+    describe 'for user signed in but no the author:' do
+      sign_in_user
+      before { answer }
+
+      it '- it should not delete the answer from the database' do
+        expect { delete :destroy, question_id: question, id: answer, format: :js }
+          .to_not change(Answer, :count)
+      end
+
+      it '- should return 401 (unauthorized) status' do
+        delete :destroy, question_id: question, id: answer, format: :js
+        expect(response).to have_http_status(:unauthorized)
+        # expect(response).to render_template :destroy
+      end
+    end
+
+    describe 'for user signed in and author: ' do
+      sign_in_user
+      let(:answer) { create(:answer, question: question, user: @user) }
+      before { answer }
+
+      it '- delete the answer from the database' do
+        expect { delete :destroy, question_id: question, id: answer, format: :js }
+          .to change(@user.answers, :count).by(-1)
+      end
+
+      it '- render destroy template' do
         delete :destroy, question_id: question, id: answer, format: :js
         expect(response).to render_template :destroy
       end

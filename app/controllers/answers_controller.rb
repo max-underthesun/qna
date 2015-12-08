@@ -23,7 +23,8 @@ class AnswersController < ApplicationController
       @answer.destroy
       flash[:warning] = I18n.t('confirmations.answers.destroy')
     else
-      flash[:alert] = I18n.t('failure.answers.destroy')
+      @answer.errors.add(:base, I18n.t('failure.answers.destroy'))
+      render status: :unauthorized
     end
     # redirect_to @answer.question
   end
