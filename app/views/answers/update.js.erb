@@ -1,0 +1,12 @@
+<% if @answer.errors.present? %>
+  $('.flash').empty();
+  $('#' + '<%= @answer.id %>' + '.answer-errors').html('<%= j render 'common/errors', resource: @answer %>');
+  $('.edit_answer .form-group').addClass('field_with_errors');
+<% else %>
+  <% flash[:notice] = I18n.t('confirmations.answers.update') %>
+  $('.flash').html('<%= bootstrap_flash %>');
+  $('#' + '<%= @answer.id %>' + '.answer-errors').empty();
+  $('div#answer_' + '<%= @answer.id %>').html('<%= j render @answer %>');
+  <% flash.discard(:notice) %>
+<% end %>
+

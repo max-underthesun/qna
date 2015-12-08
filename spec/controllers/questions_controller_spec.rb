@@ -89,7 +89,8 @@ RSpec.describe QuestionsController, type: :controller do
       it '- should not update question title' do
         original_question = question
         patch :update, id: question,
-          question: { title: updated_question.title, body: updated_question.body }, format: :js
+                       question: { title: updated_question.title, body: updated_question.body },
+                       format: :js
         # expect(assigns(:question).title).to eq original_title
         # question.reload
         expect(question.reload).to eq original_question # ?????
@@ -108,7 +109,8 @@ RSpec.describe QuestionsController, type: :controller do
       it '- should not update question' do
         original_question = question
         patch :update, id: question,
-          question: { title: updated_question.title, body: updated_question.body }, format: :js
+                       question: { title: updated_question.title, body: updated_question.body },
+                       format: :js
         expect(question.reload).to eq original_question
         # expect {
         #   patch :update, id: question, question: attributes_for(:question), format: :js

@@ -1,8 +1,8 @@
 require_relative '../acceptance_helper'
 
 feature 'DESTROY ANSWER', %q(
-  an author has to be able to destroy his questions or answers,
-  but to not be able to destroy others questions or answers
+  an author has to be able to destroy his answers,
+  but to not be able to destroy others answers
 ) do
   given(:user) { create(:user) }
   given(:other_user) { create(:user) }
@@ -11,10 +11,13 @@ feature 'DESTROY ANSWER', %q(
 
   scenario '- author destroying his answer successfully' do
     sign_in(user)
-
     visit question_path(question)
-    expect(page).to have_content answer.body
-    click_on I18n.t('answers.answer.destroy_answer')
+
+    within ".answer#answer_#{answer.id}" do
+      expect(page).to have_content answer.body
+      find("a[href='#{answer_path(answer)}']", text: /\A#{I18n.t('links.destroy')}\z/).click
+      # click_on I18n.t('links.destroy')
+    end
 
     expect(page).to_not have_content answer.body
     expect(page).to have_content I18n.t('confirmations.answers.destroy')
@@ -25,7 +28,6 @@ feature 'DESTROY ANSWER', %q(
 
     visit questions_path
     click_on I18n.t('links.show')
-    expect(page).to_not have_link(I18n.t('answers.answer.destroy_answer'),
-                                  href: answer_path(answer))
+    expect(page).to_not have_link(I18n.t('links.destroy'), href: answer_path(answer))
   end
 end

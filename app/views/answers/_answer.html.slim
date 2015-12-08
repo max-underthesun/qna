@@ -4,5 +4,11 @@ p.top-buffer = answer.body
   = answer.user ? answer.user.email : t('common.not_defined')
 - if current_user && current_user.author_of?(answer)
   .right
-    = link_to t('.destroy_answer'), answer, method: :delete,
-      data: { confirm: t('common.sure') }
+    = link_to t('links.edit'), '', class: "edit-answer-link", id: "#{answer.id}"
+  .right
+    = link_to t('links.destroy'), answer, method: :delete,
+      data: { confirm: t('common.sure') }, class: "destroy-answer-link", id: "#{answer.id}"
+
+.top-buffer
+  .answer-errors id="#{answer.id}"
+  = render 'answers/form', answer: answer, hidden: true, remote: true
