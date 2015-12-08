@@ -9,14 +9,13 @@ feature 'DESTROY ANSWER', %q(
   given!(:question) { create(:question, user: user) }
   given!(:answer) { create(:answer, question: question, user: user) }
 
-  scenario '- author destroying his answer successfully' do
+  scenario '- author destroying his answer successfully', js: true do
     sign_in(user)
     visit question_path(question)
 
     within ".answer#answer_#{answer.id}" do
       expect(page).to have_content answer.body
       find("a[href='#{answer_path(answer)}']", text: /\A#{I18n.t('links.destroy')}\z/).click
-      # click_on I18n.t('links.destroy')
     end
 
     expect(page).to_not have_content answer.body

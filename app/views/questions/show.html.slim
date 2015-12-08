@@ -7,6 +7,7 @@
     = render 'answers'
 
   .top-buffer
+    h4 = t('.new_answer')
     .errors
     = form_for [@question, @answer], remote: true do |f|
       .form-group
