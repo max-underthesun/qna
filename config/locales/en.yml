@@ -45,6 +45,7 @@ en:
     show:
       # answer: "Answer the question"
       answers_list: "List of answers"
+      new_answer: "Add a new answer here:"
       submit_answer: "Submit answer"
   answers:
     answer:

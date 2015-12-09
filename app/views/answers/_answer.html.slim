@@ -1,14 +1,16 @@
-p.top-buffer = answer.body
-.right
-  = t('common.author')
-  = answer.user ? answer.user.email : t('common.not_defined')
-- if current_user && current_user.author_of?(answer)
+.answer id="answer_#{answer.id}"
+  p.top-buffer = answer.body
   .right
-    = link_to t('links.edit'), '', class: "edit-answer-link", id: "#{answer.id}"
-  .right
-    = link_to t('links.destroy'), answer, method: :delete,
-      data: { confirm: t('common.sure') }, class: "destroy-answer-link", id: "#{answer.id}"
+    = t('common.author')
+    = answer.user ? answer.user.email : t('common.not_defined')
+  - if current_user && current_user.author_of?(answer)
+    .right
+      = link_to t('links.edit'), '', class: "edit-answer-link", id: "#{answer.id}"
+    .right
+      = link_to t('links.destroy'), answer, method: :delete, 
+                                    data: { confirm: t('common.sure') }, remote: true,
+                                    class: "destroy-answer-link", id: "#{answer.id}"
 
-.top-buffer
-  .answer-errors id="#{answer.id}"
-  = render 'answers/form', answer: answer, hidden: true, remote: true
+  .top-buffer
+    .answer-errors id="#{answer.id}"
+    = render 'answers/form', answer: answer, hidden: true, remote: true
