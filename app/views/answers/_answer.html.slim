@@ -3,7 +3,7 @@
   .right
     = t('common.author')
     = answer.user ? answer.user.email : t('common.not_defined')
-  - if current_user# && current_user.author_of?(answer)
+  - if current_user && current_user.author_of?(answer)
     .right
       = link_to t('links.edit'), '', class: "edit-answer-link", id: "#{answer.id}"
     .right

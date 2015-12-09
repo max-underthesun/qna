@@ -6,7 +6,7 @@
   $('.flash').empty();
   errors.html('<%= j render 'common/errors', resource: @answer %>');
 <% else %>
-  console.log('<%= @answer.id %>')
+  // console.log('<%= @answer.id %>')
   // var errors;
   var answer;
 
@@ -17,5 +17,5 @@
   answer.remove();
   // errors.empty();
   $('.flash').html('<%= bootstrap_flash %>');
-  <% flash.discard(:notice) %>
+  <% flash.discard(:warning) %>
 <% end %>
