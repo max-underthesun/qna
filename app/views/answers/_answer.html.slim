@@ -1,4 +1,4 @@
-.answer id="answer_#{answer.id}"
+div class=(answer.best? ? "answer best-answer" : "answer") id="answer_#{answer.id}"
   p.top-buffer = answer.body
   .right
     = t('common.author')
@@ -10,6 +10,10 @@
       = link_to t('links.destroy'), answer, method: :delete, 
                                     data: { confirm: t('common.sure') }, remote: true,
                                     class: "destroy-answer-link", id: "#{answer.id}"
+
+  - if current_user && current_user == answer.question.user
+    .right.top-buffer
+      = button_to t('buttons.best_answer'), '', method: :get, class: 'btn btn-success btn-xs'
 
   .top-buffer
     .answer-errors id="#{answer.id}"

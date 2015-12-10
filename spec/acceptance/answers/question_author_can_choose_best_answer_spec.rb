@@ -9,8 +9,8 @@ feature 'BEST ANSWER', %q(
   given!(:question) { create(:question, user: user) }
   given!(:answers) { create_list(:answer, 5, question: question) }
 
-  # given!(:answer) { create(:answer, question: question, user: user) }
-  # given!(:other_answer) { create(:answer, question: question, user: other_user) }
+  given!(:answer) { create(:answer, question: question, user: user) }
+  given!(:other_answer) { create(:answer, question: question, user: other_user) }
   # given(:updated_answer) { build(:answer) }
   # given(:invalid_answer) { build(:invalid_answer) }
 
@@ -51,10 +51,26 @@ feature 'BEST ANSWER', %q(
           click_on I18n.t('buttons.best_answer')
         end
 
-        expect(page).to have_css('.best_answer')
-        within ".best_answer" do
+        expect(page).to have_css('.best-answer')
+        within ".best-answer" do
           expect(page).to have answer.body
         end
+      end
+    end
+
+    scenario "-- best answer positioned first in the list of answers" do
+      answers.each do |answer|
+        within ".answer#answer_#{answer.id}" do
+          click_on I18n.t('buttons.best_answer')
+        end
+
+        # save_and_open_page
+        # expect(page).to have_content answer.body
+        # page.should have_selector(".answers:nth-child(1)", text: answer.body)
+        # page.find('.answer:nth-of-type(1)', text: answer.body).text
+
+        # expect(page.find('.answer:nth-of-type(1)')).to have_css('.best-answer')
+        expect(page.find('.answer:nth-of-type(1)')).to have_content answer.body
       end
     end
   end

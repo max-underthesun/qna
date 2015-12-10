@@ -35,6 +35,8 @@ en:
     destroy: "Destroy"
     sign_in: "Sign in"
     sign_out: "Sign out"
+  buttons:
+    best_answer: "Best answer"
   questions:
     form:
       submit: "Submit question"
@@ -47,6 +49,7 @@ en:
       answers_list: "List of answers"
       new_answer: "Add a new answer here:"
       submit_answer: "Submit answer"
+      best_answer: "best answer"
   answers:
     answer:
       # destroy_answer: "Destroy answer"
