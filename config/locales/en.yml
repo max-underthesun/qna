@@ -72,6 +72,7 @@ en:
     answers:
       destroy: "Your have no rights to destroy this answer. Only author can do it."
       update: "Your have no rights to update this answer. Only author can do it."
+      best: "Your have no rights to choose this answer as best. Only author of question can do it."
   errors:
     error: "error"
     title: " prohibited you from continuing"
