@@ -45,15 +45,11 @@ en:
       title: "Question title"
       new: "New question"
     show:
-      # answer: "Answer the question"
       answers_list: "List of answers"
       new_answer: "Add a new answer here:"
       submit_answer: "Submit answer"
       best_answer: "best answer"
   answers:
-    answer:
-      # destroy_answer: "Destroy answer"
-      # edit_answer: "Edit answer"
     form:
       update_answer: "Update answer"
   confirmations:
@@ -77,6 +73,7 @@ en:
   errors:
     error: "error"
     title: " prohibited you from continuing"
+
 
   activerecord:
     attributes:

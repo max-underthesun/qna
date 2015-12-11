@@ -1,19 +1,11 @@
 <% if @answer.errors.present? %>
   var errors;
-
   errors = $('#' + '<%= @answer.id %>' + '.answer-errors');
-
   $('.flash').empty();
   errors.html('<%= j render 'common/errors', resource: @answer %>');
 <% else %>
-  // var answer;
-
-  $('.answers').html('<%= j render 'questions/answers' %>');
-
-  // answer = $('div#answer_' + '<%= @answer.id %>');
   <% flash[:notice] = I18n.t('confirmations.answers.best') %>
-
-  // answer.remove();
+  $('.answers').html('<%= j render 'questions/answers' %>');
   $('.flash').html('<%= bootstrap_flash %>');
   <% flash.discard(:notice) %>
 <% end %>

@@ -46,9 +46,8 @@ RSpec.describe Answer, type: :model do
       best_answer.choose_best
       all_answers = Answer.ordered_answers_for(question).to_a
       all_answers.delete(best_answer)
-      # all_answers.shuffle!
-      created = all_answers.first.created_at
 
+      created = all_answers.first.created_at
       all_answers.each do |answer|
         expect(answer.created_at).to be >= created
         created = answer.created_at

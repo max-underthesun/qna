@@ -11,8 +11,6 @@ feature 'BEST ANSWER', %q(
 
   given!(:answer) { create(:answer, question: question, user: user) }
   given!(:other_answer) { create(:answer, question: question, user: other_user) }
-  # given(:updated_answer) { build(:answer) }
-  # given(:invalid_answer) { build(:invalid_answer) }
 
   scenario "- unauthenticated user do not see 'Best answer' button" do
     visit question_path(question)
@@ -50,8 +48,7 @@ feature 'BEST ANSWER', %q(
         within ".answer#answer_#{answer.id}" do
           click_on I18n.t('buttons.best_answer')
         end
-        # sleep(1)
-        # save_and_open_page
+
         expect(page).to have_css('.best-answer')
         within ".best-answer" do
           expect(page).to have_content answer.body
@@ -65,12 +62,6 @@ feature 'BEST ANSWER', %q(
           click_on I18n.t('buttons.best_answer')
         end
 
-        # save_and_open_page
-        # expect(page).to have_content answer.body
-        # page.should have_selector(".answers:nth-child(1)", text: answer.body)
-        # page.find('.answer:nth-of-type(1)', text: answer.body).text
-
-        # expect(page.find('.answer:nth-of-type(1)')).to have_css('.best-answer')
         expect(page.find('.answer:nth-of-type(1)')).to have_content answer.body
       end
     end

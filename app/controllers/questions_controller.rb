@@ -28,11 +28,9 @@ class QuestionsController < ApplicationController
   def update
     if current_user.author_of?(@question)
       @question.update(question_params)
-      # flash[:notice] = I18n.t('confirmations.questions.update')
     else
       @question.errors.add(:base, I18n.t('failure.questions.update'))
       render status: :unauthorized
-      # flash[:alert] = I18n.t('failure.questions.update')
     end
   end
 

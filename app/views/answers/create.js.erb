@@ -4,10 +4,12 @@
   $('.new_answer .form-group').addClass('field_with_errors');
 <% else %>
   <% flash[:notice] = I18n.t('confirmations.answers.create') %>
+
   $('.flash').html('<%= bootstrap_flash %>');
   $('.errors').empty();
   $('.new_answer .form-group').removeClass('field_with_errors');
   $('.answers').append('<%= j render @answer %>');
   $('.new_answer #answer_body').val('');
+
   <% flash.discard(:notice) %>
 <% end %>
