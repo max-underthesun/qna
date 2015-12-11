@@ -35,6 +35,8 @@ en:
     destroy: "Destroy"
     sign_in: "Sign in"
     sign_out: "Sign out"
+  buttons:
+    best_answer: "Best answer"
   questions:
     form:
       submit: "Submit question"
@@ -47,6 +49,7 @@ en:
       answers_list: "List of answers"
       new_answer: "Add a new answer here:"
       submit_answer: "Submit answer"
+      best_answer: "best answer"
   answers:
     answer:
       # destroy_answer: "Destroy answer"
@@ -58,6 +61,7 @@ en:
       create: "Your answer was successfully created."
       destroy: "Your answer was successfully destroyed."
       update: "Your answer was successfully updated"
+      best: "The answer was successfully choosen as best answer"
     questions:
       create: "Your question was successfully created."
       destroy: "Your question was successfully destroyed."
@@ -69,6 +73,7 @@ en:
     answers:
       destroy: "Your have no rights to destroy this answer. Only author can do it."
       update: "Your have no rights to update this answer. Only author can do it."
+      best: "Your have no rights to choose this answer as best. Only author of question can do it."
   errors:
     error: "error"
     title: " prohibited you from continuing"

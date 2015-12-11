@@ -1,7 +1,7 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_question, only: :create
-  before_action :set_answer, only: [:update, :destroy]
+  before_action :set_answer, only: [:update, :destroy, :best]
 
   def create
     @answer = @question.answers.new(answer_params)
@@ -27,6 +27,16 @@ class AnswersController < ApplicationController
       render status: :unauthorized
     end
     # redirect_to @answer.question
+  end
+
+  def best
+    @question = @answer.question
+    if current_user.author_of?(@answer.question)
+      @answer.choose_best
+    else
+      @answer.errors.add(:base, I18n.t('failure.answers.best'))
+      render status: :unauthorized
+    end
   end
 
   private
