@@ -1,23 +1,22 @@
-<% if @answer.errors.present? %>
-  var errors;
-  var field_with_errors;
+var errors;
+errors = function(answer_id) {
+  return $('#' + answer_id + '.answer-errors');
+};
 
-  errors = $('#' + '<%= @answer.id %>' + '.answer-errors');
+<% if @answer.errors.present? %>
+  var field_with_errors;
   field_with_errors = $('#edit_answer_' + '<%= @answer.id %>' + '.edit_answer .form-group');
 
   $('.flash').empty();
-  errors.html('<%= j render 'common/errors', resource: @answer %>');
+  errors(<%= @answer.id %>).html('<%= j render 'common/errors', resource: @answer %>');
   field_with_errors.addClass('field_with_errors');
 <% else %>
-  var errors;
   var answer;
-
-  errors = $('#' + '<%= @answer.id %>' + '.answer-errors');
   answer = $('div#answer_' + '<%= @answer.id %>');
   <% flash[:notice] = I18n.t('confirmations.answers.update') %>
 
   answer.html('<%= j render @answer %>');
-  errors.empty();
+  errors(<%= @answer.id %>).empty();
   $('.flash').html('<%= bootstrap_flash %>');
   <% flash.discard(:notice) %>
 <% end %>
