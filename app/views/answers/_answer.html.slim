@@ -11,9 +11,10 @@ div class=(answer.best? ? "answer best-answer" : "answer") id="answer_#{answer.i
                                     data: { confirm: t('common.sure') }, remote: true,
                                     class: "destroy-answer-link", id: "#{answer.id}"
 
-  - if current_user && current_user == answer.question.user
+  - if current_user && current_user.author_of?(answer.question)
     .right.top-buffer
-      = button_to t('buttons.best_answer'), '', method: :get, class: 'btn btn-success btn-xs'
+      = button_to t('buttons.best_answer'), best_answer_path(answer), method: :patch, remote: true,
+                                            class: 'btn btn-success btn-xs'
 
   .top-buffer
     .answer-errors id="#{answer.id}"

@@ -1,3 +1,3 @@
-- @question.answers.each do |answer|
+- Answer.ordered_answers_for(@question).each do |answer| #@question.answers.each do |answer|
   - unless answer.new_record?
     = render 'answers/answer', answer: answer

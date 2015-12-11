@@ -45,20 +45,21 @@ feature 'BEST ANSWER', %q(
       end
     end
 
-    scenario "-- author can choose any answer as best answer" do
+    scenario "-- author can choose any answer as best answer", js: true do
       answers.each do |answer|
         within ".answer#answer_#{answer.id}" do
           click_on I18n.t('buttons.best_answer')
         end
-
+        # sleep(1)
+        # save_and_open_page
         expect(page).to have_css('.best-answer')
         within ".best-answer" do
-          expect(page).to have answer.body
+          expect(page).to have_content answer.body
         end
       end
     end
 
-    scenario "-- best answer positioned first in the list of answers" do
+    scenario "-- best answer positioned first in the list of answers", js: true do
       answers.each do |answer|
         within ".answer#answer_#{answer.id}" do
           click_on I18n.t('buttons.best_answer')
