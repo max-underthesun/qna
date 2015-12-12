@@ -104,9 +104,9 @@ RSpec.describe QuestionsController, type: :controller do
         expect(question.reload).to eq original_question
       end
 
-      it '- should return 401 (unauthorized) status' do
+      it '- should return 403 (forbidden) status' do
         patch :update, id: question, question: attributes_for(:question), format: :js
-        expect(response).to have_http_status(:unauthorized)
+        expect(response).to have_http_status(:forbidden)
       end
     end
 

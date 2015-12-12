@@ -38,13 +38,15 @@ RSpec.describe Answer, type: :model do
       best_answer = question.answers.sample
       best_answer.choose_best
 
-      expect(Answer.ordered_answers_for(question).first).to eq best_answer
+      expect(question.answers.best_first.first).to eq best_answer
+      # expect(Answer.ordered_answers_for(question).first).to eq best_answer
     end
 
     it "should order answers by creatiton" do
       best_answer = question.answers.sample
       best_answer.choose_best
-      all_answers = Answer.ordered_answers_for(question).to_a
+      all_answers = question.answers.best_first.to_a
+      # all_answers = Answer.ordered_answers_for(question).to_a
       all_answers.delete(best_answer)
 
       created = all_answers.first.created_at

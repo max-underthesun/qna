@@ -10,6 +10,9 @@ errors = function(answer_id) {
   $('.flash').empty();
   errors(<%= @answer.id %>).html('<%= j render 'common/errors', resource: @answer %>');
   field_with_errors.addClass('field_with_errors');
+<% elsif flash[:alert] == I18n.t('failure.answers.update') %>
+  $('.flash').html('<%= bootstrap_flash %>');
+  <% flash.discard(:alert) %>
 <% else %>
   var answer;
   answer = $('div#answer_' + '<%= @answer.id %>');

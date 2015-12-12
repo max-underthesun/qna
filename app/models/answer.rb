@@ -4,14 +4,17 @@ class Answer < ActiveRecord::Base
 
   validates :body, :question_id, :user_id, presence: true
 
-  def self.ordered_answers_for(question)
-    where(question: question).order(best: :desc).order(created_at: :asc)
-  end
+  scope :best_first, -> { order(best: :desc, created_at: :asc) }
+
+  # def self.ordered_answers_for(question)
+  #   where(question: question).order(best: :desc).order(created_at: :asc)
+  # end
 
   def choose_best
-    previous_best_answer = question.answers.find_by(best: true)
-    update(best: true)
-    return unless previous_best_answer && previous_best_answer != self
-    previous_best_answer.update(best: false)
+    ActiveRecord::Base.transaction do
+      old_best_answer = question.answers.find_by(best: true)
+      old_best_answer.update(best: false) if old_best_answer && old_best_answer != self
+      update(best: true)
+    end
   end
 end

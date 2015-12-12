@@ -13,8 +13,9 @@ class AnswersController < ApplicationController
     if current_user.author_of?(@answer)
       @answer.update(answer_params)
     else
-      @answer.errors.add(:base, I18n.t('failure.answers.update'))
-      render status: :unauthorized
+      flash[:alert] = I18n.t('failure.answers.update')
+      # @answer.errors.add(:base, I18n.t('failure.answers.update'))
+      render status: :forbidden
     end
   end
 
@@ -23,7 +24,7 @@ class AnswersController < ApplicationController
       @answer.destroy
     else
       @answer.errors.add(:base, I18n.t('failure.answers.destroy'))
-      render status: :unauthorized
+      render status: :forbidden
     end
   end
 
@@ -33,7 +34,7 @@ class AnswersController < ApplicationController
       @answer.choose_best
     else
       @answer.errors.add(:base, I18n.t('failure.answers.best'))
-      render status: :unauthorized
+      render status: :forbidden
     end
   end
 

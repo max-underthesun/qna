@@ -30,7 +30,7 @@ class QuestionsController < ApplicationController
       @question.update(question_params)
     else
       @question.errors.add(:base, I18n.t('failure.questions.update'))
-      render status: :unauthorized
+      render status: :forbidden
     end
   end
 
