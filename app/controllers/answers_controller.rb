@@ -6,7 +6,7 @@ class AnswersController < ApplicationController
   def create
     @answer = @question.answers.new(answer_params)
     @answer.user = current_user
-    flash[:notice] = I18n.t('confirmations.answers.create') if @answer.save
+    @answer.save && flash[:notice] = I18n.t('confirmations.answers.create')
   end
 
   def update
