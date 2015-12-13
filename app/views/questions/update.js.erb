@@ -4,7 +4,7 @@
     var div = $('#question_' + '<%= attr %>').parent();
     div.addClass('field_with_errors');
   <% end %>
-<% elsif flash[:notice] == I18n.t('confirmations.questions.update')%>
+<% elsif response.status == 200 %>
   $('.question').html('<%= j render @question %>');
   $('.question-errors').empty();
 <% end %>

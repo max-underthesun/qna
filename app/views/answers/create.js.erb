@@ -1,7 +1,7 @@
 <% if @answer.errors.present? %>
   $('.errors').html('<%= j render 'common/errors', resource: @answer %>');
   $('.new_answer .form-group').addClass('field_with_errors');
-<% elsif flash[:notice] == I18n.t('confirmations.answers.create') %>
+<% else %>
   $('.errors').empty();
   $('.new_answer .form-group').removeClass('field_with_errors');
   $('.answers').append('<%= j render @answer %>');

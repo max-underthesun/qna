@@ -9,7 +9,7 @@ errors = function(answer_id) {
 
   errors(<%= @answer.id %>).html('<%= j render 'common/errors', resource: @answer %>');
   field_with_errors.addClass('field_with_errors');
-<% elsif flash[:notice] == I18n.t('confirmations.answers.update') =%>
+<% elsif response.status == 200 %>
   var answer;
   answer = $('div#answer_' + '<%= @answer.id %>');
 

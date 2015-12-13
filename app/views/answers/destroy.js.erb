@@ -1,4 +1,4 @@
-<% if flash[:warning] == I18n.t('confirmations.answers.destroy') %>
+<% if response.status == 200 %>
   var answer;
   answer = $('div#answer_' + '<%= @answer.id %>');
   answer.remove();
