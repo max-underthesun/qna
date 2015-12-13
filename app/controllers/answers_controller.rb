@@ -6,34 +6,33 @@ class AnswersController < ApplicationController
   def create
     @answer = @question.answers.new(answer_params)
     @answer.user = current_user
-    @answer.save
+    flash[:notice] = I18n.t('confirmations.answers.create') if @answer.save
   end
 
   def update
     if current_user.author_of?(@answer)
-      @answer.update(answer_params)
+      @answer.update(answer_params) && flash[:notice] = I18n.t('confirmations.answers.update')
     else
       flash[:alert] = I18n.t('failure.answers.update')
-      # @answer.errors.add(:base, I18n.t('failure.answers.update'))
       render status: :forbidden
     end
   end
 
   def destroy
     if current_user.author_of?(@answer)
-      @answer.destroy
+      @answer.destroy && flash[:warning] = I18n.t('confirmations.answers.destroy')
     else
-      @answer.errors.add(:base, I18n.t('failure.answers.destroy'))
+      flash[:alert] = I18n.t('failure.answers.destroy')
       render status: :forbidden
     end
   end
 
   def best
     @question = @answer.question
-    if current_user.author_of?(@answer.question)
-      @answer.choose_best
+    if current_user.author_of?(@question)
+      @answer.choose_best && flash[:notice] = I18n.t('confirmations.answers.best')
     else
-      @answer.errors.add(:base, I18n.t('failure.answers.best'))
+      flash[:alert] = I18n.t('failure.answers.best')
       render status: :forbidden
     end
   end

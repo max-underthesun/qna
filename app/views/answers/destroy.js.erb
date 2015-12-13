@@ -1,16 +1,8 @@
-<% if @answer.errors.present? %>
-  var errors;
-  errors = $('#' + '<%= @answer.id %>' + '.answer-errors');
-
-  $('.flash').empty();
-  errors.html('<%= j render 'common/errors', resource: @answer %>');
-<% else %>
+<% if flash[:warning] == I18n.t('confirmations.answers.destroy') %>
   var answer;
   answer = $('div#answer_' + '<%= @answer.id %>');
-  <% flash[:warning] = I18n.t('confirmations.answers.destroy') %>
-
   answer.remove();
-  $('.flash').html('<%= bootstrap_flash %>');
-
-  <% flash.discard(:warning) %>
 <% end %>
+
+$('.flash').html('<%= bootstrap_flash %>');
+<% flash.discard %>

@@ -7,19 +7,15 @@ errors = function(answer_id) {
   var field_with_errors;
   field_with_errors = $('#edit_answer_' + '<%= @answer.id %>' + '.edit_answer .form-group');
 
-  $('.flash').empty();
   errors(<%= @answer.id %>).html('<%= j render 'common/errors', resource: @answer %>');
   field_with_errors.addClass('field_with_errors');
-<% elsif flash[:alert] == I18n.t('failure.answers.update') %>
-  $('.flash').html('<%= bootstrap_flash %>');
-  <% flash.discard(:alert) %>
-<% else %>
+<% elsif flash[:notice] == I18n.t('confirmations.answers.update') =%>
   var answer;
   answer = $('div#answer_' + '<%= @answer.id %>');
-  <% flash[:notice] = I18n.t('confirmations.answers.update') %>
 
   answer.html('<%= j render @answer %>');
   errors(<%= @answer.id %>).empty();
-  $('.flash').html('<%= bootstrap_flash %>');
-  <% flash.discard(:notice) %>
 <% end %>
+
+$('.flash').html('<%= bootstrap_flash %>');
+<% flash.discard %>
