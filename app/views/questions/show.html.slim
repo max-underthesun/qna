@@ -14,4 +14,10 @@
         = f.label :body
         = f.text_area :body, class: 'form-control'
 
-      = f.submit t('.submit_answer'), class: 'btn btn-primary'
+        = f.fields_for :attachments do |a|
+          h5 = t('common.attachments')
+          = a.label :file
+          = a.file_field :file
+
+      .right
+        = f.submit t('.submit_answer'), class: 'btn btn-primary'

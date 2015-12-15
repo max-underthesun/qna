@@ -12,7 +12,7 @@ feature 'ADD FILE TO ANSWER', %q(
     visit question_path(question)
   end
 
-  scenario '- authenticated user creates a question' do
+  scenario '- authenticated user creates an answer with attachment', js: true do
     within '.new-answer-form' do
       fill_in I18n.t('activerecord.attributes.answer.body'), with: answer.body
       attach_file 'File', "#{Rails.root}/spec/spec_helper.rb"

@@ -7,7 +7,7 @@ p.question-title
   .top-buffer = t('common.attachments')
   ul
   - @question.attachments.each do |a|
-    li = link_to a.file.identifier, a.file.url
+    li = link_to a.file.filename, a.file.url
 
   .right
     strong = t('common.author')

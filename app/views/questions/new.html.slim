@@ -12,9 +12,9 @@
 
     = f.fields_for :attachments do |a|
       h5 = t('common.attachments')
-      span.btn.btn-xs.btn-file
-        = a.label :file
-        = a.file_field :file
+      = a.label :file
+      = a.file_field :file
+
   .right
     = f.submit t('questions.form.submit'), class: 'btn btn-primary'
 

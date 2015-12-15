@@ -1,5 +1,10 @@
 div class=(answer.best? ? "answer best-answer" : "answer") id="answer_#{answer.id}"
   p.top-buffer = answer.body
+  .top-buffer = t('common.attachments')
+  ul
+  - answer.attachments.each do |a|
+    li = link_to a.file.filename, a.file.url
+
   .right
     = t('common.author')
     = answer.user ? answer.user.email : t('common.not_defined')
