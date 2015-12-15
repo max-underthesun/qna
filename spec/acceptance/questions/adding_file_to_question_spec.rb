@@ -11,13 +11,14 @@ feature 'ADD FILE TO QUESTION', %q(
     visit new_question_path
   end
 
- scenario '- authenticated user creates a question' do
+  scenario '- authenticated user creates a question' do
     fill_in I18n.t('activerecord.attributes.question.title'), with: question.title
     fill_in I18n.t('activerecord.attributes.question.body'), with: question.body
     attach_file 'File', "#{Rails.root}/spec/spec_helper.rb"
     click_on I18n.t('questions.form.submit')
 
     # expect(page).to have_content I18n.t('confirmations.attachment.create')
-    expect(page).to have_content 'spec_helper.rb'#, href: '/uploads/attachment/file/1/spec_helper.rb'
+    expect(page).to have_content 'spec_helper.rb'
+                                 # , href: '/uploads/attachment/file/1/spec_helper.rb'
   end
 end

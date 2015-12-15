@@ -28,6 +28,7 @@ en:
     not_defined: "Not defined"
     author: "Author: "
     sure: "Are you sure?"
+    attachments: "Attachments:"
   links:
     show: "Show"
     back: "Back"

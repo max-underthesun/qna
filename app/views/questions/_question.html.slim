@@ -4,6 +4,11 @@ p.question-title
 .col-lg-12
   p.question-body
     = @question.body
+  .top-buffer = t('common.attachments')
+  ul
+  - @question.attachments.each do |a|
+    li = a.file.file.filename
+
   .right
     strong = t('common.author')
     = @question.user ? @question.user.email : t('common.not_defined')

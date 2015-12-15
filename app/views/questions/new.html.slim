@@ -10,7 +10,13 @@
     = f.label :body
     = f.text_area :body, class: 'form-control'
 
-  = f.submit t('questions.form.submit'), class: 'btn btn-primary'
+    = f.fields_for :attachments do |a|
+      h5 = t('common.attachments')
+      span.btn.btn-xs.btn-file
+        = a.label :file
+        = a.file_field :file
+  .right
+    = f.submit t('questions.form.submit'), class: 'btn btn-primary'
 
 .top-buffer
   = link_to t('links.back'), questions_path
