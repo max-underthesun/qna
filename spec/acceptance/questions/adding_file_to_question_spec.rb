@@ -18,7 +18,7 @@ feature 'ADD FILE TO QUESTION', %q(
     click_on I18n.t('questions.form.submit')
 
     # expect(page).to have_content I18n.t('confirmations.attachment.create')
-    expect(page).to have_content 'spec_helper.rb'
-                                 # , href: '/uploads/attachment/file/1/spec_helper.rb'
+    expect(page).to have_link 'spec_helper.rb',
+                              href: '/uploads/attachment/file/1/spec_helper.rb'
   end
 end
