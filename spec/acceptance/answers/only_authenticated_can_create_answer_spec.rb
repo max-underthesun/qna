@@ -12,8 +12,10 @@ feature 'CREATE ANSWER', %q(
     sign_in(user)
 
     visit question_path(question)
-    fill_in I18n.t('activerecord.attributes.answer.body'), with: answer.body
-    click_on I18n.t('questions.show.submit_answer')
+    within '.new-answer-form' do
+      fill_in I18n.t('activerecord.attributes.answer.body'), with: answer.body
+      click_on I18n.t('questions.show.submit_answer')
+    end
 
     expect(current_path).to eq question_path(question)
     expect(page).to have_content I18n.t('confirmations.answers.create')
@@ -24,8 +26,10 @@ feature 'CREATE ANSWER', %q(
     sign_in(user)
 
     visit question_path(question)
-    fill_in I18n.t('activerecord.attributes.answer.body'), with: invalid_answer.body
-    click_on I18n.t('questions.show.submit_answer')
+    within '.new-answer-form' do
+      fill_in I18n.t('activerecord.attributes.answer.body'), with: invalid_answer.body
+      click_on I18n.t('questions.show.submit_answer')
+    end
 
     expect(current_path).to eq question_path(question)
     expect(page).to_not have_content answer.body
