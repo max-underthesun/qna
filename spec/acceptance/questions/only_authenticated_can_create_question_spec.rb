@@ -1,4 +1,4 @@
-require 'rails_helper'
+require_relative '../acceptance_helper'
 
 feature 'CREATE QUESTION', %q(
   authenticated user has to be able to ask questions

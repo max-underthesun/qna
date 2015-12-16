@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.2.2'
+ruby '2.2.3'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.4'
@@ -39,6 +39,8 @@ gem 'twitter-bootstrap-rails'
 
 gem 'devise'
 
+gem 'jquery-turbolinks'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
@@ -49,14 +51,16 @@ group :development, :test do
   gem 'spring-commands-rspec'
   gem 'guard-rspec'
 
-  gem 'selenium-webdriver'
+  # gem 'selenium-webdriver'
   gem 'database_cleaner'
+
+  gem 'capybara'
+  gem 'capybara-webkit'
+  gem 'launchy'
 end
 
 group :test do
   gem 'shoulda-matchers'
-  gem 'capybara'
-  gem 'launchy'
 end
 
 group :development do
@@ -66,4 +70,3 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
 end
-

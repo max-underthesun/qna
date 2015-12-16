@@ -1,4 +1,4 @@
-require 'rails_helper'
+require_relative '../acceptance_helper'
 
 feature 'DESTROY QUESTION', %q(
   an author has to be able to destroy his questions,

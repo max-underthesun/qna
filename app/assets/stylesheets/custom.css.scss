@@ -9,10 +9,6 @@ body {
   line-height: 18px;
 }
 
-// section {
-//   overflow: auto;
-// }
-
 textarea {
   resize: vertical;
 }
@@ -35,6 +31,14 @@ textarea {
 
 .top-buffer {
   margin-top:20px;
+}
+
+.best-answer {
+  background-color: black;
+  // color: green;
+  border: 2px solid green;
+  border-radius: 5px;
+  padding: 15px;
 }
 
 /* tables */
@@ -75,7 +79,7 @@ h2 {
 }
 
 p {
-  font-size: 1.1em;
+  font-size: 1em;
   line-height: 1.7em;
 }
 

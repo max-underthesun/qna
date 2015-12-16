@@ -1,0 +1,6 @@
+<% if response.status == 200 %>
+  $('.answers').html('<%= j render 'questions/answers' %>');
+<% end %>
+
+$('.flash').html('<%= bootstrap_flash %>');
+<% flash.discard %>

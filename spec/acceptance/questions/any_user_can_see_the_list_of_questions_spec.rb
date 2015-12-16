@@ -1,4 +1,4 @@
-require 'rails_helper'
+require_relative '../acceptance_helper'
 
 feature 'SEE ALL QUESTIONS', %q(
   any user can see the questions index page

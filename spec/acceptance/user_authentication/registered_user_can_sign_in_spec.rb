@@ -1,4 +1,4 @@
-require 'rails_helper'
+require_relative '../acceptance_helper'
 
 feature 'SIGNING IN', %q(
   in order to be able to ask questions as a user I want to be able to sign in

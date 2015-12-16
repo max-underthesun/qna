@@ -35,37 +35,45 @@ en:
     destroy: "Destroy"
     sign_in: "Sign in"
     sign_out: "Sign out"
+  buttons:
+    best_answer: "Best answer"
   questions:
     form:
-      submit: "Submit"
+      submit: "Submit question"
     index:
       header: "All questions"
       title: "Question title"
       new: "New question"
     show:
-      answer: "Answer the question"
       answers_list: "List of answers"
+      new_answer: "Add a new answer here:"
       submit_answer: "Submit answer"
+      best_answer: "best answer"
   answers:
-    answer:
-      destroy_answer: "Destroy answer"
-    # new:
-    #   submit: "Post your answer"
+    form:
+      update_answer: "Update answer"
   confirmations:
     answers:
       create: "Your answer was successfully created."
       destroy: "Your answer was successfully destroyed."
+      update: "Your answer was successfully updated"
+      best: "The answer was successfully choosen as best answer"
     questions:
       create: "Your question was successfully created."
       destroy: "Your question was successfully destroyed."
+      update: "Your question was successfully updated"
   failure:
     questions:
-      destroy: "Your have no rights to destroy this question"
+      destroy: "Your have no rights to destroy this question. Only author can do it."
+      update: "Your have no rights to update this question. Only author can do it."
     answers:
-      destroy: "Your have no rights to destroy this answer"
+      destroy: "Your have no rights to destroy this answer. Only author can do it."
+      update: "Your have no rights to update this answer. Only author can do it."
+      best: "Your have no rights to choose this answer as best. Only author of question can do it."
   errors:
     error: "error"
     title: " prohibited you from continuing"
+
 
   activerecord:
     attributes:
