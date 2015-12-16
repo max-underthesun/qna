@@ -1,6 +1,5 @@
 <% if response.status == 200 %>
-  var answer;
-  answer = $('div#answer_' + '<%= @answer.id %>');
+  var answer = $('div#answer_' + '<%= @answer.id %>');
   answer.remove();
 <% end %>
 
