@@ -8,7 +8,6 @@ class QuestionsController < ApplicationController
 
   def show
     @answer = @question.answers.new
-    # @answer.attachments.new
   end
 
   def new
