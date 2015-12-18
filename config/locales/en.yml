@@ -36,6 +36,8 @@ en:
     destroy: "Destroy"
     sign_in: "Sign in"
     sign_out: "Sign out"
+    add_file: "Add file"
+    remove_file: "Remove file"
   buttons:
     best_answer: "Best answer"
   questions:
