@@ -31,7 +31,7 @@ feature 'ADD FILE TO QUESTION', %q(
       fill_in I18n.t('activerecord.attributes.question.body'), with: question.body
       click_on I18n.t('questions.form.submit')
 
-      sleep(2)
+      # sleep(2)
       expect(page).to_not have_selector 'input#question_title'
       expect(page).to_not have_selector 'textarea#question_body'
       expect(page).to_not have_content(
