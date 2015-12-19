@@ -79,13 +79,16 @@ en:
 
 
   activerecord:
+    models:
+      attachment: "Attachment"
     attributes:
       question:
-        title: Question Title
-        body: Question Body
+        title: "Question Title"
+        body: "Question Body"
       answer:
-        title: Answer Title
-        body: Answer Body
+        body: "Answer Body"
+      attachment:
+        file: "file"
     errors:
       format: "%{attribute} %{message}"
       messages:

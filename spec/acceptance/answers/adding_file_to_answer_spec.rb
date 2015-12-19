@@ -12,12 +12,14 @@ feature 'ADD FILE TO ANSWER', %q(
     sign_in(user)
     visit question_path(question)
   end
+
   describe '- with valid attributes' do
     scenario '- authenticated user creates an answer with file attached', js: true do
       within '.new-answer-form' do
         fill_in I18n.t('activerecord.attributes.answer.body'), with: answer.body
         click_on I18n.t('links.add_file')
-        attach_file 'File', "#{Rails.root}/spec/spec_helper.rb"
+        attach_file I18n.t('activerecord.attributes.attachment.file'),
+                    "#{Rails.root}/spec/spec_helper.rb"
         click_on I18n.t('questions.show.submit_answer')
       end
 
@@ -51,7 +53,8 @@ feature 'ADD FILE TO ANSWER', %q(
     within '.new-answer-form' do
       fill_in I18n.t('activerecord.attributes.answer.body'), with: invalid_answer.body
       click_on I18n.t('links.add_file')
-      attach_file 'File', "#{Rails.root}/spec/spec_helper.rb"
+      attach_file I18n.t('activerecord.attributes.attachment.file'),
+                  "#{Rails.root}/spec/spec_helper.rb"
       click_on I18n.t('questions.show.submit_answer')
 
       expect(page).to have_content(

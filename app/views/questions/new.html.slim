@@ -12,8 +12,10 @@
 
     = f.fields_for :attachments do |a|
       h5 = t('common.attachments')
-      = a.label :file
-      = a.file_field :file
+      = render 'common/attachment_fields', f: a
+    .links.top-buffer
+      = link_to_add_association t('links.add_file'),
+                                f, :attachments, partial: 'common/attachment_fields'
 
   .right
     = f.submit t('questions.form.submit'), class: 'btn btn-primary'
