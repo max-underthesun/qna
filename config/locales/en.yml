@@ -65,6 +65,8 @@ en:
       create: "Your question was successfully created."
       destroy: "Your question was successfully destroyed."
       update: "Your question was successfully updated"
+    attachment:
+      destroy: "Attachment was successfully removed"
   failure:
     questions:
       destroy: "Your have no rights to destroy this question. Only author can do it."
@@ -73,6 +75,8 @@ en:
       destroy: "Your have no rights to destroy this answer. Only author can do it."
       update: "Your have no rights to update this answer. Only author can do it."
       best: "Your have no rights to choose this answer as best. Only author of question can do it."
+    attachment:
+      destroy: "Your have no rights to remove this attachment. Only author can do it."
   errors:
     error: "error"
     title: " prohibited you from continuing"
