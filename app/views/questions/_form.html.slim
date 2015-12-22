@@ -10,4 +10,12 @@
     = f.label :body
     = f.text_area :body, class: 'form-control'
 
-  = f.submit t('.submit'), class: 'btn btn-primary'
+    h5 = t('common.attachments')
+    = f.fields_for :attachments do |a|
+    .links.top-buffer
+      = link_to_add_association t('links.add_file'), f, :attachments,
+                                partial: 'common/attachment_fields',
+                                class: 'btn btn-xs btn-default'
+
+  .right
+    = f.submit t('questions.form.submit'), class: 'btn btn-primary'

@@ -10,8 +10,8 @@
     = f.label :body
     = f.text_area :body, class: 'form-control'
 
+    h5 = t('common.attachments')
     = f.fields_for :attachments do |a|
-      h5 = t('common.attachments')
       = render 'common/attachment_fields', f: a
     .links.top-buffer
       = link_to_add_association t('links.add_file'), f, :attachments,
