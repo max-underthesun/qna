@@ -5,12 +5,21 @@ var errors = function(answer_id) {
 <% if @answer.errors.present? %>
   var field_with_errors = $('#edit_answer_' + '<%= @answer.id %>' + '.edit_answer .form-group');
 
-  errors(<%= @answer.id %>).html('<%= j render 'common/errors', resource: @answer %>');
+  <% if remotipart_submitted? %>
+    errors(<%= @answer.id %>).html('<%= j "#{render 'common/errors', resource: @answer}" %>');
+  <% else %>
+    errors(<%= @answer.id %>).html('<%= j render 'common/errors', resource: @answer %>');
+  <% end %> 
   field_with_errors.addClass('field_with_errors');
 <% elsif response.status == 200 %>
   var answer = $('div#answer_' + '<%= @answer.id %>');
 
-  answer.html('<%= j render @answer %>');
+  <% if remotipart_submitted? %>
+    answer.html('<%= j "#{render @answer}" %>');
+  <% else %>
+    answer.html('<%= j render @answer %>');
+  <% end %> 
+
   errors(<%= @answer.id %>).empty();
 <% end %>
 
