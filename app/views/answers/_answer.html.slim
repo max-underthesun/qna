@@ -3,7 +3,12 @@ div class=(answer.best? ? "answer best-answer" : "answer") id="answer_#{answer.i
   .top-buffer = t('common.attachments')
   ul
   - answer.attachments.each do |a|
-    li = link_to a.file.filename, a.file.url
+    li id="attachment_#{a.id}"
+      => link_to a.file.filename, a.file.url
+      - if current_user && current_user.author_of?(answer)
+        = link_to t('links.remove_file'), attachment_path(a), method: :delete,
+                class: 'btn btn-xxs', remote: true, id: "#{a.id}",
+                data: { confirm: t('common.sure') }
 
   .right
     = t('common.author')

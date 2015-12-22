@@ -1,16 +1,18 @@
 require_relative '../acceptance_helper'
 
-feature 'REMOVE FILES FROM QUESTION', %q(
-  author of the question can remove attached files from the question
+feature 'REMOVE FILES FROM ANSWER', %q(
+  author of the answer can remove attached files from it
 ) do
-  given(:user) { create(:user) }
+  given(:question_author) { create(:user) }
+  given(:answer_author) { create(:user) }
   given(:other_user) { create(:user) }
-  given(:question) { create(:question, user: user) }
-  given!(:attachment) { create(:attachment, attachable: question) }
+  given(:question) { create(:question, user: question_author) }
+  given!(:answer) { create(:answer, question: question, user: answer_author) }
+  given!(:attachment) { create(:attachment, attachable: answer) }
 
   scenario "- unauthenticated user do not see 'Remove answer' button" do
     visit question_path(question)
-    within '.question' do
+    within '.answers' do
       expect(page).to have_link 'spec_helper.rb',
                                 href: '/uploads/attachment/file/1/spec_helper.rb'
       expect(page).to_not have_link I18n.t('links.remove_file'),
@@ -22,7 +24,7 @@ feature 'REMOVE FILES FROM QUESTION', %q(
     sign_in(other_user)
     visit question_path(question)
 
-    within '.question' do
+    within '.answers' do
       expect(page).to have_link 'spec_helper.rb',
                                 href: '/uploads/attachment/file/2/spec_helper.rb'
       expect(page).to_not have_link I18n.t('links.remove_file'),
@@ -31,10 +33,10 @@ feature 'REMOVE FILES FROM QUESTION', %q(
   end
 
   scenario "- author successfully remove the attached file", js: true do
-    sign_in(user)
+    sign_in(answer_author)
     visit question_path(question)
 
-    within '.question' do
+    within '.answers' do
       expect(page).to have_link 'spec_helper.rb',
                                 href: '/uploads/attachment/file/3/spec_helper.rb'
       find(
