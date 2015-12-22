@@ -1,0 +1,7 @@
+<% if response.status == 200 %>
+  var attachment = $('li#attachment_' + '<%= @attachment.id %>');
+  attachment.remove();
+<% end %>
+
+$('.flash').html('<%= bootstrap_flash %>');
+<% flash.discard %>

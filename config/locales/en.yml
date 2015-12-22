@@ -36,6 +36,8 @@ en:
     destroy: "Destroy"
     sign_in: "Sign in"
     sign_out: "Sign out"
+    add_file: "Add file"
+    remove_file: "Remove file"
   buttons:
     best_answer: "Best answer"
   questions:
@@ -63,6 +65,8 @@ en:
       create: "Your question was successfully created."
       destroy: "Your question was successfully destroyed."
       update: "Your question was successfully updated"
+    attachment:
+      destroy: "Attachment was successfully removed"
   failure:
     questions:
       destroy: "Your have no rights to destroy this question. Only author can do it."
@@ -71,19 +75,24 @@ en:
       destroy: "Your have no rights to destroy this answer. Only author can do it."
       update: "Your have no rights to update this answer. Only author can do it."
       best: "Your have no rights to choose this answer as best. Only author of question can do it."
+    attachment:
+      destroy: "Your have no rights to remove this attachment. Only author can do it."
   errors:
     error: "error"
     title: " prohibited you from continuing"
 
 
   activerecord:
+    models:
+      attachment: "Attachment"
     attributes:
       question:
-        title: Question Title
-        body: Question Body
+        title: "Question Title"
+        body: "Question Body"
       answer:
-        title: Answer Title
-        body: Answer Body
+        body: "Answer Body"
+      attachment:
+        file: "file"
     errors:
       format: "%{attribute} %{message}"
       messages:

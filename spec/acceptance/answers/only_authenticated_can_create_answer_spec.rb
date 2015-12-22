@@ -32,7 +32,6 @@ feature 'CREATE ANSWER', %q(
     end
 
     expect(current_path).to eq question_path(question)
-    expect(page).to_not have_content answer.body
     expect(page).to have_content(
       "#{I18n.t('activerecord.attributes.answer.body')} "\
       "#{I18n.t('activerecord.errors.messages.blank')}"
