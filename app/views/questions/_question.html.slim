@@ -21,7 +21,6 @@ p.question-title
               data: { confirm: t('common.sure') },
               class: "destroy-question-link"
 
-.col-lg-12
-  .top-buffer
-    .question-errors
-    = render 'form', hidden: true, remote: true
+.col-lg-12.top-buffer
+  .question-errors
+  = render 'form', hidden: true, remote: true
