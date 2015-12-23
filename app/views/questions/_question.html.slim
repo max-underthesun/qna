@@ -4,7 +4,7 @@ p.question-title
 .col-lg-12
   p.question-body = @question.body
 
-  = render 'common/attachments', attachable: @question
+  = render 'attachments/attachments', attachable: @question
 
   .right
     strong = t('common.author')

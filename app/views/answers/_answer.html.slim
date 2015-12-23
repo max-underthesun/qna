@@ -1,7 +1,7 @@
 div class=(answer.best? ? "answer best-answer" : "answer") id="answer_#{answer.id}"
   p.top-buffer = answer.body
 
-  = render 'common/attachments', attachable: answer
+  = render 'attachments/attachments', attachable: answer
 
   .right
     = t('common.author')

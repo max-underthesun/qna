@@ -1,0 +1,6 @@
+h5 = t('common.attachments')
+= f.fields_for :attachments do |a|
+.links.top-buffer
+  = link_to_add_association t('links.add_file'), f, :attachments,
+                            partial: 'attachments/attachment_fields',
+                            class: 'btn btn-xs btn-default'
