@@ -13,13 +13,8 @@ p.question-title
 .col-lg-12.right
   = link_to t('links.back'), questions_path
 
-- if current_user && current_user.author_of?(@question)
-  .col-lg-12.right
-    = link_to t('links.edit'), '', class: "edit-question-link"
-  .col-lg-12.right
-    = link_to t('links.destroy'), @question, method: :delete,
-              data: { confirm: t('common.sure') },
-              class: "destroy-question-link"
+  - if current_user && current_user.author_of?(@question)
+    = render 'common/edit_destroy_links', resource: @question, remote: false
 
 .col-lg-12.top-buffer
   .question-errors

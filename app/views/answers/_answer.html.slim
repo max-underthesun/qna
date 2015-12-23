@@ -8,12 +8,7 @@ div class=(answer.best? ? "answer best-answer" : "answer") id="answer_#{answer.i
     = answer.user ? answer.user.email : t('common.not_defined')
 
   - if current_user && current_user.author_of?(answer)
-    .right
-      = link_to t('links.edit'), '', class: "edit-answer-link", id: "#{answer.id}"
-    .right
-      = link_to t('links.destroy'), answer, method: :delete, 
-                remote: true, data: { confirm: t('common.sure') },
-                class: "destroy-answer-link", id: "#{answer.id}"
+    = render 'common/edit_destroy_links', resource: answer, remote: true
 
   - if current_user && current_user.author_of?(answer.question)
     .right.top-buffer
