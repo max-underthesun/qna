@@ -1,13 +1,6 @@
 = form_for @question, html: { style: "display: #{hidden ? 'none' : 'block'}" }, remote: true do |f|
 
   = render 'common/errors', resource: @question
-
-  .form-group
-    = f.label :title
-    = f.text_field :title, class: 'form-control'
-
-  .form-group
-    = f.label :body
-    = f.text_area :body, class: 'form-control'
-
-  = f.submit t('.submit'), class: 'btn btn-primary'
+  = render 'question_fields', f: f
+  .right
+    = f.submit t('questions.form.submit'), class: 'btn btn-primary'

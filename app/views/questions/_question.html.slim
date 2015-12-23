@@ -2,17 +2,9 @@ p.question-title
   strong = @question.title
 
 .col-lg-12
-  p.question-body
-    = @question.body
-  .top-buffer = t('common.attachments')
-  ul
-    - @question.attachments.each do |a|
-      li id="attachment_#{a.id}"
-        => link_to a.file.filename, a.file.url
-        - if current_user && current_user.author_of?(@question)
-          = link_to t('links.remove_file'), attachment_path(a), method: :delete,
-                  class: 'btn btn-xxs', remote: true, id: "#{a.id}",
-                  data: { confirm: t('common.sure') }
+  p.question-body = @question.body
+
+  = render 'attachments/attachments', attachable: @question
 
   .right
     strong = t('common.author')
@@ -20,13 +12,10 @@ p.question-title
 
 .col-lg-12.right
   = link_to t('links.back'), questions_path
-- if current_user && current_user.author_of?(@question)
-  .col-lg-12.right
-    = link_to t('links.edit'), '', class: "edit-question-link"
-  .col-lg-12.right
-    = link_to t('links.destroy'), question_path(@question),
-      class: "destroy-question-link", method: :delete, data: { confirm: t('common.sure') }
-.col-lg-12
-  .top-buffer
-    .question-errors
-    = render 'form', hidden: true, remote: true
+
+  - if current_user && current_user.author_of?(@question)
+    = render 'common/edit_destroy_links', resource: @question, remote: false
+
+.col-lg-12.top-buffer
+  .question-errors
+  = render 'form', hidden: true, remote: true

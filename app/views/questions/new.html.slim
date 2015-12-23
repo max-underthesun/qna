@@ -1,23 +1,7 @@
 = form_for @question do |f|
 
   = render 'common/errors', resource: @question
-
-  .form-group
-    = f.label :title
-    = f.text_field :title, class: 'form-control'
-
-  .form-group
-    = f.label :body
-    = f.text_area :body, class: 'form-control'
-
-    = f.fields_for :attachments do |a|
-      h5 = t('common.attachments')
-      = render 'common/attachment_fields', f: a
-    .links.top-buffer
-      = link_to_add_association t('links.add_file'), f, :attachments,
-                                partial: 'common/attachment_fields',
-                                class: 'btn btn-xs btn-default'
-
+  = render 'question_fields', f: f
   .right
     = f.submit t('questions.form.submit'), class: 'btn btn-primary'
 

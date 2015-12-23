@@ -10,16 +10,6 @@
     h4 = t('.new_answer')
     .errors
     = form_for [@question, @answer], remote: true do |f|
-      .form-group
-        = f.label :body
-        = f.text_area :body, class: 'form-control'
-
-        = f.fields_for :attachments do |a|
-          h5 = t('common.attachments')
-          = render 'common/attachment_fields', f: a
-        .links.top-buffer
-          = link_to_add_association t('links.add_file'), f, :attachments,
-                                    partial: 'common/attachment_fields',
-                                    class: 'btn btn-xs btn-default'
+      = render 'answers/answer_fields', f: f
       .right
         = f.submit t('.submit_answer'), class: 'btn btn-primary'
