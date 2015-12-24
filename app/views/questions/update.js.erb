@@ -1,19 +1,11 @@
 <% if @question.errors.present? %>
-  <% if remotipart_submitted? %>
-    $('.question-errors').html('<%= j "#{render 'common/errors', resource: @question}" %>');
-  <% else %>
-    $('.question-errors').html('<%= j render 'common/errors', resource: @question %>');
-  <% end %> 
+  $('.question-errors').html('<%= render_errors_for(@answer, remotipart_submitted?) %>');
   <% @question.errors.each do |attr| %>
     var div = $('#question_' + '<%= attr %>').parent();
     div.addClass('field_with_errors');
   <% end %>
 <% elsif response.status == 200 %>
-  <% if remotipart_submitted? %>
-    $('.question').html('<%= j "#{render @question}" %>');
-  <% else %>
-    $('.question').html('<%= j render @question %>');
-  <% end %> 
+  $('.question').html('<%= render_resource(@question, remotipart_submitted?) %>');
   $('.question-errors').empty();
 <% end %>
 
