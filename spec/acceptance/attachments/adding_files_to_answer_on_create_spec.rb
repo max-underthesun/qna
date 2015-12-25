@@ -1,6 +1,6 @@
 require_relative '../acceptance_helper'
 
-feature 'ADD FILE TO ANSWER', %q(
+feature 'ADD FILES TO ANSWER ON CREATE', %q(
   author of the answer can add files to the answer to illustrate it
 ) do
   given(:user) { create(:user) }
