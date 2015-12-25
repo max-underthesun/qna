@@ -12,15 +12,9 @@ feature 'ADD FILES TO ANSWER ON UPDATE', %q{
   before { sign_in(user) }
 
   describe '- with valid attributes add file on update after creation' do
-    # given(:user) { create(:user) }
-    # given(:question) { create(:question) }
-    # given(:updated_answer) { build(:answer) }
     given(:answer) { build(:answer) }
 
-    before do
-      # sign_in(user)
-      visit question_path(question)
-    end
+    before { visit question_path(question) }
 
     scenario '-- creates an answer with file attached and then update it', js: true do
       within '.new-answer-form' do
@@ -73,16 +67,10 @@ feature 'ADD FILES TO ANSWER ON UPDATE', %q{
   end
 
   describe '- with valid attributes add file to the existing answer, then update again' do
-    # given(:user) { create(:user) }
-    # given(:question) { create(:question) }
     given!(:answer) { create(:answer, question: question, user: user) }
     given!(:attachment) { create(:attachment, attachable: answer) }
-    # given(:updated_answer) { build(:answer) }
 
-    before do
-      # sign_in(user)
-      visit question_path(question)
-    end
+    before { visit question_path(question) }
 
     scenario '-- upate with adding file, then update the body', js: true do
       within ".answer#answer_#{answer.id}" do
@@ -135,16 +123,11 @@ feature 'ADD FILES TO ANSWER ON UPDATE', %q{
   end
 
   describe '- could not update with invalid attributes and got errors' do
-    # given(:user) { create(:user) }
-    # given(:question) { create(:question) }
     given!(:answer) { create(:answer, question: question, user: user) }
     given!(:attachment) { create(:attachment, attachable: answer) }
     given(:invalid_answer) { build(:invalid_answer) }
 
-    before do
-      # sign_in(user)
-      visit question_path(question)
-    end
+    before { visit question_path(question) }
 
     scenario '-- add file on update, try invalid update and see the errors message', js: true do
       within ".answer#answer_#{answer.id}" do

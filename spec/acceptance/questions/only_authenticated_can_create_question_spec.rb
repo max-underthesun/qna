@@ -7,7 +7,7 @@ feature 'CREATE QUESTION', %q(
   given(:question) { build(:question) }
   given(:invalid_question) { build(:invalid_question) }
 
-  scenario 'Authenticated user creates a question' do
+  scenario '- authenticated user creates a question' do
     sign_in(user)
 
     visit questions_path
@@ -22,7 +22,7 @@ feature 'CREATE QUESTION', %q(
     expect(page).to have_content question.body
   end
 
-  scenario 'Authenticated user try to create invalid question' do
+  scenario '- authenticated user try to create invalid question' do
     sign_in(user)
 
     visit questions_path
@@ -43,7 +43,7 @@ feature 'CREATE QUESTION', %q(
     )
   end
 
-  scenario 'Unauthenticated user try to create a question' do
+  scenario '- unauthenticated user try to create a question' do
     visit questions_path
     click_on I18n.t('questions.index.new')
 
