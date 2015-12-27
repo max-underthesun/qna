@@ -1,6 +1,6 @@
 require_relative '../acceptance_helper'
 
-feature 'ADD FILE TO QUESTION', %q(
+feature 'ADD FILE TO QUESTION ON CREATE', %q(
   author of the question can add files to the questions to illustrate it
 ) do
   given(:user) { create(:user) }
@@ -13,25 +13,12 @@ feature 'ADD FILE TO QUESTION', %q(
   end
 
   describe '- with valid attributes' do
-    scenario '-- authenticated user creates a question with attachment', js: true do
-      fill_in I18n.t('activerecord.attributes.question.title'), with: question.title
-      fill_in I18n.t('activerecord.attributes.question.body'), with: question.body
-      click_on I18n.t('links.add_file')
-      attach_file I18n.t('activerecord.attributes.attachment.file'),
-                  "#{Rails.root}/spec/spec_helper.rb"
-      click_on I18n.t('questions.form.submit')
-
-      expect(page).to have_link 'spec_helper.rb',
-                                href: '/uploads/attachment/file/1/spec_helper.rb'
-    end
-
     scenario '-- authenticated user creates a question without attachment', js: true do
       click_on I18n.t('links.add_file')
       fill_in I18n.t('activerecord.attributes.question.title'), with: question.title
       fill_in I18n.t('activerecord.attributes.question.body'), with: question.body
       click_on I18n.t('questions.form.submit')
 
-      # sleep(2)
       expect(page).to_not have_selector 'input#question_title'
       expect(page).to_not have_selector 'textarea#question_body'
       expect(page).to_not have_content(

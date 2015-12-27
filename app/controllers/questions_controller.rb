@@ -12,7 +12,6 @@ class QuestionsController < ApplicationController
 
   def new
     @question = Question.new
-    # @question.attachments.new
   end
 
   def create
