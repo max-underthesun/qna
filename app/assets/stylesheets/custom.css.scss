@@ -41,6 +41,7 @@ textarea {
   padding: 15px;
 }
 
+
 /* tables */
 
 .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
@@ -89,6 +90,42 @@ a {
     color: #DF7401;
   }
 }
+
+ul {
+    // list-style-type: none;
+    list-style-position: inside;
+    padding-left: 0px;
+}​
+
+
+/* buttons */
+
+.btn {
+
+}
+
+.btn-black {
+  background: black;
+  color: silver;
+  border-color: silver;
+}
+
+.btn-black:hover {
+  color: yellow;
+}
+
+.btn-xxs {
+  font-size: 9px;
+  padding: 1px 5px;
+  margin-left: 10px;
+  border-color: silver;
+  color: silver;
+}
+
+.btn-xxs:hover {
+  color: red;
+}
+
 
 /* errors */
 

@@ -2,16 +2,14 @@
   = render 'question'
 
 .col-lg-12.top-buffer
-  h4 = t('.answers_list')
+  h3 = t('.answers_list')
   .answers
     = render 'answers'
 
-  .top-buffer
+  .new-answer-form.top-buffer
     h4 = t('.new_answer')
     .errors
     = form_for [@question, @answer], remote: true do |f|
-      .form-group
-        = f.label :body
-        = f.text_area :body, class: 'form-control'
-
-      = f.submit t('.submit_answer'), class: 'btn btn-primary'
+      = render 'answers/answer_fields', f: f
+      .right
+        = f.submit t('.submit_answer'), class: 'btn btn-primary'
