@@ -1,16 +1,15 @@
 p.question-title
   strong = @question.title
 
-.col-lg-1
+.col-lg-1.center
   div class="question-rating" id="question_#{@question.id}"
     = t('common.rating')
-    .center
-      = link_to '', class: "btn btn-black btn-xs" do
+    .top-buffer
+      = link_to '', class: "btn btn-black" do
         i.fa.fa-chevron-up
-    .center
-      strong = @question.id
-    .center
-      = link_to '', class: "btn btn-black btn-xs" do
+    .rating-value
+      = @question.id
+    = link_to '', class: "btn btn-black" do
         i.fa.fa-chevron-down
  
 
