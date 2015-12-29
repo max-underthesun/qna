@@ -29,6 +29,7 @@ en:
     author: "Author: "
     sure: "Are you sure?"
     attachments: "Attachments:"
+    rating: "Rating: "
   links:
     show: "Show"
     back: "Back"

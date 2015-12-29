@@ -8,7 +8,14 @@ feature 'VOTE FOR THE QUESTION', %q(
   given(:question_author) { create(:user) }
   given!(:question) { create(:question, user: question_author) }
 
-  scenario "- anauthorized user can see the rating of the question in the question show view"
+  scenario "- anauthorized user can see the rating of the question in the question show view" do
+    visit question_path(question)
+
+    within ".question-rating#question_#{question.id}" do
+      expect(page).to have_content I18n.t('common.rating')
+      expect(page).to have_content "#{question.rating}"
+    end
+  end
 
   describe "- author unable to vote for his question" do
     scenario "-- author see the rating"
