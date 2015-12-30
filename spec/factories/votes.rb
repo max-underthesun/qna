@@ -1,8 +1,7 @@
 FactoryGirl.define do
   factory :vote do
     value 1
-votable nil
-user nil
+    # votable FactoryGirl.create(:question)
+    # user
   end
-
 end
