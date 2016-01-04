@@ -3,9 +3,17 @@ module VotableController
 
   included do
     before_action :set_votable, only: [:vote_up]
+    before_action :authenticate_user!
   end
 
   def vote_up
+    vote = @votable.votes.new(value: 1, user: current_user)
+    if vote.save
+      flash[:notice] = 'nice work'
+    else
+      flash[:alert] = 'something wrong'
+    end
+    redirect_to @votable
   end
 
   private

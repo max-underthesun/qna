@@ -2,35 +2,32 @@ require 'rails_helper'
 
 RSpec.shared_examples "votable_controller" do
   describe 'PATCH #vote_up' do
-
     describe 'for not signed in user: ' do
-      it '- should not add new vote to the object votes' do
+      it '- should not add new vote to the resource votes' do
         # original_object = object
         # patch :vote_up, id: object
         # expect(object.vote.reload).to eq original_answer
-        expect { patch :vote_up, id: object }.to_not change(object.votes, :count)
+        expect { patch :vote_up, id: resource }.to_not change(resource.votes, :count)
       end
 
-      # it '- should return 401 (unauthorized) status' do
-      #   patch :best, id: answer, answer: { best: best_answer.best }, format: :js
-      #   expect(response).to have_http_status(:unauthorized)
-      # end
+      it '- should return 401 (unauthorized) status' do
+        patch :vote_up, id: resource
+        expect(response).to have_http_status(:unauthorized)
+      end
     end
 
-  #   describe 'for user signed in but not the author of question: ' do
-  #     sign_in_user
+    describe 'for user signed in and not the author of resource: ' do
+      before { sign_in(user) }
 
-  #     it '- should not update answer best status' do
-  #       original_answer = answer
-  #       patch :best, id: answer, answer: { best: best_answer.best }, format: :js
-  #       expect(answer.reload).to eq original_answer
-  #     end
+      it '- should add a new vote to the resource votes' do
+        expect { patch :vote_up, id: resource }.to change(resource.votes, :count).by(1)
+      end
 
-  #     it '- should return 403 (forbidden) status' do
-  #       patch :best, id: answer, answer: { best: best_answer.best }, format: :js
-  #       expect(response).to have_http_status(:forbidden)
-  #     end
-  #   end
+      # it '- should return 403 (forbidden) status' do
+      #   patch :best, id: answer, answer: { best: best_answer.best }, format: :js
+      #   expect(response).to have_http_status(:forbidden)
+      # end
+    end
 
   #   describe 'for user signed in and author of question: ' do
   #     sign_in_user
