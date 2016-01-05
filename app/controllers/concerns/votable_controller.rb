@@ -3,7 +3,6 @@ module VotableController
 
   included do
     before_action :set_votable, only: [:vote_up]
-    before_action :authenticate_user!
   end
 
   def vote_up

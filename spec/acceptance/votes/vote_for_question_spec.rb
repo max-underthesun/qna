@@ -36,7 +36,7 @@ feature 'VOTE FOR THE QUESTION', %q(
     end
 
     # scenario "-- see the '+' and '-' buttons for vote"
-    scenario "-- able to vote '+'" do
+    scenario "-- able to vote_up" do
       within ".question-rating#question_#{question.id}" do
         expect(find(".rating-value")).to have_content "#{votes_number}"
         find("a[href='#{vote_up_question_path(question)}']").click
