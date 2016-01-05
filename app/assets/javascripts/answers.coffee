@@ -33,15 +33,17 @@ edit = ->
       errors(answer_id).show()
       destroy(answer_id).hide()
 
-newAnswer = (e, data, status, xhr) ->
-  $('.answers').html(xhr, responseText)
+newAnswer = ->
+  $(document.body).on 'ajax:success', 'form.new_answer', (e, data, status, xhr) ->
+    $('.answers').append(xhr.responseText)
 
 ready = ->
   edit()
   cancel()
+  newAnswer()
 
 $(document).ready(ready)
-  .on('ajax:success', 'form.new_answer', newAnswer)
+  # .on('ajax:success', 'form.new_answer', newAnswer)
 
 
   # $('form.new_answer').bind 'ajax:success', (e, data, status, xhr) ->
