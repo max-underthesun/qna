@@ -23,10 +23,10 @@ RSpec.shared_examples "votable_controller" do
         expect { patch :vote_up, id: resource }.to change(resource.votes, :count).by(1)
       end
 
-      # it '- should return 403 (forbidden) status' do
-      #   patch :best, id: answer, answer: { best: best_answer.best }, format: :js
-      #   expect(response).to have_http_status(:forbidden)
-      # end
+      it '- should render resource' do
+        patch :vote_up, id: resource
+        expect(response).to redirect_to resource
+      end
     end
 
   #   describe 'for user signed in and author of question: ' do
