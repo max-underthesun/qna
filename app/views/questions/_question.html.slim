@@ -5,7 +5,10 @@ p.question-title
   div class="question-rating" id="question_#{@question.id}"
     = t('common.rating')
     .top-buffer
-      = link_to vote_up_question_path(@question), method: :patch, class: "btn btn-black" do
+      = link_to vote_up_question_path(@question), method: :patch, remote: true,
+                id: "vote_up-question-#{@question.id}",
+                class: "btn btn-black vote_up",
+                data: { type: :json } do
         i.fa.fa-chevron-up
     .rating-value
       = @question.rating

@@ -20,3 +20,7 @@ $(document).ready ->
     $('.edit_question').hide()
     $('.question-errors').hide()
     $('.destroy-question-link').show()
+
+  $(document.body).on 'ajax:success', 'a.vote_up', (e, data, status, xhr) ->
+    question = $.parseJSON(xhr.responseText)
+    $('#question_' + question.id + ' .rating-value').html(question.rating)

@@ -1,11 +1,11 @@
 - resource_name = resource.class.to_s.downcase
 .right
   = link_to t('links.edit'), '',
-            class: "edit-#{resource_name}-link",
             id: "edit-#{resource_name}-#{resource.id}",
+            class: "edit-#{resource_name}-link",
             data: { resource_id: resource.id }
 .right
-  = link_to t('links.destroy'), resource, method: :delete, 
-            remote: remote, data: { confirm: t('common.sure') },
+  = link_to t('links.destroy'), resource, method: :delete, remote: remote,
+            id: "destroy-#{resource_name}-#{resource.id}",
             class: "destroy-#{resource_name}-link",
-            id: "destroy-#{resource_name}-#{resource.id}"
+            data: { confirm: t('common.sure') }

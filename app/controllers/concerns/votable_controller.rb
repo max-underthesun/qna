@@ -7,12 +7,17 @@ module VotableController
 
   def vote_up
     vote = @votable.votes.new(value: 1, user: current_user)
-    if vote.save
-      flash[:notice] = 'nice work'
-    else
-      flash[:alert] = 'something wrong'
+
+    respond_to do |format|
+      if vote.save
+        format.json { render json: { id: @votable.id, rating: @votable.rating } }
+      # flash[:notice] = 'nice work'
+      else
+        format.json { render json: @votable.errors.full_messages }
+      end
+      # flash[:alert] = 'something wrong'
     end
-    redirect_to @votable
+    # redirect_to @votable
   end
 
   private
