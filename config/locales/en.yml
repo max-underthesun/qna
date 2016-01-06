@@ -129,3 +129,6 @@ en:
           one: is the wrong length (should be 1 character)
           other: is the wrong length (should be %{count} characters)
         other_than: must be other than %{count}
+      models:
+        vote:
+          taken: "You already voted for this"

@@ -6,14 +6,15 @@ module VotableController
   end
 
   def vote_up
-    vote = @votable.votes.new(value: 1, user: current_user)
+    @vote = @votable.votes.new(value: 1, user: current_user)
 
     respond_to do |format|
-      if vote.save
+      if @vote.save
         format.json { render json: { id: @votable.id, rating: @votable.rating } }
       # flash[:notice] = 'nice work'
       else
-        format.json { render json: @votable.errors.full_messages }
+        format.json { render json: @vote.errors.messages, status: :unprocessable_entity }
+        # puts @vote.errors.inspect
       end
       # flash[:alert] = 'something wrong'
     end
