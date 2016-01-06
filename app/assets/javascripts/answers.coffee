@@ -35,7 +35,8 @@ edit = ->
 
 newAnswer = ->
   $(document.body).on 'ajax:success', 'form.new_answer', (e, data, status, xhr) ->
-    $('.answers').append(xhr.responseText)
+    answer = $.parseJSON(xhr.responseText)
+    $('.answers').append('<p>' + answer.body + '</p>')
 
 ready = ->
   edit()
@@ -43,6 +44,8 @@ ready = ->
   newAnswer()
 
 $(document).ready(ready)
+
+
   # .on('ajax:success', 'form.new_answer', newAnswer)
 
 

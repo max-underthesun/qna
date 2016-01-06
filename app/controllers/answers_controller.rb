@@ -10,7 +10,7 @@ class AnswersController < ApplicationController
 
     respond_to do |format|
       format.html { render partial: @answer, layout: false }
-      # format.js
+      format.json { render json: @answer }
     end
   end
 
