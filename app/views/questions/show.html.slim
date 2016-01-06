@@ -9,7 +9,7 @@
   .new-answer-form.top-buffer
     h4 = t('.new_answer')
     .errors
-    = form_for [@question, @answer], remote: true, data: {type: :json} do |f|
+    = form_for [@question, @answer], remote: true do |f|
       = render 'answers/answer_fields', f: f
       .right
         = f.submit t('.submit_answer'), class: 'btn btn-primary'

@@ -33,18 +33,19 @@ edit = ->
       errors(answer_id).show()
       destroy(answer_id).hide()
 
-newAnswer = ->
-  $(document.body).on 'ajax:success', 'form.new_answer', (e, data, status, xhr) ->
-    answer = $.parseJSON(xhr.responseText)
-    $('.answers').append('<p>' + answer.body + '</p>')
 
 ready = ->
   edit()
   cancel()
-  newAnswer()
 
 $(document).ready(ready)
 
+# newAnswer = ->
+#   $(document.body).on 'ajax:success', 'form.new_answer', (e, data, status, xhr) ->
+#     answer = $.parseJSON(xhr.responseText)
+#     $('.answers').append('<p>' + answer.body + '</p>')
+
+  # newAnswer()
 
   # .on('ajax:success', 'form.new_answer', newAnswer)
 
