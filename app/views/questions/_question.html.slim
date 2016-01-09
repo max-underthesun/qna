@@ -1,7 +1,24 @@
 p.question-title
   strong = @question.title
 
-.col-lg-12
+.col-lg-1.center
+  div class="question-rating" id="question_#{@question.id}"
+    = t('common.rating')
+    .top-buffer
+      - if !current_user || (current_user && current_user.can_vote?(@question))
+        = link_to vote_up_question_path(@question), method: :patch, remote: true,
+                  id: "vote_up-question-#{@question.id}",
+                  class: "btn btn-black vote_up",
+                  data: { type: :json } do
+          i.fa.fa-chevron-up
+    .rating-value
+      = @question.rating
+    = link_to '', class: "btn btn-black" do
+        i.fa.fa-chevron-down
+ 
+
+
+.col-lg-11
   p.question-body = @question.body
 
   = render 'attachments/attachments', attachable: @question

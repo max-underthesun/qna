@@ -16,5 +16,5 @@ div class=(answer.best? ? "answer best-answer" : "answer") id="answer_#{answer.i
                   remote: true, class: 'btn btn-success btn-xs'
 
   .top-buffer
-    .answer-errors id="#{answer.id}"
+    .answer-errors id="errors-answer-#{answer.id}"
     = render 'answers/form', answer: answer, hidden: true, remote: true

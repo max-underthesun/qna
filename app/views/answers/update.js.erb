@@ -1,5 +1,5 @@
 var errors = function(answer_id) {
-  return $('#' + answer_id + '.answer-errors');
+  return $('#errors-answer-' + answer_id + '.answer-errors');
 };
 
 <% if @answer.errors.present? %>

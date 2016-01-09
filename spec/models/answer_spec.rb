@@ -33,7 +33,7 @@ RSpec.describe Answer, type: :model do
     end
   end
 
-  describe "ordered_answers_for should order question answers" do
+  describe "best_first should order question answers" do
     let(:question) { create(:question) }
     let!(:answers) { create_list(:answer, 5, question: question) }
 
@@ -57,4 +57,6 @@ RSpec.describe Answer, type: :model do
       end
     end
   end
+
+  it_behaves_like "votable"
 end

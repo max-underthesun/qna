@@ -3,14 +3,14 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 form = (answer_id) -> $('#edit_answer_' + answer_id)
-errors = (answer_id) -> $('#' + answer_id + '.answer-errors')
-destroy = (answer_id) -> $('#' + answer_id + '.destroy-answer-link')
+errors = (answer_id) -> $('#errors-answer-' + answer_id + '.answer-errors')
+destroy = (answer_id) -> $('#destroy-answer-' + answer_id + '.destroy-answer-link')
 
 cancel = ->
   $(document.body).on 'click', '.edit-answer-link.cancel', (e) ->
     e.preventDefault();
 
-    answer_id = $(this).attr('id')
+    answer_id = $(this).data('resourceId')
 
     $(this).html 'Edit'
     $(this).removeClass 'cancel'
@@ -24,7 +24,7 @@ edit = ->
     e.preventDefault();
 
     if !$(this).hasClass('cancel')
-      answer_id = $(this).attr('id')
+      answer_id = $(this).data('resourceId')
 
       $(this).html 'Cancel edit'
       $(this).addClass 'cancel'
@@ -33,8 +33,22 @@ edit = ->
       errors(answer_id).show()
       destroy(answer_id).hide()
 
+
 ready = ->
   edit()
   cancel()
 
 $(document).ready(ready)
+
+# newAnswer = ->
+#   $(document.body).on 'ajax:success', 'form.new_answer', (e, data, status, xhr) ->
+#     answer = $.parseJSON(xhr.responseText)
+#     $('.answers').append('<p>' + answer.body + '</p>')
+
+  # newAnswer()
+
+  # .on('ajax:success', 'form.new_answer', newAnswer)
+
+
+  # $('form.new_answer').bind 'ajax:success', (e, data, status, xhr) ->
+    # $('.answers').append('<%= render_resource(@answer, remotipart_submitted?) %>');
