@@ -89,7 +89,7 @@ feature 'VOTE FOR THE QUESTION', %q(
       end
     end
 
-    scenario "-- unable to vote_up twice in a row (the button will hide)", js: true do
+    scenario "-- unable to vote_up twice in a row", js: true do
       within ".question-rating#question_#{question.id}" do
         find("a[href='#{vote_up_question_path(question)}']").click
         sleep(1)
@@ -106,6 +106,25 @@ feature 'VOTE FOR THE QUESTION', %q(
 
         expect(find(".rating-value")).to have_content "#{votes_number - 1}"
       end
+    end
+
+    scenario "-- unable to vote_down second time (don't see the button)", js: true do
+      create(:vote, votable: question, user: user)
+      visit question_path(question)
+
+      within ".question-rating#question_#{question.id}" do
+        expect(page).to_not have_css "a[href='#{vote_down_question_path(question)}']"
+      end
+    end
+
+    scenario "-- unable to vote_down twice in a row", js: true do
+      within ".question-rating#question_#{question.id}" do
+        find("a[href='#{vote_down_question_path(question)}']").click
+        sleep(1)
+        # expect(page).to_not have_css "a[href='#{vote_up_question_path(question)}']"
+        find("a[href='#{vote_down_question_path(question)}']").click
+      end
+      expect(page).to have_content I18n.t('activerecord.errors.models.vote.taken')
     end
 
     # scenario "-- can cancel his vote (have a button and it works properly)"
