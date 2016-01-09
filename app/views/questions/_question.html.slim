@@ -5,7 +5,7 @@ p.question-title
   div class="question-rating" id="question_#{@question.id}"
     = t('common.rating')
     .top-buffer
-      - if !current_user || (current_user && current_user.not_author_of?(@question) && !current_user.votes.find_by(votable_id: @question.id, votable_type: "Question"))
+      - if !current_user || (current_user && current_user.can_vote?(@question))
         = link_to vote_up_question_path(@question), method: :patch, remote: true,
                   id: "vote_up-question-#{@question.id}",
                   class: "btn btn-black vote_up",
