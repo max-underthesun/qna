@@ -32,8 +32,16 @@ feature 'VOTE FOR THE QUESTION', %q(
       expect(page).to have_content I18n.t('devise.failure.unauthenticated')
     end
 
-    # scenario "-- unable to vote_down", js: true do
-    # end
+    scenario "-- unable to vote_down", js: true do
+      within ".question-rating#question_#{question.id}" do
+        expect(find(".rating-value")).to have_content "#{votes_number}"
+        find("a[href='#{vote_down_question_path(question)}']").click
+
+        expect(find(".rating-value")).to have_content "#{votes_number}"
+      end
+
+      expect(page).to have_content I18n.t('devise.failure.unauthenticated')
+    end
   end
 
   describe "- author of the question" do
@@ -49,9 +57,10 @@ feature 'VOTE FOR THE QUESTION', %q(
       end
     end
 
-    scenario "-- unable to vote_up (do not see the button)", js: true do
+    scenario "-- unable to vote_up or vote_down (do not see the buttons)", js: true do
       within ".question-rating#question_#{question.id}" do
         expect(page).to_not have_css "a[href='#{vote_up_question_path(question)}']"
+        expect(page).to_not have_css "a[href='#{vote_down_question_path(question)}']"
       end
     end
 
