@@ -99,7 +99,14 @@ feature 'VOTE FOR THE QUESTION', %q(
       expect(page).to have_content I18n.t('activerecord.errors.models.vote.taken')
     end
 
-    # scenario "-- can vote_down"
+    scenario "-- able to vote_down", js: true do
+      within ".question-rating#question_#{question.id}" do
+        expect(find(".rating-value")).to have_content "#{votes_number}"
+        find("a[href='#{vote_down_question_path(question)}']").click
+
+        expect(find(".rating-value")).to have_content "#{votes_number - 1}"
+      end
+    end
 
     # scenario "-- can cancel his vote (have a button and it works properly)"
 

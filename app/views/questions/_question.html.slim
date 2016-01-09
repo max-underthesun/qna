@@ -13,7 +13,10 @@ p.question-title
           i.fa.fa-chevron-up
     .rating-value
       = @question.rating
-    = link_to '', class: "btn btn-black" do
+    = link_to vote_down_question_path(@question), method: :patch, remote: true,
+              id: "vote_down-question-#{@question.id}",
+              class: "btn btn-black vote_down",
+              data: { type: :json } do
         i.fa.fa-chevron-down
  
 

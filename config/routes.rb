@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   concern :votable do
     member do
       patch :vote_up
+      patch :vote_down
     end
   end
 
