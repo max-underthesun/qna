@@ -28,6 +28,9 @@ module VotableController
     end
   end
 
+  def vote_destroy
+  end
+
   private
 
   def set_votable

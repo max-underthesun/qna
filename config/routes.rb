@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     member do
       patch :vote_up
       patch :vote_down
+      delete :vote_destroy
     end
   end
 

@@ -63,8 +63,6 @@ feature 'VOTE FOR THE QUESTION', %q(
         expect(page).to_not have_css "a[href='#{vote_down_question_path(question)}']"
       end
     end
-
-    # scenario "-- unable to vote_down (do not see the button)"
   end
 
   describe "- non-author of the question" do
@@ -136,7 +134,14 @@ feature 'VOTE FOR THE QUESTION', %q(
       expect(page).to have_content I18n.t('activerecord.errors.models.vote.taken')
     end
 
-    # scenario "-- can cancel his vote (have a button and it works properly)"
+    scenario "-- if voted have a button to cancel vote" do
+      create(:vote, votable: question, user: user)
+      visit question_path(question)
+
+      within ".question-rating#question_#{question.id}" do
+        expect(page).to have_css "a[href='#{vote_destroy_question_path(question)}']"
+      end
+    end
 
     # scenario "-- can cancel existent vote and make a new vote"
   end

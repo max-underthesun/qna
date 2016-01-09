@@ -19,7 +19,11 @@ p.question-title
                 class: "btn btn-black vote_down",
                 data: { type: :json } do
           i.fa.fa-chevron-down
- 
+    = link_to vote_destroy_question_path(@question), method: :delete, remote: true,
+              id: "vote_destroy-question-#{@question.id}",
+              class: "btn btn-black vote_destroy",
+              data: { type: :json } do
+        i.fa.fa-undo
 
 
 .col-lg-11
