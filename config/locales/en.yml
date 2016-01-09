@@ -68,6 +68,8 @@ en:
       update: "Your question was successfully updated"
     attachment:
       destroy: "Attachment was successfully removed"
+    votes:
+      create: "You voted successfully"
   failure:
     questions:
       destroy: "Your have no rights to destroy this question. Only author can do it."
@@ -81,7 +83,8 @@ en:
   errors:
     error: "error"
     title: " prohibited you from continuing"
-
+    votes:
+      self_vote: "You can't vote for yourself"
 
   activerecord:
     models:
@@ -131,4 +134,4 @@ en:
         other_than: must be other than %{count}
       models:
         vote:
-          taken: "You already voted for this"
+          taken: "You have already voted for this"

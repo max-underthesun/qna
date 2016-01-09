@@ -1,7 +1,4 @@
 class Vote < ActiveRecord::Base
-  # attr_accessor :votable_klass
-  # before_validation :set_votable_klass
-
   belongs_to :user
   belongs_to :votable, polymorphic: true
 
@@ -12,27 +9,19 @@ class Vote < ActiveRecord::Base
 
   validate :current_user_is_not_a_votable_author
 
-  # def forbid_voting
-  #   errors.add(:user_id, "You can't vote for yourself")
-  # end
-
-
-  # def current_user_is_not_a_votable_author
-  #   # if votable #votable_id && votable_type
-  #     if votable && votable_klass.find(votable_id).user_id == user_id
-  #       self.errors.add(:user_id, "You can't vote for yourself")
-  #       # false
-  #     end
-  #   # end
-  # end
-
-  # def votable_klass # set_votable_klass
-  #   # self.votable_klass = 
-  #   votable_type.constantize
-  # end
   private
 
   def current_user_is_not_a_votable_author
-    errors.add(:user_id, "You can't vote for yourself") if votable && votable.user_id == user_id
+    errors.add(:user_id, I18n.t('errors.votes.self_vote')) if votable && votable.user_id == user_id
   end
+
+  # def current_user_is_not_a_votable_author
+  #   if votable && votable_klass.find(votable_id).user_id == user_id
+  #     self.errors.add(:user_id, "You can't vote for yourself")
+  #   end
+  # end
+
+  # def votable_klass
+  #   votable_type.constantize
+  # end
 end
