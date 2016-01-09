@@ -16,9 +16,6 @@ class Vote < ActiveRecord::Base
   #   errors.add(:user_id, "You can't vote for yourself")
   # end
 
-  def current_user_is_not_a_votable_author
-    errors.add(:user_id, "You can't vote for yourself") if votable && votable.user_id == user_id
-  end
 
   # def current_user_is_not_a_votable_author
   #   # if votable #votable_id && votable_type
@@ -33,4 +30,9 @@ class Vote < ActiveRecord::Base
   #   # self.votable_klass = 
   #   votable_type.constantize
   # end
+  private
+
+  def current_user_is_not_a_votable_author
+    errors.add(:user_id, "You can't vote for yourself") if votable && votable.user_id == user_id
+  end
 end
