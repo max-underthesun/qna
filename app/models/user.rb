@@ -11,4 +11,8 @@ class User < ActiveRecord::Base
   def author_of?(object)
     object.user_id == id
   end
+
+  def not_author_of?(object)
+    !author_of?(object)
+  end
 end

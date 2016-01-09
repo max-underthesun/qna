@@ -8,7 +8,7 @@ FactoryGirl.define do
     end
 
     value 1
-    # votable { |a| a.association(:question) }
     user
+    # votable { |a| a.association(:question) }
   end
 end

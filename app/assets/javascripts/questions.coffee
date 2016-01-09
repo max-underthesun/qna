@@ -31,6 +31,7 @@ $(document).ready ->
     question = $.parseJSON(xhr.responseText)
     success = 'You voted successfully'
     $('#question_' + question.id + ' .rating-value').html(question.rating)
+    # $('a#vote_up-question-' + question.id).hide()
     $('.flash').append(alert(success, 'success'))
   .on 'ajax:error', 'a.vote_up', (e, xhr, status, error) ->
     errors = $.parseJSON(xhr.responseText)
