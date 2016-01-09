@@ -29,7 +29,7 @@ $(document).ready ->
 
   $(document.body).on 'ajax:success', 'a.vote_up', (e, data, status, xhr) ->
     question = $.parseJSON(xhr.responseText)
-    success = 'You voted successfully'
+    success = 'You voted up successfully'
     $('#question_' + question.id + ' .rating-value').html(question.rating)
     # $('a#vote_up-question-' + question.id).hide()
     $('.flash').append(alert(success, 'success'))
@@ -39,6 +39,17 @@ $(document).ready ->
     $.each errors, (index, value) ->
       $('.flash').append(alert(value, 'warning'))
 
+  $(document.body).on 'ajax:success', 'a.vote_down', (e, data, status, xhr) ->
+    question = $.parseJSON(xhr.responseText)
+    success = 'You voted down successfully'
+    $('#question_' + question.id + ' .rating-value').html(question.rating)
+    # $('a#vote_down-question-' + question.id).hide()
+    $('.flash').append(alert(success, 'success'))
+  .on 'ajax:error', 'a.vote_down', (e, xhr, status, error) ->
+    errors = $.parseJSON(xhr.responseText)
+    $('.flash').empty()
+    $.each errors, (index, value) ->
+      $('.flash').append(alert(value, 'warning'))
 
         # '<div class="alert alert-warning alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>' + value + '</div>')
 
