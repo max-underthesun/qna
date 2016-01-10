@@ -42,6 +42,12 @@ feature 'VOTE FOR THE QUESTION', %q(
 
       expect(page).to have_content I18n.t('devise.failure.unauthenticated')
     end
+
+    scenario "-- unable to cancel any vote - do not see the button", js: true do
+      within ".question-rating#question_#{question.id}" do
+        expect(page).to_not have_css "a[href='#{vote_destroy_question_path(question)}']"
+      end
+    end
   end
 
   describe "- author of the question" do
@@ -61,6 +67,12 @@ feature 'VOTE FOR THE QUESTION', %q(
       within ".question-rating#question_#{question.id}" do
         expect(page).to_not have_css "a[href='#{vote_up_question_path(question)}']"
         expect(page).to_not have_css "a[href='#{vote_down_question_path(question)}']"
+      end
+    end
+
+    scenario "-- unable to cancel any vote - do not see the button", js: true do
+      within ".question-rating#question_#{question.id}" do
+        expect(page).to_not have_css "a[href='#{vote_destroy_question_path(question)}']"
       end
     end
   end
