@@ -31,8 +31,12 @@ $(document).ready ->
     question = $.parseJSON(xhr.responseText)
     success = 'You voted up successfully'
     $('#question_' + question.id + ' .rating-value').html(question.rating)
+    $('.vote_up-question-' + question.id).hide()
+    $('.vote_down-question-' + question.id).hide()
     # $('a#vote_up-question-' + question.id).hide()
-    $('.flash').append(alert(success, 'success'))
+    # $('a#vote_down-question-' + question.id).hide()
+    $('.vote_destroy-question-' + question.id).show()
+    $('.flash').html(alert(success, 'success'))
   .on 'ajax:error', 'a.vote_up', (e, xhr, status, error) ->
     errors = $.parseJSON(xhr.responseText)
     $('.flash').empty()
@@ -43,13 +47,35 @@ $(document).ready ->
     question = $.parseJSON(xhr.responseText)
     success = 'You voted down successfully'
     $('#question_' + question.id + ' .rating-value').html(question.rating)
+    $('.vote_up-question-' + question.id).hide()
+    $('.vote_down-question-' + question.id).hide()
+    # $('a#vote_up-question-' + question.id).hide()
     # $('a#vote_down-question-' + question.id).hide()
-    $('.flash').append(alert(success, 'success'))
+    $('.vote_destroy-question-' + question.id).show()
+    $('.flash').html(alert(success, 'success'))
   .on 'ajax:error', 'a.vote_down', (e, xhr, status, error) ->
     errors = $.parseJSON(xhr.responseText)
     $('.flash').empty()
     $.each errors, (index, value) ->
       $('.flash').append(alert(value, 'warning'))
+
+  $(document.body).on 'ajax:success', 'a.vote_destroy', (e, data, status, xhr) ->
+    question = $.parseJSON(xhr.responseText)
+    success = 'You cancel your vote successfully'
+    $('#question_' + question.id + ' .rating-value').html(question.rating)
+    $('.vote_up-question-' + question.id).show()
+    $('.vote_down-question-' + question.id).show()
+    $('.vote_destroy-question-' + question.id).hide()
+    $('.flash').html(alert(success, 'success'))
+  .on 'ajax:error', 'a.vote_destroy', (e, xhr, status, error) ->
+    failure = 'You can not cancel this vote'
+    $('.flash').html(alert(failure, 'warning'))
+
+
+    # errors = $.parseJSON(xhr.responseText)
+    # $('.flash').empty()
+    # $.each errors, (index, value) ->
+    #   $('.flash').append(alert(value, 'warning'))
 
         # '<div class="alert alert-warning alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>' + value + '</div>')
 

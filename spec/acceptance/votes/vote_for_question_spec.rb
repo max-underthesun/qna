@@ -43,7 +43,7 @@ feature 'VOTE FOR THE QUESTION', %q(
       expect(page).to have_content I18n.t('devise.failure.unauthenticated')
     end
 
-    scenario "-- unable to cancel any vote - do not see the button", js: true do
+    scenario "-- unable to cancel any vote: do not see the button", js: true do
       within ".question-rating#question_#{question.id}" do
         expect(page).to_not have_css "a[href='#{vote_destroy_question_path(question)}']"
       end
@@ -108,14 +108,12 @@ feature 'VOTE FOR THE QUESTION', %q(
       end
     end
 
-    scenario "-- unable to vote_up twice in a row", js: true do
+    scenario "-- unable to vote_up twice in a row (button will hide)", js: true do
       within ".question-rating#question_#{question.id}" do
         find("a[href='#{vote_up_question_path(question)}']").click
         sleep(1)
-        # expect(page).to_not have_css "a[href='#{vote_up_question_path(question)}']"
-        find("a[href='#{vote_up_question_path(question)}']").click
+        expect(page).to_not have_css "a[href='#{vote_up_question_path(question)}']"
       end
-      expect(page).to have_content I18n.t('activerecord.errors.models.vote.taken')
     end
 
     scenario "-- able to vote_down", js: true do
@@ -136,14 +134,12 @@ feature 'VOTE FOR THE QUESTION', %q(
       end
     end
 
-    scenario "-- unable to vote_down twice in a row", js: true do
+    scenario "-- unable to vote_down twice in a row (button will hide)", js: true do
       within ".question-rating#question_#{question.id}" do
         find("a[href='#{vote_down_question_path(question)}']").click
         sleep(1)
-        # expect(page).to_not have_css "a[href='#{vote_up_question_path(question)}']"
-        find("a[href='#{vote_down_question_path(question)}']").click
+        expect(page).to_not have_css "a[href='#{vote_down_question_path(question)}']"
       end
-      expect(page).to have_content I18n.t('activerecord.errors.models.vote.taken')
     end
 
     scenario "-- if voted have a button to cancel vote" do
@@ -155,6 +151,34 @@ feature 'VOTE FOR THE QUESTION', %q(
       end
     end
 
-    # scenario "-- can cancel existent vote and make a new vote"
+    scenario "-- if voted can cancel vote", js: true do
+      create(:vote, votable: question, user: user)
+      visit question_path(question)
+
+      within ".question-rating#question_#{question.id}" do
+        expect(find(".rating-value")).to have_content "#{votes_number + 1}"
+        find("a[href='#{vote_destroy_question_path(question)}']").click
+        expect(find(".rating-value")).to have_content "#{votes_number}"
+      end
+    end
+
+    scenario "-- unable to cancel vote if not voted (don't see the button)", js: true do
+      within ".question-rating#question_#{question.id}" do
+        expect(page).to_not have_css "a[href='#{vote_destroy_question_path(question)}']"
+      end
+    end
+
+    scenario "-- unable to cancel vote twice in a row (button will hide)", js: true do
+      create(:vote, votable: question, user: user)
+      visit question_path(question)
+
+      within ".question-rating#question_#{question.id}" do
+        expect(find(".rating-value")).to have_content "#{votes_number + 1}"
+        find("a[href='#{vote_destroy_question_path(question)}']").click
+        expect(find(".rating-value")).to have_content "#{votes_number}"
+        sleep(1)
+        expect(page).to_not have_css "a[href='#{vote_destroy_question_path(question)}']"
+      end
+    end
   end
 end
