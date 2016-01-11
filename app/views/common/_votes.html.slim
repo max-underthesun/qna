@@ -1,0 +1,33 @@
+- vote_visibility = \
+   (!current_user || (current_user.can_vote?(resource))) ? 'block' : 'none'
+- resource_name = resource.class.to_s.downcase
+
+div class="vote_up-#{resource_name}-#{resource.id}" style="display: #{vote_visibility}"
+  = link_to eval("vote_up_#{resource_name}_path(resource)"),
+            method: :patch, remote: true,
+            id: "vote_up-#{resource_name}-#{resource.id}",
+            class: "btn btn-black vote_up",
+            data: { type: :json } do
+      i.fa.fa-chevron-up
+
+div class="rating-value rating_value-#{resource_name}-#{resource.id}"
+  = resource.rating
+
+div class="vote_down-#{resource_name}-#{resource.id}" style="display: #{vote_visibility}"
+  = link_to eval("vote_down_#{resource_name}_path(resource)"),
+            method: :patch, remote: true,
+            id: "vote_down-#{resource_name}-#{resource.id}",
+            class: "btn btn-black vote_down",
+            data: { type: :json } do
+      i.fa.fa-chevron-down
+
+- vote_destroy_visibility = \
+   (current_user && current_user.voted_for?(resource)) ? 'block' : 'none'
+div [class="vote_destroy-#{resource_name}-#{resource.id}"
+     style="display: #{vote_destroy_visibility}"]
+  = link_to eval("vote_destroy_#{resource_name}_path(resource)"),
+            method: :delete, remote: true,
+            id: "vote_destroy-#{resource_name}-#{resource.id}",
+            class: "btn btn-black vote_destroy",
+            data: { type: :json } do
+      i.fa.fa-undo

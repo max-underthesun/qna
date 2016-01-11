@@ -5,33 +5,9 @@ p.question-title
   div class="question-rating" id="question_#{@question.id}"
     .bottom-buffer = t('common.rating')
 
-    - vote_visibility = \
-       (!current_user || (current_user && current_user.can_vote?(@question))) ? 'block' : 'none'
-    div class="vote_up-question-#{@question.id}" style="display: #{vote_visibility}"
-        = link_to vote_up_question_path(@question), method: :patch, remote: true,
-                  id: "vote_up-question-#{@question.id}",
-                  class: "btn btn-black vote_up",
-                  data: { type: :json } do
-          i.fa.fa-chevron-up
+    = render 'common/votes', resource: @question
 
-    div class="rating-value rating_value-question-#{@question.id}"
-      = @question.rating
 
-    div class="vote_down-question-#{@question.id}" style="display: #{vote_visibility}"
-      = link_to vote_down_question_path(@question), method: :patch, remote: true,
-                id: "vote_down-question-#{@question.id}",
-                class: "btn btn-black vote_down",
-                data: { type: :json } do
-          i.fa.fa-chevron-down
-
-    - vote_destroy_visibility = \
-       (current_user && current_user.voted_for?(@question)) ? 'block' : 'none'
-    div class="vote_destroy-question-#{@question.id}" style="display: #{vote_destroy_visibility}"
-      = link_to vote_destroy_question_path(@question), method: :delete, remote: true,
-                id: "vote_destroy-question-#{@question.id}",
-                class: "btn btn-black vote_destroy",
-                data: { type: :json } do
-          i.fa.fa-undo
 
 
 .col-lg-11
