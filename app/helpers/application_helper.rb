@@ -14,4 +14,16 @@ module ApplicationHelper
       j render resource
     end
   end
+
+  def name_of(resource)
+    resource.class.to_s.downcase
+  end
+
+  def vote_visibility(resource)
+    (!current_user || (current_user.can_vote?(resource))) ? 'block' : 'none'
+  end
+
+  def vote_destroy_visibility(resource)
+    (current_user && current_user.voted_for?(resource)) ? 'block' : 'none'
+  end
 end
