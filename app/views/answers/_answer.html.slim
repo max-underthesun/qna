@@ -1,9 +1,8 @@
-.row.top-buffer
+.answer.row.top-buffer
   .col-lg-1.center
     = render 'common/votes', resource: answer
 
-  .col-lg-11
-    div class=(answer.best? ? "answer best-answer" : "answer") id="answer_#{answer.id}"
+  .col-lg-11 class=(answer.best? ? "answer best-answer" : "answer") id="answer_#{answer.id}"
       p.top-buffer = answer.body
 
       = render 'attachments/attachments', attachable: answer

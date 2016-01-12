@@ -30,7 +30,7 @@ $(document).ready ->
   $(document.body).on 'ajax:success', '.question a.vote_up', (e, data, status, xhr) ->
     question = $.parseJSON(xhr.responseText)
     success = 'You voted up for the question successfully'
-    $('#question_' + question.id + ' .rating-value').html(question.rating)
+    $('#rating_for-question_' + question.id + ' .rating-value').html(question.rating)
     $('.vote_up-question-' + question.id).hide()
     $('.vote_down-question-' + question.id).hide()
     # $('a#vote_up-question-' + question.id).hide()
@@ -46,7 +46,7 @@ $(document).ready ->
   $(document.body).on 'ajax:success', '.question a.vote_down', (e, data, status, xhr) ->
     question = $.parseJSON(xhr.responseText)
     success = 'You voted down for the question successfully'
-    $('#question_' + question.id + ' .rating-value').html(question.rating)
+    $('#rating_for-question_' + question.id + ' .rating-value').html(question.rating)
     $('.vote_up-question-' + question.id).hide()
     $('.vote_down-question-' + question.id).hide()
     # $('a#vote_up-question-' + question.id).hide()
@@ -62,7 +62,7 @@ $(document).ready ->
   $(document.body).on 'ajax:success', '.question a.vote_destroy', (e, data, status, xhr) ->
     question = $.parseJSON(xhr.responseText)
     success = 'You cancel your vote for the question successfully'
-    $('#question_' + question.id + ' .rating-value').html(question.rating)
+    $('#rating_for-question_' + question.id + ' .rating-value').html(question.rating)
     $('.vote_up-question-' + question.id).show()
     $('.vote_down-question-' + question.id).show()
     $('.vote_destroy-question-' + question.id).hide()

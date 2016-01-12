@@ -37,7 +37,7 @@ feature 'BEST ANSWER', %q(
 
     scenario "-- author see the 'Best answer' buttons for each answer" do
       answers.each do |answer|
-        within ".answer#answer_#{answer.id}" do
+        within ".answer #answer_#{answer.id}" do
           expect(page).to have_button(I18n.t('buttons.best_answer'))
         end
       end
@@ -45,7 +45,7 @@ feature 'BEST ANSWER', %q(
 
     scenario "-- author can choose any answer as best answer", js: true do
       answers.each do |answer|
-        within ".answer#answer_#{answer.id}" do
+        within ".answer #answer_#{answer.id}" do
           click_on I18n.t('buttons.best_answer')
         end
 
@@ -58,7 +58,7 @@ feature 'BEST ANSWER', %q(
 
     scenario "-- best answer positioned first in the list of answers", js: true do
       answers.each do |answer|
-        within ".answer#answer_#{answer.id}" do
+        within ".answer #answer_#{answer.id}" do
           click_on I18n.t('buttons.best_answer')
         end
 
