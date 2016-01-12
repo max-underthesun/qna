@@ -2,10 +2,7 @@ p.question-title
   strong = @question.title
 
 .col-lg-1.center
-  div class="question-rating" id="question_#{@question.id}"
-    .bottom-buffer = t('common.rating')
-
-    = render 'common/votes', resource: @question
+  = render 'common/votes', resource: @question
 
 .col-lg-11
   p.question-body = @question.body
