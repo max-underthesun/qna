@@ -16,6 +16,10 @@ class User < ActiveRecord::Base
     not_author_of?(object) && not_voted_yet_for?(object)
   end
 
+  def voted_for?(object)
+    (votes.find_by(votable_id: object.id, votable_type: object.class.to_s)).present?
+  end
+
   private
 
   def not_author_of?(object)
@@ -23,6 +27,6 @@ class User < ActiveRecord::Base
   end
 
   def not_voted_yet_for?(object)
-    (votes.find_by(votable_id: object.id, votable_type: object.class.to_s)).nil?
+    !voted_for?(object)
   end
 end

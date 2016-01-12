@@ -2,7 +2,7 @@ module VotableController
   extend ActiveSupport::Concern
 
   included do
-    before_action :set_votable, only: [:vote_up, :vote_down]
+    before_action :set_votable, only: [:vote_up, :vote_down, :vote_destroy]
     # before_action :new_vote, only: [:vote_up]
   end
 
@@ -24,6 +24,20 @@ module VotableController
         format.json { render json: { id: @votable.id, rating: @votable.rating } }
       else
         format.json { render json: @vote.errors.messages, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def vote_destroy
+    @vote = @votable.votes.find_by(user: current_user)
+    respond_to do |format|
+      if @vote && @vote.destroy
+        format.json { render json: { id: @votable.id, rating: @votable.rating } }
+      else
+        format.json do
+          render json: { id: @votable.id, rating: @votable.rating },
+                 status: :unprocessable_entity
+        end
       end
     end
   end

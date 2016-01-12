@@ -124,4 +124,59 @@ RSpec.shared_examples "votable_controller" do
       end
     end
   end
+
+  describe 'DELETE #vote_destroy' do
+    votes_number = 5
+    let!(:votes) { create_list(:vote, votes_number, votable: resource) }
+    let(:vote) { votes.sample }
+    let(:user) { vote.user }
+
+    describe 'for not signed in user: ' do
+      it '- should not destroy any vote in the database' do
+        expect(resource.votes.count).to eq(votes_number)
+        expect { delete :vote_destroy, id: resource, vote_id: vote, format: :json }
+          .to_not change(Vote, :count)
+      end
+
+      it '- should return 401 (unauthorized) status' do
+        delete :vote_destroy, id: resource, vote_id: vote, format: :json
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
+
+    describe 'for user signed in and author of the vote: ' do
+      before { sign_in(user) }
+
+      it '-- should destroy a vote from the resource votes' do
+        expect(resource.votes.count).to eq(votes_number)
+        expect { delete :vote_destroy, id: resource, vote_id: vote, format: :json }
+          .to change(resource.votes, :count).by(-1)
+      end
+
+      it '-- should destroy right vote' do
+        expect(resource.votes.count).to eq(votes_number)
+        expect(resource.votes.include?(vote)).to be true
+
+        delete :vote_destroy, id: resource, vote_id: vote, format: :json
+
+        expect(resource.votes.count).to eq(votes_number - 1)
+        expect(resource.votes.include?(vote)).to be false
+      end
+    end
+
+    describe 'for user signed in and not author of the vote: ' do
+      before { sign_in(resource_author) }
+
+      it '- should not destroy any vote in the database' do
+        expect(resource.votes.count).to eq(votes_number)
+        expect { delete :vote_destroy, id: resource, vote_id: vote, format: :json }
+          .to_not change(Vote, :count)
+      end
+
+      it '- should return 422 (unprocessable_entity) status' do
+        delete :vote_destroy, id: resource, vote_id: vote, format: :json
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+    end
+  end
 end
