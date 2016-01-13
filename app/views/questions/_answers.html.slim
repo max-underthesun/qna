@@ -1,3 +1,4 @@
 - @question.answers.best_first.each do |answer|
   - unless answer.new_record?
-    = render 'answers/answer', answer: answer
+    .answer.row
+      = render 'answers/answer', answer: answer

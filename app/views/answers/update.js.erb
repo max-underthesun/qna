@@ -10,7 +10,7 @@ var errors = function(answer_id) {
 <% elsif response.status == 200 %>
   var answer = $('div#answer_' + '<%= @answer.id %>');
 
-  answer.html('<%= render_resource(@answer, remotipart_submitted?) %>');
+  answer.parent().html('<%= render_resource(@answer, remotipart_submitted?) %>');
   errors(<%= @answer.id %>).empty();
 <% end %>
 

@@ -26,13 +26,13 @@ feature 'EDIT ANSWER', %q(
     end
 
     scenario '-- can see edit link for own answer' do
-      within ".answer#answer_#{other_answer.id}" do
+      within "#answer_#{other_answer.id}" do
         expect(page).to have_link(I18n.t('links.edit'))
       end
     end
 
     scenario '-- do not see edit link for other user answer' do
-      within ".answer#answer_#{answer.id}" do
+      within "#answer_#{answer.id}" do
         expect(page).to_not have_link(I18n.t('links.edit'))
       end
     end
@@ -45,13 +45,13 @@ feature 'EDIT ANSWER', %q(
     end
 
     scenario '-- author see the edit link' do
-      within ".answer#answer_#{answer.id}" do
+      within "#answer_#{answer.id}" do
         expect(page).to have_link(I18n.t('links.edit'))
       end
     end
 
     scenario '-- author successfully updated the answer with valid attributes', js: true do
-      within ".answer#answer_#{answer.id}" do
+      within "#answer_#{answer.id}" do
         click_on I18n.t('links.edit')
         fill_in I18n.t('activerecord.attributes.answer.body'), with: updated_answer.body
         click_on I18n.t('answers.form.update_answer')
@@ -62,7 +62,7 @@ feature 'EDIT ANSWER', %q(
     end
 
     scenario '-- author could not updated the answer with invalid attributes', js: true do
-      within ".answer#answer_#{answer.id}" do
+      within "#answer_#{answer.id}" do
         click_on I18n.t('links.edit')
         fill_in I18n.t('activerecord.attributes.answer.body'), with: invalid_answer.body
         click_on I18n.t('answers.form.update_answer')

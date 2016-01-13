@@ -15,14 +15,14 @@ feature 'VOTE FOR THE QUESTION', %q(
     before { visit question_path(question) }
 
     scenario "-- see the rating of the question in the question show view" do
-      within ".question-rating#question_#{question.id}" do
+      within ".question-rating#rating_for-question_#{question.id}" do
         expect(page).to have_content I18n.t('common.rating')
         expect(page).to have_content "#{question.rating}"
       end
     end
 
     scenario "-- unable to vote_up", js: true do
-      within ".question-rating#question_#{question.id}" do
+      within ".question-rating#rating_for-question_#{question.id}" do
         expect(find(".rating-value")).to have_content "#{votes_number}"
         find("a[href='#{vote_up_question_path(question)}']").click
 
@@ -33,7 +33,7 @@ feature 'VOTE FOR THE QUESTION', %q(
     end
 
     scenario "-- unable to vote_down", js: true do
-      within ".question-rating#question_#{question.id}" do
+      within ".question-rating#rating_for-question_#{question.id}" do
         expect(find(".rating-value")).to have_content "#{votes_number}"
         find("a[href='#{vote_down_question_path(question)}']").click
 
@@ -44,7 +44,7 @@ feature 'VOTE FOR THE QUESTION', %q(
     end
 
     scenario "-- unable to cancel any vote: do not see the button", js: true do
-      within ".question-rating#question_#{question.id}" do
+      within ".question-rating#rating_for-question_#{question.id}" do
         expect(page).to_not have_css "a[href='#{vote_destroy_question_path(question)}']"
       end
     end
@@ -57,21 +57,21 @@ feature 'VOTE FOR THE QUESTION', %q(
     end
 
     scenario "-- see the rating of the question in the question show view" do
-      within ".question-rating#question_#{question.id}" do
+      within ".question-rating#rating_for-question_#{question.id}" do
         expect(page).to have_content I18n.t('common.rating')
         expect(page).to have_content "#{question.rating}"
       end
     end
 
     scenario "-- unable to vote_up or vote_down (do not see the buttons)", js: true do
-      within ".question-rating#question_#{question.id}" do
+      within ".question-rating#rating_for-question_#{question.id}" do
         expect(page).to_not have_css "a[href='#{vote_up_question_path(question)}']"
         expect(page).to_not have_css "a[href='#{vote_down_question_path(question)}']"
       end
     end
 
     scenario "-- unable to cancel any vote - do not see the button", js: true do
-      within ".question-rating#question_#{question.id}" do
+      within ".question-rating#rating_for-question_#{question.id}" do
         expect(page).to_not have_css "a[href='#{vote_destroy_question_path(question)}']"
       end
     end
@@ -84,14 +84,14 @@ feature 'VOTE FOR THE QUESTION', %q(
     end
 
     scenario "-- see the rating of the question in the question show view" do
-      within ".question-rating#question_#{question.id}" do
+      within ".question-rating#rating_for-question_#{question.id}" do
         expect(page).to have_content I18n.t('common.rating')
         expect(page).to have_content "#{question.rating}"
       end
     end
 
     scenario "-- able to vote_up", js: true do
-      within ".question-rating#question_#{question.id}" do
+      within ".question-rating#rating_for-question_#{question.id}" do
         expect(find(".rating-value")).to have_content "#{votes_number}"
         find("a[href='#{vote_up_question_path(question)}']").click
 
@@ -103,13 +103,13 @@ feature 'VOTE FOR THE QUESTION', %q(
       create(:vote, votable: question, user: user)
       visit question_path(question)
 
-      within ".question-rating#question_#{question.id}" do
+      within ".question-rating#rating_for-question_#{question.id}" do
         expect(page).to_not have_css "a[href='#{vote_up_question_path(question)}']"
       end
     end
 
     scenario "-- unable to vote_up twice in a row (button will hide)", js: true do
-      within ".question-rating#question_#{question.id}" do
+      within ".question-rating#rating_for-question_#{question.id}" do
         find("a[href='#{vote_up_question_path(question)}']").click
         sleep(1)
         expect(page).to_not have_css "a[href='#{vote_up_question_path(question)}']"
@@ -117,7 +117,7 @@ feature 'VOTE FOR THE QUESTION', %q(
     end
 
     scenario "-- able to vote_down", js: true do
-      within ".question-rating#question_#{question.id}" do
+      within ".question-rating#rating_for-question_#{question.id}" do
         expect(find(".rating-value")).to have_content "#{votes_number}"
         find("a[href='#{vote_down_question_path(question)}']").click
 
@@ -129,13 +129,13 @@ feature 'VOTE FOR THE QUESTION', %q(
       create(:vote, votable: question, user: user)
       visit question_path(question)
 
-      within ".question-rating#question_#{question.id}" do
+      within ".question-rating#rating_for-question_#{question.id}" do
         expect(page).to_not have_css "a[href='#{vote_down_question_path(question)}']"
       end
     end
 
     scenario "-- unable to vote_down twice in a row (button will hide)", js: true do
-      within ".question-rating#question_#{question.id}" do
+      within ".question-rating#rating_for-question_#{question.id}" do
         find("a[href='#{vote_down_question_path(question)}']").click
         sleep(1)
         expect(page).to_not have_css "a[href='#{vote_down_question_path(question)}']"
@@ -146,7 +146,7 @@ feature 'VOTE FOR THE QUESTION', %q(
       create(:vote, votable: question, user: user)
       visit question_path(question)
 
-      within ".question-rating#question_#{question.id}" do
+      within ".question-rating#rating_for-question_#{question.id}" do
         expect(page).to have_css "a[href='#{vote_destroy_question_path(question)}']"
       end
     end
@@ -155,7 +155,7 @@ feature 'VOTE FOR THE QUESTION', %q(
       create(:vote, votable: question, user: user)
       visit question_path(question)
 
-      within ".question-rating#question_#{question.id}" do
+      within ".question-rating#rating_for-question_#{question.id}" do
         expect(find(".rating-value")).to have_content "#{votes_number + 1}"
         find("a[href='#{vote_destroy_question_path(question)}']").click
         expect(find(".rating-value")).to have_content "#{votes_number}"
@@ -163,7 +163,7 @@ feature 'VOTE FOR THE QUESTION', %q(
     end
 
     scenario "-- unable to cancel vote if not voted (don't see the button)", js: true do
-      within ".question-rating#question_#{question.id}" do
+      within ".question-rating#rating_for-question_#{question.id}" do
         expect(page).to_not have_css "a[href='#{vote_destroy_question_path(question)}']"
       end
     end
@@ -172,7 +172,7 @@ feature 'VOTE FOR THE QUESTION', %q(
       create(:vote, votable: question, user: user)
       visit question_path(question)
 
-      within ".question-rating#question_#{question.id}" do
+      within ".question-rating#rating_for-question_#{question.id}" do
         expect(find(".rating-value")).to have_content "#{votes_number + 1}"
         find("a[href='#{vote_destroy_question_path(question)}']").click
         expect(find(".rating-value")).to have_content "#{votes_number}"

@@ -1,12 +1,13 @@
 .question
   = render 'question'
 
-.col-lg-12.top-buffer
+.col-lg-12
   h3 = t('.answers_list')
   .answers
     = render 'answers'
 
-  .new-answer-form.top-buffer
+.col-lg-12
+  .new-answer-form
     h4 = t('.new_answer')
     .errors
     = form_for [@question, @answer], remote: true do |f|
