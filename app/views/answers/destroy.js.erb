@@ -1,6 +1,6 @@
 <% if response.status == 200 %>
   var answer = $('div#answer_' + '<%= @answer.id %>');
-  answer.remove();
+  answer.parent().remove();
 <% end %>
 
 $('.flash').html('<%= bootstrap_flash %>');

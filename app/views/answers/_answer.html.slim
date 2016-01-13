@@ -1,23 +1,22 @@
-.answer.row
-  .col-lg-1.center
-    = render 'common/votes', resource: answer
+.col-lg-1.center
+  = render 'common/votes', resource: answer
 
-  .col-lg-11 class=("best-answer" if answer.best?) id="answer_#{answer.id}"
-      p = answer.body
+.col-lg-11 class=("best-answer" if answer.best?) id="answer_#{answer.id}"
+    p = answer.body
 
-      = render 'attachments/attachments', attachable: answer
+    = render 'attachments/attachments', attachable: answer
 
-      .right
-        = t('common.author')
-        = answer.user ? answer.user.email : t('common.not_defined')
+    .right
+      = t('common.author')
+      = answer.user ? answer.user.email : t('common.not_defined')
 
-      - if current_user && current_user.author_of?(answer)
-        = render 'common/edit_destroy_links', resource: answer, remote: true
+    - if current_user && current_user.author_of?(answer)
+      = render 'common/edit_destroy_links', resource: answer, remote: true
 
-      - if current_user && current_user.author_of?(answer.question)
-        .right.top-buffer
-          = button_to t('buttons.best_answer'), best_answer_path(answer), method: :patch,
-                      remote: true, class: 'btn btn-success btn-xs'
+    - if current_user && current_user.author_of?(answer.question)
+      .right.top-buffer
+        = button_to t('buttons.best_answer'), best_answer_path(answer), method: :patch,
+                    remote: true, class: 'btn btn-success btn-xs'
 
-      .answer-errors id="errors-answer-#{answer.id}"
-      = render 'answers/form', answer: answer, hidden: true, remote: true
+    .answer-errors id="errors-answer-#{answer.id}"
+    = render 'answers/form', answer: answer, hidden: true, remote: true
