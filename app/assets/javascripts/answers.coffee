@@ -52,11 +52,7 @@ voteUp = ->
     answer = $.parseJSON(xhr.responseText)
     success = 'You voted up for the answer successfully'
     ratingRenewFor(answer)
-    # $('#rating_for-answer_' + answer.id + ' .rating-value').html(answer.rating)
     voteButtonsToggleFor(answer)
-    # $('.vote_up-answer-' + answer.id).hide()
-    # $('.vote_down-answer-' + answer.id).hide()
-    # $('.vote_destroy-answer-' + answer.id).show()
     $('.flash').html(alert(success, 'success'))
   .on 'ajax:error', 'a.vote_up', (e, xhr, status, error) ->
     errors = $.parseJSON(xhr.responseText)
@@ -69,11 +65,7 @@ voteDown = ->
     answer = $.parseJSON(xhr.responseText)
     success = 'You voted down for the answer successfully'
     ratingRenewFor(answer)
-    # $('#rating_for-answer_' + answer.id + ' .rating-value').html(answer.rating)
     voteButtonsToggleFor(answer)
-    # $('.vote_up-answer-' + answer.id).hide()
-    # $('.vote_down-answer-' + answer.id).hide()
-    # $('.vote_destroy-answer-' + answer.id).show()
     $('.flash').html(alert(success, 'success'))
   .on 'ajax:error', 'a.vote_up', (e, xhr, status, error) ->
     errors = $.parseJSON(xhr.responseText)
@@ -86,11 +78,7 @@ voteDestroy = ->
     answer = $.parseJSON(xhr.responseText)
     success = 'You cancel your vote for the answer successfully'
     ratingRenewFor(answer)
-    # $('#rating_for-answer_' + answer.id + ' .rating-value').html(answer.rating)
     voteButtonsToggleFor(answer)
-    # $('.vote_up-answer-' + answer.id).show()
-    # $('.vote_down-answer-' + answer.id).show()
-    # $('.vote_destroy-answer-' + answer.id).hide()
     $('.flash').html(alert(success, 'success'))
   .on 'ajax:error', 'a.vote_destroy', (e, xhr, status, error) ->
     failure = 'You can not cancel this vote'
@@ -105,16 +93,3 @@ ready = ->
   voteDestroy()
 
 $(document).ready(ready)
-
-# newAnswer = ->
-#   $(document.body).on 'ajax:success', 'form.new_answer', (e, data, status, xhr) ->
-#     answer = $.parseJSON(xhr.responseText)
-#     $('.answers').append('<p>' + answer.body + '</p>')
-
-  # newAnswer()
-
-  # .on('ajax:success', 'form.new_answer', newAnswer)
-
-
-  # $('form.new_answer').bind 'ajax:success', (e, data, status, xhr) ->
-    # $('.answers').append('<%= render_resource(@answer, remotipart_submitted?) %>');
