@@ -6,6 +6,14 @@ form = (answer_id) -> $('#edit_answer_' + answer_id)
 errors = (answer_id) -> $('#errors-answer-' + answer_id + '.answer-errors')
 destroy = (answer_id) -> $('#destroy-answer-' + answer_id + '.destroy-answer-link')
 
+voteButtonsToggleFor = (answer) ->
+  $('.vote_up-answer-' + answer.id).toggle()
+  $('.vote_down-answer-' + answer.id).toggle()
+  $('.vote_destroy-answer-' + answer.id).toggle()
+
+ratingRenewFor = (answer) ->
+  $('#rating_for-answer_' + answer.id + ' .rating-value').html(answer.rating)
+
 alert = (value, type) -> (
     '<div class="alert alert-' + type + ' alert-dismissible" role="alert">
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -39,14 +47,16 @@ edit = ->
       errors(answer_id).show()
       destroy(answer_id).hide()
 
-vote_up = ->
+voteUp = ->
   $(document.body).on 'ajax:success', '.answers a.vote_up', (e, data, status, xhr) ->
     answer = $.parseJSON(xhr.responseText)
     success = 'You voted up for the answer successfully'
-    $('#rating_for-answer_' + answer.id + ' .rating-value').html(answer.rating)
-    $('.vote_up-answer-' + answer.id).hide()
-    $('.vote_down-answer-' + answer.id).hide()
-    $('.vote_destroy-answer-' + answer.id).show()
+    ratingRenewFor(answer)
+    # $('#rating_for-answer_' + answer.id + ' .rating-value').html(answer.rating)
+    voteButtonsToggleFor(answer)
+    # $('.vote_up-answer-' + answer.id).hide()
+    # $('.vote_down-answer-' + answer.id).hide()
+    # $('.vote_destroy-answer-' + answer.id).show()
     $('.flash').html(alert(success, 'success'))
   .on 'ajax:error', 'a.vote_up', (e, xhr, status, error) ->
     errors = $.parseJSON(xhr.responseText)
@@ -54,14 +64,16 @@ vote_up = ->
     $.each errors, (index, value) ->
       $('.flash').append(alert(value, 'warning'))
 
-vote_down = ->
+voteDown = ->
   $(document.body).on 'ajax:success', '.answers a.vote_down', (e, data, status, xhr) ->
     answer = $.parseJSON(xhr.responseText)
     success = 'You voted down for the answer successfully'
-    $('#rating_for-answer_' + answer.id + ' .rating-value').html(answer.rating)
-    $('.vote_up-answer-' + answer.id).hide()
-    $('.vote_down-answer-' + answer.id).hide()
-    $('.vote_destroy-answer-' + answer.id).show()
+    ratingRenewFor(answer)
+    # $('#rating_for-answer_' + answer.id + ' .rating-value').html(answer.rating)
+    voteButtonsToggleFor(answer)
+    # $('.vote_up-answer-' + answer.id).hide()
+    # $('.vote_down-answer-' + answer.id).hide()
+    # $('.vote_destroy-answer-' + answer.id).show()
     $('.flash').html(alert(success, 'success'))
   .on 'ajax:error', 'a.vote_up', (e, xhr, status, error) ->
     errors = $.parseJSON(xhr.responseText)
@@ -69,14 +81,16 @@ vote_down = ->
     $.each errors, (index, value) ->
       $('.flash').append(alert(value, 'warning'))
 
-vote_destroy = ->
+voteDestroy = ->
   $(document.body).on 'ajax:success', '.answers a.vote_destroy', (e, data, status, xhr) ->
     answer = $.parseJSON(xhr.responseText)
     success = 'You cancel your vote for the answer successfully'
-    $('#rating_for-answer_' + answer.id + ' .rating-value').html(answer.rating)
-    $('.vote_up-answer-' + answer.id).show()
-    $('.vote_down-answer-' + answer.id).show()
-    $('.vote_destroy-answer-' + answer.id).hide()
+    ratingRenewFor(answer)
+    # $('#rating_for-answer_' + answer.id + ' .rating-value').html(answer.rating)
+    voteButtonsToggleFor(answer)
+    # $('.vote_up-answer-' + answer.id).show()
+    # $('.vote_down-answer-' + answer.id).show()
+    # $('.vote_destroy-answer-' + answer.id).hide()
     $('.flash').html(alert(success, 'success'))
   .on 'ajax:error', 'a.vote_destroy', (e, xhr, status, error) ->
     failure = 'You can not cancel this vote'
@@ -86,9 +100,9 @@ vote_destroy = ->
 ready = ->
   edit()
   cancel()
-  vote_up()
-  vote_down()
-  vote_destroy()
+  voteUp()
+  voteDown()
+  voteDestroy()
 
 $(document).ready(ready)
 
