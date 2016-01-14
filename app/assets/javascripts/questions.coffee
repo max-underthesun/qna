@@ -2,12 +2,6 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
-alert = (value, type) -> (
-    '<div class="alert alert-' + type + ' alert-dismissible" role="alert">
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span></button>' + value + '</div>'
-  )
-
 $(document).ready ->
 
   $(document.body).on 'click', '.edit-question-link', (e) ->
