@@ -3,7 +3,6 @@ module VotableController
 
   included do
     before_action :set_votable, only: [:vote_up, :vote_down, :vote_destroy]
-    # before_action :new_vote, only: [:vote_up]
   end
 
   def vote_up

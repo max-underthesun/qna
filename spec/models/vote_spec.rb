@@ -9,10 +9,6 @@ RSpec.describe Vote, type: :model do
     create :vote, :question_vote
     is_expected.to validate_uniqueness_of(:user_id).scoped_to([:votable_id, :votable_type])
   end
-  # describe do
-  #   before { create :vote, :question_vote }
-  #   it { should validate_uniqueness_of(:user_id).scoped_to([:votable_id, :votable_type]) }
-  # end
 
   it { should belong_to :votable }
   it { should validate_presence_of :votable_id }
@@ -23,10 +19,10 @@ RSpec.describe Vote, type: :model do
 
   # it { should validate_inclusion_of(:votable_type).in_array(%w(Question Answer)) }
 
-  # let(:user) { create(:user) }
+  # let(:fake) { create(:fake) }
   # it 'validates inclusion of votable_type in ["Question", "Answer"]' do
   #   expect(build(:vote, :question_vote)).to be_valid
   #   expect(build(:vote, :answer_vote)).to be_valid
-  #   expect(build(:vote, votable_type: "User", votable_id: user.id)).to_not be_valid
+  #   expect(build(:vote, votable_type: "Fake", votable_id: fake.id)).to_not be_valid
   # end
 end
