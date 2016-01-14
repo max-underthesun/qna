@@ -13,7 +13,7 @@ feature 'DESTROY ANSWER', %q(
     sign_in(user)
     visit question_path(question)
 
-    within ".answer#answer_#{answer.id}" do
+    within "#answer_#{answer.id}" do
       expect(page).to have_content answer.body
       find("a[href='#{answer_path(answer)}']", text: /\A#{I18n.t('links.destroy')}\z/).click
     end

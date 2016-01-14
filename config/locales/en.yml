@@ -29,6 +29,7 @@ en:
     author: "Author: "
     sure: "Are you sure?"
     attachments: "Attachments:"
+    rating: "Rating: "
   links:
     show: "Show"
     back: "Back"
@@ -67,6 +68,8 @@ en:
       update: "Your question was successfully updated"
     attachment:
       destroy: "Attachment was successfully removed"
+    votes:
+      create: "You voted successfully"
   failure:
     questions:
       destroy: "Your have no rights to destroy this question. Only author can do it."
@@ -80,7 +83,8 @@ en:
   errors:
     error: "error"
     title: " prohibited you from continuing"
-
+    votes:
+      self_vote: "You can't vote for yourself"
 
   activerecord:
     models:
@@ -128,3 +132,6 @@ en:
           one: is the wrong length (should be 1 character)
           other: is the wrong length (should be %{count} characters)
         other_than: must be other than %{count}
+      models:
+        vote:
+          taken: "You have already voted for this"

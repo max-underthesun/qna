@@ -1,0 +1,32 @@
+div class="#{name_of(resource)}-rating" id="rating_for-#{name_of(resource)}_#{resource.id}"
+  .bottom-buffer = t('common.rating')
+
+  div [class="vote_up-#{name_of(resource)}-#{resource.id}"
+       style="display: #{vote_visibility(resource)}"]
+    = link_to polymorphic_path(resource, action: :vote_up),
+              method: :patch, remote: true,
+              id: "vote_up-#{name_of(resource)}-#{resource.id}",
+              class: "btn btn-black vote_up",
+              data: { type: :json } do
+        i.fa.fa-chevron-up
+
+  div class="rating-value rating_value-#{name_of(resource)}-#{resource.id}"
+    = resource.rating
+
+  div [class="vote_down-#{name_of(resource)}-#{resource.id}"
+       style="display: #{vote_visibility(resource)}"]
+    = link_to polymorphic_path(resource, action: :vote_down),
+              method: :patch, remote: true,
+              id: "vote_down-#{name_of(resource)}-#{resource.id}",
+              class: "btn btn-black vote_down",
+              data: { type: :json } do
+        i.fa.fa-chevron-down
+
+  div [class="vote_destroy-#{name_of(resource)}-#{resource.id}"
+       style="display: #{vote_destroy_visibility(resource)}"]
+    = link_to polymorphic_path(resource, action: :vote_destroy),
+              method: :delete, remote: true,
+              id: "vote_destroy-#{name_of(resource)}-#{resource.id}",
+              class: "btn btn-black vote_destroy",
+              data: { type: :json } do
+        i.fa.fa-undo

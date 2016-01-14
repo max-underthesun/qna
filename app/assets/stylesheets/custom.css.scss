@@ -33,12 +33,42 @@ textarea {
   margin-top:20px;
 }
 
+.bottom-buffer {
+  margin-bottom:20px;
+}
+
 .best-answer {
   background-color: black;
   // color: green;
   border: 2px solid green;
   border-radius: 5px;
   padding: 15px;
+}
+
+.question {
+  margin-bottom:20px;
+}
+
+.answer {
+  margin-top:20px;
+  margin-bottom:20px;
+  border-top: 1px solid #444;
+  padding:20px;
+}
+
+.new-answer-form {
+  margin-top:50px;
+}
+
+.rating-value {
+  margin-top:10px;
+  margin-bottom:10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: gray;
+  color: black;
+  font-weight: bold;
+  font-size: 1.5em;
 }
 
 
@@ -111,7 +141,7 @@ ul {
 }
 
 .btn-black:hover {
-  color: yellow;
+  color: orange;
 }
 
 .btn-xxs {
@@ -148,4 +178,8 @@ ul {
     color: red;
     border: 2px solid #d9534f;
   }
+}
+
+.answer-errors {
+  margin-top:20px;
 }

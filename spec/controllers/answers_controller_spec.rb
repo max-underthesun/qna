@@ -233,4 +233,12 @@ RSpec.describe AnswersController, type: :controller do
       end
     end
   end
+
+  describe 'for vote actions' do
+    let(:resource_author) { create(:user) }
+    let(:user) { create(:user) }
+    let(:resource) { create(:answer, user: resource_author) }
+
+    it_behaves_like "votable_controller"
+  end
 end

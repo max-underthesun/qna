@@ -1,7 +1,10 @@
 p.question-title
   strong = @question.title
 
-.col-lg-12
+.col-lg-1.center
+  = render 'common/votes', resource: @question
+
+.col-lg-11
   p.question-body = @question.body
 
   = render 'attachments/attachments', attachable: @question
