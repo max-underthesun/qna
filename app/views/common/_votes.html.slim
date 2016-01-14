@@ -3,7 +3,8 @@ div class="#{name_of(resource)}-rating" id="rating_for-#{name_of(resource)}_#{re
 
   div [class="vote_up-#{name_of(resource)}-#{resource.id}"
        style="display: #{vote_visibility(resource)}"]
-    = link_to eval("vote_up_#{name_of(resource)}_path(resource)"),
+    = link_to polymorphic_path(resource, action: :vote_up),
+              # eval("vote_up_#{name_of(resource)}_path(resource)"),
               method: :patch, remote: true,
               id: "vote_up-#{name_of(resource)}-#{resource.id}",
               class: "btn btn-black vote_up",
@@ -15,7 +16,8 @@ div class="#{name_of(resource)}-rating" id="rating_for-#{name_of(resource)}_#{re
 
   div [class="vote_down-#{name_of(resource)}-#{resource.id}"
        style="display: #{vote_visibility(resource)}"]
-    = link_to eval("vote_down_#{name_of(resource)}_path(resource)"),
+    = link_to polymorphic_path(resource, action: :vote_down),
+              # eval("vote_down_#{name_of(resource)}_path(resource)"),
               method: :patch, remote: true,
               id: "vote_down-#{name_of(resource)}-#{resource.id}",
               class: "btn btn-black vote_down",
@@ -24,7 +26,8 @@ div class="#{name_of(resource)}-rating" id="rating_for-#{name_of(resource)}_#{re
 
   div [class="vote_destroy-#{name_of(resource)}-#{resource.id}"
        style="display: #{vote_destroy_visibility(resource)}"]
-    = link_to eval("vote_destroy_#{name_of(resource)}_path(resource)"),
+    = link_to polymorphic_path(resource, action: :vote_destroy),
+              # eval("vote_destroy_#{name_of(resource)}_path(resource)"),
               method: :delete, remote: true,
               id: "vote_destroy-#{name_of(resource)}-#{resource.id}",
               class: "btn btn-black vote_destroy",

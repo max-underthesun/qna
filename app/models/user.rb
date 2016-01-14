@@ -17,7 +17,8 @@ class User < ActiveRecord::Base
   end
 
   def voted_for?(object)
-    (votes.find_by(votable_id: object.id, votable_type: object.class.to_s)).present?
+    (votes.where(votable: object)).present?
+    # (votes.find_by(votable_id: object.id, votable_type: object.class.to_s)).present?
   end
 
   private
