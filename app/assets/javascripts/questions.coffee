@@ -60,3 +60,6 @@ $(document).ready ->
   .on 'ajax:error', 'a.vote_destroy', (e, xhr, status, error) ->
     failure = 'You can not cancel this vote'
     $('.flash').html(alert(failure, 'warning'))
+
+  # message = $('.question').data('url')
+  console.log(gon.current_user)

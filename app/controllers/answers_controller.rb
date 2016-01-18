@@ -9,6 +9,11 @@ class AnswersController < ApplicationController
     @answer = @question.answers.new(answer_params)
     @answer.user = current_user
     @answer.save && flash[:notice] = I18n.t('confirmations.answers.create')
+    PrivatePub.publish_to "/questions/#{@question.id}/answers",
+                          answer: @answer.to_json,
+                          rating: @answer.rating.to_json,
+                          author: @answer.user.email.to_json
+    # if @answer.valid?
   end
 
   def update

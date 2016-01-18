@@ -1,0 +1,18 @@
+.answer.row
+  .col-lg-1.center
+    div class="answer-rating" id="rating_for-answer_#{@answer.id}"
+      .bottom-buffer Rating:
+
+      div class="rating-value rating_value-answer-#{@answer.id}"
+        = @rating
+
+  .col-lg-11
+    p = @answer.body
+    strong Attachmetns
+    .right 
+      | Author:
+      = " #{@author}"
+
+    - if (@current_user_id && @current_user_id == @question_user_id)
+      .right.top-buffer
+        a class="btn btn-success btn-xs" data-remote="true" data-method="patch" rel="nofollow" href="/answers/#{@answer.id}/best" Best answer

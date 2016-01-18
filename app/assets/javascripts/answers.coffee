@@ -78,6 +78,25 @@ voteDestroy = ->
     failure = 'You can not cancel this vote'
     $('.flash').html(alert(failure, 'warning'))
 
+privatePub = ->
+  questionId = $('.answers').data('questionId')
+  currentUserId = gon.current_user_id
+  console.log(questionId)
+  PrivatePub.subscribe '/questions/' + questionId + '/answers', (data, channel) ->
+    console.log(data)
+    answer = $.parseJSON(data['answer'])
+    rating = $.parseJSON(data['rating'])
+    author = $.parseJSON(data['author'])
+    console.log(answer)
+    if currentUserId != answer.user_id
+      $('.answers').append(JST["answers/answer"]({
+        answer: answer,
+        rating: rating,
+        author: author,
+        current_user_id: currentUserId,
+        question_id: questionId,
+        question_user_id: gon.question_user_id
+      }))
 
 ready = ->
   edit()
@@ -85,5 +104,6 @@ ready = ->
   voteUp()
   voteDown()
   voteDestroy()
+  privatePub()
 
 $(document).ready(ready)

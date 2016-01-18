@@ -2,6 +2,11 @@
   $('.errors').html('<%= render_errors_for(@answer, remotipart_submitted?) %>');
   $('.new_answer .form-group').addClass('field_with_errors');
 <% else %>
+
+  <%# publish_to "/questions/#{@question.id}/answers" do %>
+    // $('.answers').append('<%= j render @answer %>');
+  <%# end %>
+
   $('.errors').empty();
   $('.new_answer .form-group').removeClass('field_with_errors');
   $('.answers').append('<%= render_resource(@answer, remotipart_submitted?) %>');
