@@ -2,6 +2,8 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
+console.log(gon.current_user_id)
+
 form = (answer_id) -> $('#edit_answer_' + answer_id)
 errors = (answer_id) -> $('#errors-answer-' + answer_id + '.answer-errors')
 destroy = (answer_id) -> $('#destroy-answer-' + answer_id + '.destroy-answer-link')
@@ -78,6 +80,28 @@ voteDestroy = ->
     failure = 'You can not cancel this vote'
     $('.flash').html(alert(failure, 'warning'))
 
+privatePub = ->
+  questionId = $('.answers').data('questionId')
+  currentUserId = gon.current_user_id
+  console.log(currentUserId)
+  console.log(gon.current_user_id)
+  PrivatePub.subscribe '/questions/' + questionId + '/answers', (data, channel) ->
+    console.log(data)
+    answer = $.parseJSON(data['answer'])
+    rating = $.parseJSON(data['rating'])
+    author = $.parseJSON(data['author'])
+    attachments = $.parseJSON(data['attachments'])
+    console.log(answer)
+    if currentUserId != answer.user_id
+      $('.answers').append(JST["answers/answer"]({
+        answer: answer,
+        rating: rating,
+        author: author,
+        current_user_id: currentUserId,
+        question_id: questionId,
+        question_user_id: gon.question_user_id,
+        attachments: attachments
+      }))
 
 ready = ->
   edit()
@@ -85,5 +109,6 @@ ready = ->
   voteUp()
   voteDown()
   voteDestroy()
+  privatePub()
 
 $(document).ready(ready)
