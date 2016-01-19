@@ -87,6 +87,7 @@ privatePub = ->
     answer = $.parseJSON(data['answer'])
     rating = $.parseJSON(data['rating'])
     author = $.parseJSON(data['author'])
+    attachments = $.parseJSON(data['attachments'])
     console.log(answer)
     if currentUserId != answer.user_id
       $('.answers').append(JST["answers/answer"]({
@@ -95,7 +96,8 @@ privatePub = ->
         author: author,
         current_user_id: currentUserId,
         question_id: questionId,
-        question_user_id: gon.question_user_id
+        question_user_id: gon.question_user_id,
+        attachments: attachments
       }))
 
 ready = ->

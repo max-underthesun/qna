@@ -3,16 +3,41 @@
     div class="answer-rating" id="rating_for-answer_#{@answer.id}"
       .bottom-buffer Rating:
 
+      div class="vote_up-answer-#{@answer.id}" style="display: block"
+        a [id="vote_up-answer-#{@answer.id}" class="btn btn-black vote_up"
+           data-remote="true" data-method="patch" data-type="json" rel="nofollow"
+           href="/answers/#{@answer.id}/vote_up"]
+          i.fa.fa-chevron-up
       div class="rating-value rating_value-answer-#{@answer.id}"
         = @rating
+      div class="vote_up-answer-#{@answer.id}" style="display: block"
+        a [id="vote_down-answer-#{@answer.id}" class="btn btn-black vote_down"
+           data-remote="true" data-method="patch" data-type="json" rel="nofollow"
+           href="/answers/#{@answer.id}/vote_down"]
+          i.fa.fa-chevron-down
+      div class="vote_up-answer-#{@answer.id}" style="display: none"
+        a [id="vote_destroy-answer-#{@answer.id}" class="btn btn-black vote_destroy"
+           data-remote="true" data-method="delete" data-type="json" rel="nofollow"
+           href="/answers/#{@answer.id}/vote_destroy"]
+          i.fa.fa-undo
 
   .col-lg-11
     p = @answer.body
-    strong Attachmetns
+
+    .top-buffer
+      | Attachments:
+    - if @attachments.length
+      ul
+        - for attachment in @attachments
+          li id="attachment_#{attachment.id}"
+            a href="#{attachment.url}" #{attachment.name}
+
     .right 
       | Author:
       = " #{@author}"
 
     - if (@current_user_id && @current_user_id == @question_user_id)
       .right.top-buffer
-        a class="btn btn-success btn-xs" data-remote="true" data-method="patch" rel="nofollow" href="/answers/#{@answer.id}/best" Best answer
+        a [class="btn btn-success btn-xs" data-remote="true" data-method="patch"
+           rel="nofollow" href="/answers/#{@answer.id}/best"] 
+           |Best answer
