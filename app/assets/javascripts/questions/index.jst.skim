@@ -1,0 +1,8 @@
+tr
+  td
+    = @question.title
+  td
+    = @author
+  td
+    a href="/questions/#{@question.id}" Show
+  td

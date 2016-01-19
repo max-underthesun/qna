@@ -61,5 +61,13 @@ $(document).ready ->
     failure = 'You can not cancel this vote'
     $('.flash').html(alert(failure, 'warning'))
 
-  # message = $('.question').data('url')
+  PrivatePub.subscribe '/questions', (data, channel) ->
+    console.log(data)
+    question = $.parseJSON(data['question'])
+    author = $.parseJSON(data['author'])
+    $('tbody').append(JST["questions/index"]({
+        question: question,
+        author: author
+      }))
+
   console.log(gon.current_user)
