@@ -23,6 +23,9 @@ class QuestionsController < ApplicationController
 
     if @question.save
       flash[:notice] = I18n.t('confirmations.questions.create')
+      PrivatePub.publish_to "/questions",
+                            question: @question.to_json,
+                            author: @question.user.email.to_json
       redirect_to @question
     else
       render :new
