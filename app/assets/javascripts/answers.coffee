@@ -2,6 +2,8 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
+console.log(gon.current_user_id)
+
 form = (answer_id) -> $('#edit_answer_' + answer_id)
 errors = (answer_id) -> $('#errors-answer-' + answer_id + '.answer-errors')
 destroy = (answer_id) -> $('#destroy-answer-' + answer_id + '.destroy-answer-link')
@@ -81,7 +83,8 @@ voteDestroy = ->
 privatePub = ->
   questionId = $('.answers').data('questionId')
   currentUserId = gon.current_user_id
-  console.log(questionId)
+  console.log(currentUserId)
+  console.log(gon.current_user_id)
   PrivatePub.subscribe '/questions/' + questionId + '/answers', (data, channel) ->
     console.log(data)
     answer = $.parseJSON(data['answer'])
