@@ -70,4 +70,4 @@ $(document).ready ->
         author: author
       }))
 
-  console.log(gon.current_user)
+  # console.log(gon.current_user)

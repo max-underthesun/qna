@@ -81,9 +81,10 @@ voteDestroy = ->
     $('.flash').html(alert(failure, 'warning'))
 
 privatePub = ->
+  # currentUserId = undefined
   gon.watch 'current_user_id'
-  currentUserId = gon.current_user_id
   questionId = $('.answers').data('questionId')
+  currentUserId = gon.current_user_id
   console.log(currentUserId)
   # console.log(gon.current_user_id)
   PrivatePub.subscribe '/questions/' + questionId + '/answers', (data, channel) ->
