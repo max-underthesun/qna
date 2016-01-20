@@ -5,7 +5,6 @@ html lang="en"
     meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"
     meta name="viewport" content="width=device-width, initial-scale=1.0"
     title= content_for?(:title) ? yield(:title) : "QnA"
-    = Gon::Base.render_data
     = csrf_meta_tags
     = stylesheet_link_tag "application", :media => "all", 'data-turbolinks-track' => true
     = javascript_include_tag "application", 'data-turbolinks-track' => true
@@ -16,6 +15,7 @@ html lang="en"
 
 
   body
+    = Gon::Base.render_data
     .navbar.navbar-default.navbar-static-top
         .container
           button.navbar-toggle type="button" data-toggle="collapse" data-target=".navbar-responsive-collapse"

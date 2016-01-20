@@ -2,8 +2,6 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
-console.log(gon.current_user_id)
-
 form = (answer_id) -> $('#edit_answer_' + answer_id)
 errors = (answer_id) -> $('#errors-answer-' + answer_id + '.answer-errors')
 destroy = (answer_id) -> $('#destroy-answer-' + answer_id + '.destroy-answer-link')
