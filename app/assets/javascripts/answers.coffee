@@ -81,7 +81,7 @@ voteDestroy = ->
     $('.flash').html(alert(failure, 'warning'))
 
 privatePub = ->
-  gon.watch 'current_user_id'
+  # gon.watch 'current_user_id'
   currentUserId = gon.current_user_id
   questionId = $('.answers').data('questionId')
   console.log(currentUserId)
@@ -113,3 +113,5 @@ ready = ->
   privatePub()
 
 $(document).ready(ready)
+# $(document).on('page:load', privatePub)
+# $(document).on('page:update', privatePub)

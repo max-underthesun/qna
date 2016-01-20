@@ -9,7 +9,7 @@ class AnswersController < ApplicationController
     @answer = @question.answers.new(answer_params)
     @answer.user = current_user
     # @answer.save && flash[:notice] = I18n.t('confirmations.answers.create')
-    flash[:notice] = I18n.t('confirmations.answers.create') && publish if @answer.save
+    publish && flash[:notice] = I18n.t('confirmations.answers.create') if @answer.save
   end
 
   def update
