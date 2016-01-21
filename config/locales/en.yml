@@ -30,6 +30,7 @@ en:
     sure: "Are you sure?"
     attachments: "Attachments:"
     rating: "Rating: "
+    comments: "Comments"
   links:
     show: "Show"
     back: "Back"
@@ -56,6 +57,9 @@ en:
   answers:
     form:
       update_answer: "Update answer"
+  comments:
+      new_comment: "new comment"
+      submit_comment: "Submin comment"
   confirmations:
     answers:
       create: "Your answer was successfully created."

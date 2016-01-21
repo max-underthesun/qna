@@ -27,6 +27,10 @@ RSpec.describe QuestionsController, type: :controller do
       expect(assigns(:answer)).to be_a_new(Answer)
     end
 
+    it 'puts a new comment to the variable @comment' do
+      expect(assigns(:comment)).to be_a_new(Comment)
+    end
+
     it 'render show view' do
       expect(response).to render_template :show
     end

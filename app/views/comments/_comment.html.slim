@@ -6,7 +6,4 @@
         = t('common.author')
         = comment.user ? comment.user.email : t('common.not_defined')
 
-      - if current_user && current_user.author_of?(comment)
-        = render 'common/edit_destroy_links', resource: comment, remote: true
-
       .comment-errors id="errors-comment-#{comment.id}"

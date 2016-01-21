@@ -3,7 +3,7 @@
   .col-lg-1
   .comments.col-lg-11#comments-for-question
     - if @question.comments.any?
-      h5 Comments
+      h5 = t('common.comments')
       = render 'comments/comments', commentable: @question
 
 .col-lg-12

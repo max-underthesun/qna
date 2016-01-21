@@ -14,7 +14,7 @@ feature 'COMMENT THE QUESTION', %q(
     before { visit question_path(question) }
 
     scenario "-- see all the comments for the question" do
-      within ".question" do
+      within ".question .comments" do
         comments.each do |comment|
           expect(page).to have_content comment.body
           expect(page).to have_content comment.user.email
@@ -22,16 +22,13 @@ feature 'COMMENT THE QUESTION', %q(
       end
     end
 
-  #   scenario "-- unable to vote_up", js: true do
-  #     within ".question-rating#rating_for-question_#{question.id}" do
-  #       expect(find(".rating-value")).to have_content "#{votes_number}"
-  #       find("a[href='#{vote_up_question_path(question)}']").click
+    scenario "-- unable to comment a question", js: true do
+      within ".question .comments" do
+        find("a[href='']", text: I18n.t('comments.new_comment')).click
+      end
 
-  #       expect(find(".rating-value")).to have_content "#{votes_number}"
-  #     end
-
-  #     expect(page).to have_content I18n.t('devise.failure.unauthenticated')
-  #   end
+      expect(page).to have_content I18n.t('devise.failure.unauthenticated')
+    end
 
   #   scenario "-- unable to cancel any vote: do not see the button", js: true do
   #     within ".question-rating#rating_for-question_#{question.id}" do

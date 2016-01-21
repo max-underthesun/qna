@@ -1,3 +1,9 @@
 - commentable.comments.each do |comment|
   - unless comment.new_record?
     = render 'comments/comment', comment: comment
+
+= link_to t('comments.new_comment'), ''
+
+.col-lg-12.top-buffer
+  .comment-errors
+  = render 'comments/form', hidden: false, remote: true
