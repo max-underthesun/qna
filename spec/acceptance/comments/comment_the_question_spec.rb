@@ -1,7 +1,7 @@
 require_relative '../acceptance_helper'
 
 feature 'COMMENT THE QUESTION', %q(
-  authenticated user can comment the question to specifiy details
+  authenticated user can make a comment to the question to specifiy details
 ) do
   comments_number = 5
 
@@ -15,7 +15,10 @@ feature 'COMMENT THE QUESTION', %q(
 
     scenario "-- see all the comments for the question" do
       within ".question" do
-        comments.each { |comment| expect(page).to have_content comment.body }
+        comments.each do |comment|
+          expect(page).to have_content comment.body
+          expect(page).to have_content comment.user.email
+        end
       end
     end
 
