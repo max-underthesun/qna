@@ -72,11 +72,15 @@ $(document).ready ->
 
   $(document.body).on 'click', '.new-comment-link', (e) ->
     e.preventDefault();
-    if gon.current_user_id && !$(this).hasClass('cancel')
-      $(this).html 'Cancel edit'
-      $(this).addClass 'cancel'
-      $('.new_comment').show()
-      $('.comment-errors').show()
+    if gon.current_user_id
+      if !$(this).hasClass('cancel')
+        $(this).html 'Cancel edit'
+        $(this).addClass 'cancel'
+        $('.new_comment').show()
+        $('.comment-errors').show()
+    else
+      failure = 'You have to sign in first'
+      $('.flash').html(alert(failure, 'warning'))
 
   $(document.body).on 'click', '.new-comment-link.cancel', (e) ->
     e.preventDefault();
@@ -84,3 +88,5 @@ $(document).ready ->
     $(this).removeClass 'cancel'
     $('.new_comment').hide()
     $('.comment-errors').hide()
+
+# errors ???

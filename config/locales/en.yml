@@ -74,6 +74,8 @@ en:
       destroy: "Attachment was successfully removed"
     votes:
       create: "You voted successfully"
+    comment:
+      create: "Your comment was successfully created."
   failure:
     questions:
       destroy: "Your have no rights to destroy this question. Only author can do it."
@@ -101,6 +103,8 @@ en:
         body: "Answer Body"
       attachment:
         file: "file"
+      comment:
+        body: "Comment body"
     errors:
       format: "%{attribute} %{message}"
       messages:
