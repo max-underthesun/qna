@@ -1,9 +1,8 @@
-.comment.row
-  .div id="comment_#{comment.id}"
-      p = comment.body
+.comment id="comment_#{comment.id}"
+  p = comment.body
 
-      .right
-        = t('common.author')
-        = comment.user ? comment.user.email : t('common.not_defined')
+  .right
+    = t('common.author')
+    = comment.user ? comment.user.email : t('common.not_defined')
 
-      .comment-errors id="errors-comment-#{comment.id}"
+  .comment-errors id="errors-comment-#{comment.id}"
