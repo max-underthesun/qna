@@ -24,11 +24,11 @@ feature 'COMMENT THE QUESTION', %q(
     end
 
     scenario "-- unable to comment a question (don't have a form)", js: true do
-      within ".question .comments" do
+      within ".question .new-comment-form" do
         find("a[href='']", text: I18n.t('comments.new_comment')).click
-        expect(page).to_not have_css('textarea#comment_body')
       end
 
+      expect(page).to_not have_css('textarea#comment_body')
       expect(page).to have_content('You have to sign in first')
     end
   end
@@ -49,20 +49,20 @@ feature 'COMMENT THE QUESTION', %q(
     end
 
     scenario "-- see the form for a new comment", js: true do
-      within ".question .comments" do
+      within ".question .new-comment-form" do
         find("a[href='']", text: I18n.t('comments.new_comment')).click
         expect(page).to have_css('textarea#comment_body')
       end
     end
 
     scenario "-- able to add a new comment", js: true do
-      within ".question .comments" do
+      within ".question .new-comment-form" do
         find("a[href='']", text: I18n.t('comments.new_comment')).click
-        expect(page).to have_css('textarea#comment_body')
         fill_in I18n.t('activerecord.attributes.comment.body'), with: comment.body
         click_on I18n.t('comments.submit_comment')
-        expect(page).to have_content comment.body
       end
+
+      within(".question .comments") { expect(page).to have_content comment.body }
 
       expect(page).to have_content I18n.t('confirmations.comment.create')
       expect(current_path).to eq question_path(question)

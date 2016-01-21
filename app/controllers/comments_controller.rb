@@ -5,7 +5,6 @@ class CommentsController < ApplicationController
   def create
     @comment = @question.comments.new(comment_params)
     @comment.user = current_user
-    # @answer.save && flash[:notice] = I18n.t('confirmations.answers.create')
     flash[:notice] = I18n.t('confirmations.comment.create') if @comment.save
   end
 

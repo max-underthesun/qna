@@ -1,10 +1,14 @@
 .question
   = render 'question'
   .col-lg-1
-  .comments.col-lg-11#comments-for-question
-    - if @question.comments.any?
-      h5 = t('common.comments')
-      = render 'comments/comments', commentable: @question
+  .col-lg-11
+    .comments#comments-for-question
+      - unless @question.comments.empty?
+        = render 'comments/comments', commentable: @question
+    .new-comment-form
+      = link_to t('comments.new_comment'), '', class: "new-comment-link"
+      .comment-errors
+      = render 'comments/form', hidden: true, remote: true
 
 .col-lg-12
   h3 = t('.answers_list')

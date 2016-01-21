@@ -1,9 +1,4 @@
+= t('common.comments')
 - commentable.comments.each do |comment|
   - unless comment.new_record?
     = render 'comments/comment', comment: comment
-
-= link_to t('comments.new_comment'), '', class: "new-comment-link"
-
-.new-comment-form
-  .comment-errors
-  = render 'comments/form', hidden: true, remote: true

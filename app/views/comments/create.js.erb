@@ -2,9 +2,6 @@
   $('.comment-errors').html('<%= render_errors_for(@comment, remotipart_submitted?) %>');
   $('.new_comment .form-group').addClass('field_with_errors');
 <% else %>
-
-
-
   $('.comment-errors').empty();
   $('.new_comment .form-group').removeClass('field_with_errors');
   $('.comments').append('<%= render_resource(@comment, remotipart_submitted?) %>');
