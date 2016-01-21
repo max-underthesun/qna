@@ -2,8 +2,8 @@
   - unless comment.new_record?
     = render 'comments/comment', comment: comment
 
-= link_to t('comments.new_comment'), ''
+= link_to t('comments.new_comment'), '', class: "new-comment-link"
 
 .new-comment-form
   .comment-errors
-  = render 'comments/form', hidden: false, remote: true
+  = render 'comments/form', hidden: true, remote: true

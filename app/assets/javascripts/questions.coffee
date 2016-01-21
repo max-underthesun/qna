@@ -70,4 +70,17 @@ $(document).ready ->
         author: author
       }))
 
-  # console.log(gon.current_user)
+  $(document.body).on 'click', '.new-comment-link', (e) ->
+    e.preventDefault();
+    if gon.current_user_id && !$(this).hasClass('cancel')
+      $(this).html 'Cancel edit'
+      $(this).addClass 'cancel'
+      $('.new_comment').show()
+      $('.comment-errors').show()
+
+  $(document.body).on 'click', '.new-comment-link.cancel', (e) ->
+    e.preventDefault();
+    $(this).html 'new comment'
+    $(this).removeClass 'cancel'
+    $('.new_comment').hide()
+    $('.comment-errors').hide()

@@ -22,47 +22,51 @@ feature 'COMMENT THE QUESTION', %q(
       end
     end
 
-    scenario "-- unable to comment a question", js: true do
+    scenario "-- unable to comment a question (don't have a form)", js: true do
       within ".question .comments" do
         find("a[href='']", text: I18n.t('comments.new_comment')).click
       end
 
-      expect(page).to have_content I18n.t('devise.failure.unauthenticated')
+      expect(page).to_not have_css('textarea#comment_body')
     end
-
-  #   scenario "-- unable to cancel any vote: do not see the button", js: true do
-  #     within ".question-rating#rating_for-question_#{question.id}" do
-  #       expect(page).to_not have_css "a[href='#{vote_destroy_question_path(question)}']"
-  #     end
-  #   end
   end
 
-  # describe "- author of the question" do
-  #   before do
-  #     sign_in(question_author)
-  #     visit question_path(question)
-  #   end
+  describe "- author of the question" do
+    before do
+      sign_in(question_author)
+      visit question_path(question)
+    end
 
-  #   scenario "-- see the rating of the question in the question show view" do
-  #     within ".question-rating#rating_for-question_#{question.id}" do
-  #       expect(page).to have_content I18n.t('common.rating')
-  #       expect(page).to have_content "#{question.rating}"
-  #     end
-  #   end
+    scenario "-- see all the comments for the question" do
+      within ".question .comments" do
+        comments.each do |comment|
+          expect(page).to have_content comment.body
+          expect(page).to have_content comment.user.email
+        end
+      end
+    end
 
-  #   scenario "-- unable to vote_up or vote_down (do not see the buttons)", js: true do
-  #     within ".question-rating#rating_for-question_#{question.id}" do
-  #       expect(page).to_not have_css "a[href='#{vote_up_question_path(question)}']"
-  #       expect(page).to_not have_css "a[href='#{vote_down_question_path(question)}']"
-  #     end
-  #   end
+    scenario "-- see the form for a new comment", js: true do
+      within ".question .comments" do
+        find("a[href='']", text: I18n.t('comments.new_comment')).click
+      end
 
-  #   scenario "-- unable to cancel any vote - do not see the button", js: true do
-  #     within ".question-rating#rating_for-question_#{question.id}" do
-  #       expect(page).to_not have_css "a[href='#{vote_destroy_question_path(question)}']"
-  #     end
-  #   end
-  # end
+      expect(page).to have_css('textarea#comment_body')
+    end
+
+    # scenario "-- unable to vote_up or vote_down (do not see the buttons)", js: true do
+    #   within ".question-rating#rating_for-question_#{question.id}" do
+    #     expect(page).to_not have_css "a[href='#{vote_up_question_path(question)}']"
+    #     expect(page).to_not have_css "a[href='#{vote_down_question_path(question)}']"
+    #   end
+    # end
+
+    # scenario "-- unable to cancel any vote - do not see the button", js: true do
+    #   within ".question-rating#rating_for-question_#{question.id}" do
+    #     expect(page).to_not have_css "a[href='#{vote_destroy_question_path(question)}']"
+    #   end
+    # end
+  end
 
   # describe "- non-author of the question" do
   #   before do
