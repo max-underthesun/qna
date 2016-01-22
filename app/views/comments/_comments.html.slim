@@ -3,7 +3,7 @@
   .comments id="comments-for-#{name_of(commentable)}-#{commentable.id}"
     - unless commentable.comments.empty?
       = t('common.comments')
-      - commentable.comments.each do |comment|
+      - commentable.comments.order_by_creation_asc.each do |comment|
         - unless comment.new_record?
           = render 'comments/comment', comment: comment
 
