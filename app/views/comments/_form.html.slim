@@ -1,6 +1,6 @@
-= form_for [@question, @comment], html: { style: "display: #{hidden ? 'none' : 'block'}" }, remote: true do |f|
+= form_for [commentable, comment], html: { style: "display: #{hidden ? 'none' : 'block'}" }, remote: true do |f|
 
-  = render 'common/errors', resource: @comment
+  = render 'common/errors', resource: comment
   = render 'comments/comment_fields', f: f
   .right
     = f.submit t('comments.submit_comment'), class: 'btn btn-primary'

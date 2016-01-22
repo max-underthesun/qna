@@ -1,7 +1,7 @@
 .col-lg-1
 .col-lg-11
   .comments id="comments-for-#{name_of(commentable)}-#{commentable.id}"
-    - unless @question.comments.empty?
+    - unless commentable.comments.empty?
       = t('common.comments')
       - commentable.comments.each do |comment|
         - unless comment.new_record?
@@ -10,5 +10,8 @@
   .new-comment-form
     = link_to t('comments.new_comment'), '', class: "new-comment-link"
     .comment-errors
-    = render 'comments/form', hidden: true, remote: true
+    = render 'comments/form', commentable: commentable,
+                              comment: commentable.comments.new,
+                              hidden: true,
+                              remote: true
 
