@@ -10,7 +10,6 @@ var commentBodyField = $(form + ' #comment_body')
   errors.html('<%= render_errors_for(@comment, remotipart_submitted?) %>');
   formGroup.addClass('field_with_errors');
 <% else %>
-  
   errors.empty();
   formGroup.removeClass('field_with_errors');
   comments.append('<%= render_resource(@comment, remotipart_submitted?) %>');
