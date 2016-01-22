@@ -1,4 +1,14 @@
-= t('common.comments')
-- commentable.comments.each do |comment|
-  - unless comment.new_record?
-    = render 'comments/comment', comment: comment
+.col-lg-1
+.col-lg-11
+  .comments id="comments-for-#{name_of(commentable)}-#{commentable.id}"
+    - unless @question.comments.empty?
+      = t('common.comments')
+      - commentable.comments.each do |comment|
+        - unless comment.new_record?
+          = render 'comments/comment', comment: comment
+
+  .new-comment-form
+    = link_to t('comments.new_comment'), '', class: "new-comment-link"
+    .comment-errors
+    = render 'comments/form', hidden: true, remote: true
+
