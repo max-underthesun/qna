@@ -74,7 +74,7 @@ $(document).ready ->
     e.preventDefault();
     if gon.current_user_id
       if !$(this).hasClass('cancel')
-        $(this).html 'Cancel edit'
+        $(this).html 'cancel adding new comment'
         $(this).addClass 'cancel'
         $('.new_comment').show()
         $('.comment-errors').show()
