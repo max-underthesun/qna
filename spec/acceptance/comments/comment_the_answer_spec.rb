@@ -9,15 +9,15 @@ feature 'COMMENT THE ANSWER', %q(
   given(:question_author) { create(:user) }
   given(:answer_author) { create(:user) }
   given!(:question) { create(:question, user: question_author) }
-  given!(:answer) { create(:answer, user: answer_author) }
+  given!(:answer) { create(:answer, question: question, user: answer_author) }
   given!(:comments) { create_list(:comment, comments_number, commentable: answer) }
   given(:comment) { build(:comment, commentable: answer) }
 
   describe "- unauthorized user" do
     before { visit question_path(question) }
 
-    scenario "-- see all the comments for the question" do
-      within ".answers #answer_#{answer.id} .comments" do
+    scenario "-- see all the comments for the answer" do
+      within ".answers .answer #comments-for-answer-#{answer.id}" do
         comments.each do |comment|
           expect(page).to have_content comment.body
           expect(page).to have_content comment.user.email
