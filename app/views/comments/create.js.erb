@@ -1,11 +1,20 @@
+var commentableName = '<%= name_of(@comment.commentable) %>';
+var commentableId = '<%= @comment.commentable.id %>';
+var form = '#new-comment-form-for-' + commentableName + '-' + commentableId;
+var errors = $('#comment-errors-for-' + commentableName + '-' + commentableId);
+var comments = $('#comments-for-' + commentableName + '-' + commentableId);
+var formGroup = $(form + ' .form-group')
+var commentBodyField = $(form + ' #comment_body')
+
 <% if @comment.errors.present? %>
-  $('.comment-errors').html('<%= render_errors_for(@comment, remotipart_submitted?) %>');
-  $('.new_comment .form-group').addClass('field_with_errors');
+  errors.html('<%= render_errors_for(@comment, remotipart_submitted?) %>');
+  formGroup.addClass('field_with_errors');
 <% else %>
-  $('.comment-errors').empty();
-  $('.new_comment .form-group').removeClass('field_with_errors');
-  $('.comments').append('<%= render_resource(@comment, remotipart_submitted?) %>');
-  $('.new_comment #comment_body').val('');
+  
+  errors.empty();
+  formGroup.removeClass('field_with_errors');
+  comments.append('<%= render_resource(@comment, remotipart_submitted?) %>');
+  commentBodyField.val('');
 <% end %>
 
 $('.flash').html('<%= bootstrap_flash %>');

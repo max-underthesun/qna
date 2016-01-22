@@ -1,4 +1,7 @@
-= form_for [commentable, comment], html: { style: "display: #{hidden ? 'none' : 'block'}" }, remote: true do |f|
+= form_for [commentable, comment],
+           html: { style: "display: #{hidden ? 'none' : 'block'}",
+                   id: "new-comment-form-for-#{name_of(commentable)}-#{commentable.id}" },
+           remote: true do |f|
 
   = render 'common/errors', resource: comment
   = render 'comments/comment_fields', f: f

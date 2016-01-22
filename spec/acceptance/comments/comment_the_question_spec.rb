@@ -29,7 +29,7 @@ feature 'COMMENT THE QUESTION', %q(
       end
 
       expect(page).to_not have_css('textarea#comment_body')
-      expect(page).to have_content('You have to sign in first')
+      expect(page).to have_content('You have to sign in for comment the question')
     end
   end
 

@@ -77,6 +77,12 @@ textarea {
   font-size: 1.5em;
 }
 
+.comments {
+  margin-top:15px;
+  margin-bottom:5px;
+  padding-top:5px;
+}
+
 .comment {
   margin-top:5px;
   margin-bottom:5px;
@@ -199,5 +205,9 @@ ul {
 }
 
 .answer-errors {
+  margin-top:20px;
+}
+
+.comment-errors {
   margin-top:20px;
 }
