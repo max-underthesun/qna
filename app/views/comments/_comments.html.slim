@@ -1,7 +1,7 @@
 .col-lg-1
 .col-lg-11
   .comments id="comments-for-#{name_of(commentable)}-#{commentable.id}"
-    - unless commentable.comments.empty?
+    - if commentable.comments.exists?
       = t('common.comments')
       - commentable.comments.order_by_creation_asc.each do |comment|
         - unless comment.new_record?
