@@ -17,12 +17,10 @@ ratingRenewFor = (answer) ->
 cancel = ->
   $(document.body).on 'click', '.edit-answer-link.cancel', (e) ->
     e.preventDefault();
-
     answer_id = $(this).data('resourceId')
 
     $(this).html 'Edit'
     $(this).removeClass 'cancel'
-
     form(answer_id).hide()
     errors(answer_id).hide()
     destroy(answer_id).show()
@@ -30,13 +28,11 @@ cancel = ->
 edit = ->
   $(document.body).on 'click', '.edit-answer-link', (e) ->
     e.preventDefault();
-
     if !$(this).hasClass('cancel')
       answer_id = $(this).data('resourceId')
 
       $(this).html 'Cancel edit'
       $(this).addClass 'cancel'
-
       form(answer_id).show()
       errors(answer_id).show()
       destroy(answer_id).hide()
@@ -79,18 +75,13 @@ voteDestroy = ->
     $('.flash').html(alert(failure, 'warning'))
 
 privatePub = ->
-  # gon.watch 'current_user_id'
   currentUserId = gon.current_user_id
   questionId = $('.answers').data('questionId')
-  console.log(currentUserId)
-  # console.log(gon.current_user_id)
   PrivatePub.subscribe '/questions/' + questionId + '/answers', (data, channel) ->
-    console.log(data)
     answer = $.parseJSON(data['answer'])
     rating = $.parseJSON(data['rating'])
     author = $.parseJSON(data['author'])
     attachments = $.parseJSON(data['attachments'])
-    console.log(answer)
     if currentUserId != answer.user_id
       $('.answers').append(JST["answers/answer"]({
         answer: answer,
@@ -102,6 +93,29 @@ privatePub = ->
         attachments: attachments
       }))
 
+newComment = ->
+  $(document.body).on 'click', '.new-comment-for-answer-link', (e) ->
+    e.preventDefault();
+    if gon.current_user_id
+      if !$(this).hasClass('cancel')
+        answer_id = $(this).data('resourceId')
+        $(this).html 'cancel adding new comment'
+        $(this).addClass 'cancel'
+        $('#new-comment-form-for-answer-' + answer_id).show()
+        $('#comment-errors-for-answer-' + answer_id).show()
+    else
+      failure = 'You have to sign in for comment the answer'
+      $('.flash').html(alert(failure, 'warning'))
+
+newCommentCancel = ->
+  $(document.body).on 'click', '.new-comment-for-answer-link.cancel', (e) ->
+    e.preventDefault();
+    answer_id = $(this).data('resourceId')
+    $(this).html 'new comment'
+    $(this).removeClass 'cancel'
+    $('#new-comment-form-for-answer-' + answer_id).hide()
+    $('#comment-errors-for-answer-' + answer_id).hide()
+
 ready = ->
   edit()
   cancel()
@@ -109,7 +123,7 @@ ready = ->
   voteDown()
   voteDestroy()
   privatePub()
+  newComment()
+  newCommentCancel()
 
 $(document).ready(ready)
-# $(document).on('page:load', privatePub)
-# $(document).on('page:update', privatePub)

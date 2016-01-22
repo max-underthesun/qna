@@ -21,3 +21,5 @@
 
       .answer-errors id="errors-answer-#{answer.id}"
       = render 'answers/form', answer: answer, hidden: true, remote: true
+
+  = render 'comments/comments', commentable: answer

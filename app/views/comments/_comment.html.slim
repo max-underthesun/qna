@@ -1,0 +1,6 @@
+.comment id="comment_#{comment.id}"
+  = comment.body
+
+  .right
+    = t('common.author')
+    = comment.user ? comment.user.email : t('common.not_defined')

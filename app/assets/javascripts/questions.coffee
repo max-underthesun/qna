@@ -62,7 +62,6 @@ $(document).ready ->
     $('.flash').html(alert(failure, 'warning'))
 
   PrivatePub.subscribe '/questions', (data, channel) ->
-    console.log(data)
     question = $.parseJSON(data['question'])
     author = $.parseJSON(data['author'])
     $('tbody').append(JST["questions/index"]({
@@ -70,4 +69,23 @@ $(document).ready ->
         author: author
       }))
 
-  # console.log(gon.current_user)
+  $(document.body).on 'click', '.new-comment-for-question-link', (e) ->
+    e.preventDefault();
+    question_id = $(this).data('resourceId')
+    if gon.current_user_id
+      if !$(this).hasClass('cancel')
+        $(this).html 'cancel adding new comment'
+        $(this).addClass 'cancel'
+        $('#new-comment-form-for-question-' + question_id).show()
+        $('.comment-errors#comment-errors-for-question-' + question_id).show()
+    else
+      failure = 'You have to sign in for comment the question'
+      $('.flash').html(alert(failure, 'warning'))
+
+  $(document.body).on 'click', '.new-comment-for-question-link.cancel', (e) ->
+    e.preventDefault();
+    question_id = $(this).data('resourceId')
+    $(this).html 'new comment'
+    $(this).removeClass 'cancel'
+    $('#new-comment-form-for-question-' + question_id).hide()
+    $('.comment-errors#comment-errors-for-question-' + question_id).hide()

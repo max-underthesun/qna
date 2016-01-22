@@ -11,8 +11,11 @@ Rails.application.routes.draw do
 
   resources :questions, concerns: [:votable] do
     resources :answers, concerns: [:votable], shallow: true do
+      resources :comments
       patch :best, on: :member
     end
+
+    resources :comments
   end
 
   resources :attachments, only: :destroy
