@@ -1,45 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe CommentsController, type: :controller do
-  # let(:question_author) { create(:user) }
-  # let(:question) { create(:question, user: question_author) }
-
-  # describe 'POST #create' do
-  #   sign_in_user
-
-  #   context 'with valid attributes' do
-  #     it 'saves a new comment to the database' do
-  #       expect {
-  #         post :create, question_id: question, answer: attributes_for(:answer), format: :js
-  #       }.to change(question.answers, :count).by(1)
-  #       expect(assigns(:answer).user).to eq @user
-  #     end
-
-  #     it 'render create template' do
-  #       post :create, question_id: question, answer: attributes_for(:answer), format: :js
-  #       expect(response).to render_template :create
-  #     end
-  #   end
-
-  #   context 'with invalid attributes' do
-  #     it 'puts the question to the variable @question' do
-  #       post :create, question_id: question, answer: attributes_for(:invalid_answer), format: :js
-  #       expect(assigns(:question)).to eq question
-  #     end
-
-  #     it 'does not save an answer' do
-  #       expect {
-  #         post :create, question_id: question, answer: attributes_for(:invalid_answer), format: :js
-  #       }.to_not change(Answer, :count)
-  #     end
-
-  #     it 'redirect to question show view' do
-  #       post :create, question_id: question, answer: attributes_for(:invalid_answer), format: :js
-  #       expect(response).to render_template :create
-  #     end
-  #   end
-  # end
-
   describe 'POST #create' do
     let(:question_author) { create(:user) }
     let(:question) { create(:question, user: question_author) }
