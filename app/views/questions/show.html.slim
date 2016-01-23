@@ -16,3 +16,4 @@
         = f.submit t('.submit_answer'), class: 'btn btn-primary'
 
 = subscribe_to "/questions/#{@question.id}/answers"
+= subscribe_to "/questions/#{@question.id}/comments"

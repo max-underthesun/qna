@@ -89,3 +89,15 @@ $(document).ready ->
     $(this).removeClass 'cancel'
     $('#new-comment-form-for-question-' + question_id).hide()
     $('.comment-errors#comment-errors-for-question-' + question_id).hide()
+
+  currentUserId = gon.current_user_id
+  questionId = $('.answers').data('questionId')
+  console.log(questionId)
+  PrivatePub.subscribe '/questions/' + questionId + '/comments', (data, channel) ->
+    comment = $.parseJSON(data['comment'])
+    author = $.parseJSON(data['author'])
+    if currentUserId != comment.user_id
+      $('#comments-for-question-' + questionId).append(JST["comments/comment"]({
+          comment: comment,
+          author: author
+        }))
