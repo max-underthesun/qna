@@ -92,7 +92,6 @@ $(document).ready ->
 
   currentUserId = gon.current_user_id
   questionId = $('.answers').data('questionId')
-  console.log(questionId)
   PrivatePub.subscribe '/questions/' + questionId + '/comments', (data, channel) ->
     comment = $.parseJSON(data['comment'])
     author = $.parseJSON(data['author'])

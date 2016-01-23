@@ -74,7 +74,7 @@ voteDestroy = ->
     failure = 'You can not cancel this vote'
     $('.flash').html(alert(failure, 'warning'))
 
-privatePub = ->
+privatePubAnswers = ->
   currentUserId = gon.current_user_id
   questionId = $('.answers').data('questionId')
   PrivatePub.subscribe '/questions/' + questionId + '/answers', (data, channel) ->
@@ -116,14 +116,27 @@ newCommentCancel = ->
     $('#new-comment-form-for-answer-' + answer_id).hide()
     $('#comment-errors-for-answer-' + answer_id).hide()
 
+privatePubComments = ->
+  currentUserId = gon.current_user_id
+  questionId = $('.answers').data('questionId')
+  PrivatePub.subscribe '/questions/' + questionId + '/answers/comments', (data, channel) ->
+    comment = $.parseJSON(data['comment'])
+    author = $.parseJSON(data['author'])
+    if currentUserId != comment.user_id
+      $('#comments-for-answer-' + comment.commentable_id).append(JST["comments/comment"]({
+          comment: comment,
+          author: author
+        }))
+
 ready = ->
   edit()
   cancel()
   voteUp()
   voteDown()
   voteDestroy()
-  privatePub()
+  privatePubAnswers()
   newComment()
   newCommentCancel()
+  privatePubComments()
 
 $(document).ready(ready)

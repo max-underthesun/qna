@@ -33,7 +33,8 @@ class CommentsController < ApplicationController
     case @commentable_class.name
     when 'Question'
       "/questions/#{@commentable.id}/comments"
-      # "/questions/#{@question.id}/answers/comments"
+    when 'Answer'
+      "/questions/#{@commentable.question_id}/answers/comments"
     end
   end
 end
