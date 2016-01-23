@@ -59,7 +59,7 @@ en:
       update_answer: "Update answer"
   comments:
       new_comment: "new comment"
-      submit_comment: "Submin comment"
+      submit_comment: "Submit comment"
   confirmations:
     answers:
       create: "Your answer was successfully created."

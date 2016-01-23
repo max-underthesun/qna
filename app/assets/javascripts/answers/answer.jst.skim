@@ -41,3 +41,22 @@
         a [class="btn btn-success btn-xs" data-remote="true" data-method="patch"
            rel="nofollow" href="/answers/#{@answer.id}/best"] 
            |Best answer
+
+  .col-lg-1
+  .col-lg-11
+    .comments id="comments-for-answer-#{@answer.id}"
+
+    .new-comment-form id="new-comment-for-answer-#{@answer.id}"
+      a class="new-comment-for-answer-link" data-resource-id="#{@answer.id}" href="" new comment
+
+      .comment-errors id="comment-errors-for-answer-#{@answer.id}"
+      form [style="display: none" id="new-comment-form-for-answer-#{@answer.id}"
+            class="new_comment" action="/answers/#{@answer.id}/comments"
+            accept-charset="UTF-8" data-remote="true" method="post"]
+        input name="utf8" type="hidden" value="&#x2713;"
+
+        .form-group
+          label for="comment_body" Comment body
+          textarea class="form-control" name="comment[body]" id="comment_body"
+        .right
+          input type="submit" name="commit" value="Submit comment" class="btn btn-primary"
