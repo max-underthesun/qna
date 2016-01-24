@@ -1,10 +1,10 @@
 .question
   = render 'question'
+  = render 'comments/comments', commentable: @question
 
-.col-lg-12
-  h3 = t('.answers_list')
-  .answers
-    = render 'answers'
+
+.answers.col-lg-12 data={question_id: "#{@question.id}"}
+  = render 'answers'
 
 .col-lg-12
   .new-answer-form
@@ -14,3 +14,7 @@
       = render 'answers/answer_fields', f: f
       .right
         = f.submit t('.submit_answer'), class: 'btn btn-primary'
+
+= subscribe_to "/questions/#{@question.id}/answers"
+= subscribe_to "/questions/#{@question.id}/comments"
+= subscribe_to "/questions/#{@question.id}/answers/comments"

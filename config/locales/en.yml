@@ -30,6 +30,7 @@ en:
     sure: "Are you sure?"
     attachments: "Attachments:"
     rating: "Rating: "
+    comments: "Comments"
   links:
     show: "Show"
     back: "Back"
@@ -56,6 +57,9 @@ en:
   answers:
     form:
       update_answer: "Update answer"
+  comments:
+      new_comment: "new comment"
+      submit_comment: "Submit comment"
   confirmations:
     answers:
       create: "Your answer was successfully created."
@@ -70,6 +74,8 @@ en:
       destroy: "Attachment was successfully removed"
     votes:
       create: "You voted successfully"
+    comment:
+      create: "Your comment was successfully created."
   failure:
     questions:
       destroy: "Your have no rights to destroy this question. Only author can do it."
@@ -97,6 +103,8 @@ en:
         body: "Answer Body"
       attachment:
         file: "file"
+      comment:
+        body: "Comment body"
     errors:
       format: "%{attribute} %{message}"
       messages:

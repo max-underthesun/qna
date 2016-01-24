@@ -8,7 +8,7 @@ class AnswersController < ApplicationController
   def create
     @answer = @question.answers.new(answer_params)
     @answer.user = current_user
-    @answer.save && flash[:notice] = I18n.t('confirmations.answers.create')
+    publish && flash[:notice] = I18n.t('confirmations.answers.create') if @answer.save
   end
 
   def update
@@ -51,5 +51,13 @@ class AnswersController < ApplicationController
 
   def answer_params
     params.require(:answer).permit(:body, attachments_attributes: [:file, :id, :_destroy])
+  end
+
+  def publish
+    PrivatePub.publish_to "/questions/#{@question.id}/answers",
+                          answer: @answer.to_json,
+                          rating: @answer.rating.to_json,
+                          author: @answer.user.email.to_json,
+                          attachments: @answer.attachments_info.to_json
   end
 end

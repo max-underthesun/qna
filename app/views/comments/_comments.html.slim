@@ -1,0 +1,20 @@
+.col-lg-1
+.col-lg-11
+  .comments id="comments-for-#{name_of(commentable)}-#{commentable.id}"
+    - if commentable.comments.exists?
+      = t('common.comments')
+      - commentable.comments.order_by_creation_asc.each do |comment|
+        - unless comment.new_record?
+          = render 'comments/comment', comment: comment
+
+  .new-comment-form id="new-comment-for-#{name_of(commentable)}-#{commentable.id}"
+    = link_to t('comments.new_comment'), '',
+              class: "new-comment-for-#{name_of(commentable)}-link",
+              data: { resource_id: commentable.id }
+
+    .comment-errors id="comment-errors-for-#{name_of(commentable)}-#{commentable.id}"
+    = render 'comments/form', commentable: commentable,
+                              comment: commentable.comments.new,
+                              hidden: true,
+                              remote: true
+

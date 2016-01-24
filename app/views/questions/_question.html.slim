@@ -13,8 +13,8 @@ p.question-title
     strong = t('common.author')
     = @question.user ? @question.user.email : t('common.not_defined')
 
-.col-lg-12.right
-  = link_to t('links.back'), questions_path
+  .right
+    = link_to t('links.back'), questions_path
 
   - if current_user && current_user.author_of?(@question)
     = render 'common/edit_destroy_links', resource: @question, remote: false

@@ -10,6 +10,8 @@ class QuestionsController < ApplicationController
 
   def show
     @answer = @question.answers.new
+    gon.current_user_id = current_user.id if current_user
+    gon.question_user_id = @question.user.id
   end
 
   def new
@@ -21,6 +23,7 @@ class QuestionsController < ApplicationController
 
     if @question.save
       flash[:notice] = I18n.t('confirmations.questions.create')
+      publish
       redirect_to @question
     else
       render :new
@@ -56,5 +59,11 @@ class QuestionsController < ApplicationController
 
   def load_question
     @question = Question.find(params[:id])
+  end
+
+  def publish
+    PrivatePub.publish_to "/questions",
+                          question: @question.to_json,
+                          author: @question.user.email.to_json
   end
 end

@@ -1,0 +1,20 @@
+var commentableName = '<%= name_of(@comment.commentable) %>';
+var commentableId = '<%= @comment.commentable.id %>';
+var form = '#new-comment-form-for-' + commentableName + '-' + commentableId;
+var errors = $('#comment-errors-for-' + commentableName + '-' + commentableId);
+var comments = $('#comments-for-' + commentableName + '-' + commentableId);
+var formGroup = $(form + ' .form-group')
+var commentBodyField = $(form + ' #comment_body')
+
+<% if @comment.errors.present? %>
+  errors.html('<%= render_errors_for(@comment, remotipart_submitted?) %>');
+  formGroup.addClass('field_with_errors');
+<% else %>
+  errors.empty();
+  formGroup.removeClass('field_with_errors');
+  comments.append('<%= render_resource(@comment, remotipart_submitted?) %>');
+  commentBodyField.val('');
+<% end %>
+
+$('.flash').html('<%= bootstrap_flash %>');
+<% flash.discard %>

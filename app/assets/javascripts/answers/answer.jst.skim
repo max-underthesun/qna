@@ -1,0 +1,62 @@
+.answer.row
+  .col-lg-1.center
+    div class="answer-rating" id="rating_for-answer_#{@answer.id}"
+      .bottom-buffer Rating:
+
+      div class="vote_up-answer-#{@answer.id}" style="display: block"
+        a [id="vote_up-answer-#{@answer.id}" class="btn btn-black vote_up"
+           data-remote="true" data-method="patch" data-type="json" rel="nofollow"
+           href="/answers/#{@answer.id}/vote_up"]
+          i.fa.fa-chevron-up
+      div class="rating-value rating_value-answer-#{@answer.id}"
+        = @rating
+      div class="vote_up-answer-#{@answer.id}" style="display: block"
+        a [id="vote_down-answer-#{@answer.id}" class="btn btn-black vote_down"
+           data-remote="true" data-method="patch" data-type="json" rel="nofollow"
+           href="/answers/#{@answer.id}/vote_down"]
+          i.fa.fa-chevron-down
+      div class="vote_up-answer-#{@answer.id}" style="display: none"
+        a [id="vote_destroy-answer-#{@answer.id}" class="btn btn-black vote_destroy"
+           data-remote="true" data-method="delete" data-type="json" rel="nofollow"
+           href="/answers/#{@answer.id}/vote_destroy"]
+          i.fa.fa-undo
+
+  .col-lg-11
+    p = @answer.body
+
+    .top-buffer
+      | Attachments:
+    - if @attachments.length
+      ul
+        - for attachment in @attachments
+          li id="attachment_#{attachment.id}"
+            a href="#{attachment.url}" #{attachment.name}
+
+    .right 
+      | Author:
+      = " #{@author}"
+
+    - if (@current_user_id && @current_user_id == @question_user_id)
+      .right.top-buffer
+        a [class="btn btn-success btn-xs" data-remote="true" data-method="patch"
+           rel="nofollow" href="/answers/#{@answer.id}/best"] 
+           |Best answer
+
+  .col-lg-1
+  .col-lg-11
+    .comments id="comments-for-answer-#{@answer.id}"
+
+    .new-comment-form id="new-comment-for-answer-#{@answer.id}"
+      a class="new-comment-for-answer-link" data-resource-id="#{@answer.id}" href="" new comment
+
+      .comment-errors id="comment-errors-for-answer-#{@answer.id}"
+      form [style="display: none" id="new-comment-form-for-answer-#{@answer.id}"
+            class="new_comment" action="/answers/#{@answer.id}/comments"
+            accept-charset="UTF-8" data-remote="true" method="post"]
+        input name="utf8" type="hidden" value="&#x2713;"
+
+        .form-group
+          label for="comment_body" Comment body
+          textarea class="form-control" name="comment[body]" id="comment_body"
+        .right
+          input type="submit" name="commit" value="Submit comment" class="btn btn-primary"
