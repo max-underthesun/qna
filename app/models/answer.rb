@@ -19,4 +19,12 @@ class Answer < ActiveRecord::Base
       update!(best: true)
     end
   end
+
+  def attachments_info
+    attachments_info = []
+    attachments.each do |a|
+      attachments_info << { id: a.id, name: a.file.filename, url: a.file.url }
+    end
+    attachments_info
+  end
 end

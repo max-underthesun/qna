@@ -8,7 +8,6 @@ class AnswersController < ApplicationController
   def create
     @answer = @question.answers.new(answer_params)
     @answer.user = current_user
-    # @answer.save && flash[:notice] = I18n.t('confirmations.answers.create')
     publish && flash[:notice] = I18n.t('confirmations.answers.create') if @answer.save
   end
 
@@ -59,14 +58,6 @@ class AnswersController < ApplicationController
                           answer: @answer.to_json,
                           rating: @answer.rating.to_json,
                           author: @answer.user.email.to_json,
-                          attachments: attachments.to_json
-  end
-
-  def attachments
-    attachments = []
-    @answer.attachments.each do |a|
-      attachments << { id: a.id, name: a.file.filename, url: a.file.url }
-    end
-    attachments
+                          attachments: @answer.attachments_info.to_json
   end
 end
