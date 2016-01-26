@@ -8,6 +8,8 @@ class Answer < ActiveRecord::Base
 
   validates :body, :question_id, :user_id, presence: true
 
+  validate :if_updating_by_author, on: :update
+
   scope :best_first, -> { order(best: :desc, created_at: :asc) }
 
   accepts_nested_attributes_for :attachments, reject_if: :all_blank, allow_destroy: true
@@ -26,5 +28,11 @@ class Answer < ActiveRecord::Base
       attachments_info << { id: a.id, name: a.file.filename, url: a.file.url }
     end
     attachments_info
+  end
+
+  private
+
+  def if_updating_by_author
+    errors.add(:base, 'Only author can update') if Answer.find(id).user_id != user_id
   end
 end
