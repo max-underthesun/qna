@@ -14,39 +14,39 @@ class QuestionsController < ApplicationController
     @answer = @question.answers.new
     gon.current_user_id = current_user.id if current_user
     gon.question_user_id = @question.user.id
-    respond_with(@question)
+    # respond_with(@question)
   end
 
   def new
-    respond_with(@question = Question.new)
+    @question = Question.new
+    # respond_with(@question = Question.new)
   end
 
   def create
-    respond_with(@question = current_user.questions.create(question_params))
-    publish
+    @question = current_user.questions.new(question_params)
+    if @question.save
+      flash[:notice] = I18n.t('confirmations.questions.create')
+      publish
+      redirect_to @question
+    else
+      render :new
+    end
 
-    # @question = current_user.questions.new(question_params)
-
-    # if @question.save
-    #   flash[:notice] = I18n.t('confirmations.questions.create')
-    #   publish
-    #   redirect_to @question
-    # else
-    #   render :new
-    # end
+    # respond_with(@question = current_user.questions.create(question_params))
+    # publish
   end
 
   def update
-    @question.update(question_params) if current_user.author_of?(@question)
-    respond_with(@question)
+    if current_user.author_of?(@question)
+      @question.update(question_params) &&
+        flash[:notice] = I18n.t('confirmations.questions.update')
+    else
+      flash[:alert] = I18n.t('failure.questions.update')
+      render status: :forbidden
+    end
 
-    # if current_user.author_of?(@question)
-    #   @question.update(question_params) &&
-    #     flash[:notice] = I18n.t('confirmations.questions.update')
-    # else
-    #   flash[:alert] = I18n.t('failure.questions.update')
-    #   render status: :forbidden
-    # end
+    # @question.update(question_params) if current_user.author_of?(@question)
+    # respond_with(@question)
   end
 
   def destroy
@@ -78,7 +78,7 @@ class QuestionsController < ApplicationController
   end
 
   def publish
-    return if @question.errors.any?
+    # return if @question.errors.any?
     PrivatePub.publish_to "/questions",
                           question: @question.to_json,
                           author: @question.user.email.to_json
