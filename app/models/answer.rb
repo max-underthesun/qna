@@ -8,7 +8,7 @@ class Answer < ActiveRecord::Base
 
   validates :body, :question_id, :user_id, presence: true
 
-  validate :if_updating_by_author, on: :update
+  # validate :if_updating_by_author, on: :update
 
   scope :best_first, -> { order(best: :desc, created_at: :asc) }
 
@@ -30,9 +30,9 @@ class Answer < ActiveRecord::Base
     attachments_info
   end
 
-  private
+  # private
 
-  def if_updating_by_author
-    errors.add(:base, 'Only author can update') if Answer.find(id).user_id != user_id
-  end
+  # def if_updating_by_author
+  #   errors.add(:base, 'Only author can update') if Answer.find(id).user_id != user_id
+  # end
 end

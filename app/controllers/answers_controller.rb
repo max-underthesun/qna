@@ -8,37 +8,37 @@ class AnswersController < ApplicationController
   respond_to :js, only: [:create, :update, :destroy]
 
   def create
-    respond_with(
-      @answer = @question.answers.create(answer_params.merge!(user_id: current_user.id)))
-    publish
+    @answer = @question.answers.new(answer_params)
+    @answer.user = current_user
+    publish && flash[:notice] = I18n.t('confirmations.answers.create') if @answer.save
 
-    # @answer = @question.answers.new(answer_params)
-    # @answer.user = current_user
-    # publish && flash[:notice] = I18n.t('confirmations.answers.create') if @answer.save
+    # respond_with(
+    #   @answer = @question.answers.create(answer_params.merge!(user_id: current_user.id)))
+    # publish
   end
 
   def update
-    # @answer.update(answer_params) if current_user.author_of?(@answer)
-    @answer.update(answer_params.merge!(user_id: current_user.id))
-    respond_with(@answer)
+    if current_user.author_of?(@answer)
+      @answer.update(answer_params) && flash[:notice] = I18n.t('confirmations.answers.update')
+    else
+      flash[:alert] = I18n.t('failure.answers.update')
+      render status: :forbidden
+    end
 
-    # if current_user.author_of?(@answer)
-    #   @answer.update(answer_params) && flash[:notice] = I18n.t('confirmations.answers.update')
-    # else
-    #   flash[:alert] = I18n.t('failure.answers.update')
-    #   render status: :forbidden
-    # end
+    # @answer.update(answer_params) if current_user.author_of?(@answer)
+    # @answer.update(answer_params.merge!(user_id: current_user.id))
+    # respond_with(@answer)
   end
 
   def destroy
-    respond_with(@answer.destroy) if current_user.author_of?(@answer)
+    if current_user.author_of?(@answer)
+      @answer.destroy && flash[:warning] = I18n.t('confirmations.answers.destroy')
+    else
+      flash[:alert] = I18n.t('failure.answers.destroy')
+      render status: :forbidden
+    end
 
-    # if current_user.author_of?(@answer)
-    #   @answer.destroy && flash[:warning] = I18n.t('confirmations.answers.destroy')
-    # else
-    #   flash[:alert] = I18n.t('failure.answers.destroy')
-    #   render status: :forbidden
-    # end
+    # respond_with(@answer.destroy) if current_user.author_of?(@answer)
   end
 
   def best
@@ -66,7 +66,7 @@ class AnswersController < ApplicationController
   end
 
   def publish
-    return if @answer.errors.any?
+    # return if @answer.errors.any?
     PrivatePub.publish_to "/questions/#{@question.id}/answers",
                           answer: @answer.to_json,
                           rating: @answer.rating.to_json,
