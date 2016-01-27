@@ -5,28 +5,40 @@ class AnswersController < ApplicationController
   before_action :set_question, only: :create
   before_action :set_answer, only: [:update, :destroy, :best]
 
+  respond_to :js, only: [:create, :update, :destroy]
+
   def create
-    @answer = @question.answers.new(answer_params)
-    @answer.user = current_user
-    publish && flash[:notice] = I18n.t('confirmations.answers.create') if @answer.save
+    respond_with(
+      @answer = @question.answers.create(answer_params.merge!(user_id: current_user.id)))
+    publish
+
+    # @answer = @question.answers.new(answer_params)
+    # @answer.user = current_user
+    # publish && flash[:notice] = I18n.t('confirmations.answers.create') if @answer.save
   end
 
   def update
-    if current_user.author_of?(@answer)
-      @answer.update(answer_params) && flash[:notice] = I18n.t('confirmations.answers.update')
-    else
-      flash[:alert] = I18n.t('failure.answers.update')
-      render status: :forbidden
-    end
+    # @answer.update(answer_params) if current_user.author_of?(@answer)
+    @answer.update(answer_params.merge!(user_id: current_user.id))
+    respond_with(@answer)
+
+    # if current_user.author_of?(@answer)
+    #   @answer.update(answer_params) && flash[:notice] = I18n.t('confirmations.answers.update')
+    # else
+    #   flash[:alert] = I18n.t('failure.answers.update')
+    #   render status: :forbidden
+    # end
   end
 
   def destroy
-    if current_user.author_of?(@answer)
-      @answer.destroy && flash[:warning] = I18n.t('confirmations.answers.destroy')
-    else
-      flash[:alert] = I18n.t('failure.answers.destroy')
-      render status: :forbidden
-    end
+    respond_with(@answer.destroy) if current_user.author_of?(@answer)
+
+    # if current_user.author_of?(@answer)
+    #   @answer.destroy && flash[:warning] = I18n.t('confirmations.answers.destroy')
+    # else
+    #   flash[:alert] = I18n.t('failure.answers.destroy')
+    #   render status: :forbidden
+    # end
   end
 
   def best
@@ -54,6 +66,7 @@ class AnswersController < ApplicationController
   end
 
   def publish
+    return if @answer.errors.any?
     PrivatePub.publish_to "/questions/#{@question.id}/answers",
                           answer: @answer.to_json,
                           rating: @answer.rating.to_json,

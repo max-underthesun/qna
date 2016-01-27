@@ -62,12 +62,12 @@ en:
       submit_comment: "Submit comment"
   confirmations:
     answers:
-      create: "Your answer was successfully created."
+      create: "Answer was successfully created."
       destroy: "Your answer was successfully destroyed."
       update: "Your answer was successfully updated"
       best: "The answer was successfully choosen as best answer"
     questions:
-      create: "Your question was successfully created."
+      create: "Question was successfully created."
       destroy: "Your question was successfully destroyed."
       update: "Your question was successfully updated"
     attachment:
