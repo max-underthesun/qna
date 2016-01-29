@@ -7,7 +7,9 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   private
 
   def authorize_user
-    @user = User.find_for_oauth(request.env['omniauth.auth'])
+    auth = request.env['omniauth.auth']
+    return unless auth
+    @user = User.find_for_oauth(auth)
     return unless @user.persisted?
     sign_in_and_redirect @user, event: :authentication
     return unless is_navigational_format?
