@@ -2,11 +2,59 @@ class User < ActiveRecord::Base
   has_many :questions, dependent: :destroy
   has_many :answers, dependent: :destroy
   has_many :votes, dependent: :destroy
+  has_many :authorizations, dependent: :destroy
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+         :recoverable, :rememberable, :trackable, :validatable,
+         :omniauthable, omniauth_providers: [:facebook]
+
+  def self.find_for_oauth(auth)
+    @email = auth.info[:email] if auth.info.try(:email)
+
+    if user_exist_and_already_has_authorization?(auth)
+      return @user
+    elsif user_existed_but_has_no_authorization?
+      create_authorization(auth)
+    else
+      create_a_new_user
+      create_authorization(auth)
+    end
+    @user
+
+    # authorization = Authorization.where(provider: auth.provider, uid: auth.uid.to_s).first
+    # return authorization.user if authorization
+
+    # email = auth.info[:email]
+    # user = User.where(email: email).first
+    # if user
+    #   user.authorizations.create(provider: auth.provider, uid: auth.uid)
+    # else
+    #   password = Devise.friendly_token[0, 20]
+    #   user = User.create!(email: email, password: password, password_confirmation: password)
+    #   user.authorizations.create(provider: auth.provider, uid: auth.uid)
+    # end
+    # user
+  end
+
+  def self.user_exist_and_already_has_authorization?(auth)
+    @authorization = Authorization.where(provider: auth.provider, uid: auth.uid.to_s).first
+    @user = @authorization.user if @authorization
+  end
+
+  def self.user_existed_but_has_no_authorization?
+    @user = User.where(email: @email).first
+  end
+
+  def self.create_a_new_user
+    password = Devise.friendly_token[0, 20]
+    @user = User.create!(email: @email, password: password, password_confirmation: password)
+  end
+
+  def self.create_authorization(auth)
+    @user.authorizations.create(provider: auth.provider, uid: auth.uid)
+  end
 
   def author_of?(object)
     object.user_id == id
