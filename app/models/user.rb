@@ -23,36 +23,7 @@ class User < ActiveRecord::Base
       create_authorization(auth)
     end
     @user
-
-    # authorization = Authorization.where(provider: auth.provider, uid: auth.uid.to_s).first
-    # return authorization.user if authorization
-
-    # email = auth.info[:email]
-    # user = User.where(email: email).first
-    # if user
-    #   user.authorizations.create(provider: auth.provider, uid: auth.uid)
-    # else
-    #   password = Devise.friendly_token[0, 20]
-    #   user = User.create!(email: email, password: password, password_confirmation: password)
-    #   user.authorizations.create(provider: auth.provider, uid: auth.uid)
-    # end
-    # user
   end
-
-  # def self.new_with_session(params, session)
-  #   if session["devise.auth_attributes"]
-  #     new(params) do |user|
-  #       @provider = user.authorizations.find_by(provider: session['devise.auth_attributes'][:provider])
-  #     end
-  #   else
-  #     super
-  #   end
-  # end
-
-  # def password_required?
-  #   # super && authorizations.blank?
-  #   super && authorizations.find_by(@provider).blank?
-  # end
 
   def author_of?(object)
     object.user_id == id
