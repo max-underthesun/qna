@@ -1,0 +1,8 @@
+.col-lg-8
+  = form_tag "/users/auth/#{action}/callback", method: :post do
+
+    .form-group
+      = label_tag :email
+      = email_field_tag :email, nil, class: 'form-control'
+    .right
+    = submit_tag 'Confirm email', class: 'btn btn-primary'

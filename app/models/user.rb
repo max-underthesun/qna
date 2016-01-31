@@ -8,16 +8,17 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
-         :omniauthable, omniauth_providers: [:facebook]
+         :omniauthable, omniauth_providers: [:facebook, :twitter]
 
   def self.find_for_oauth(auth)
     @email = auth.info[:email] if auth.info.try(:email)
 
-    if user_exist_and_already_has_authorization?(auth)
+    if user_exists_and_already_has_authorization?(auth)
       return @user
-    elsif user_existed_but_has_no_authorization?
+    elsif user_exists_but_has_no_authorization?
       create_authorization(auth)
     else
+      return unless @email
       create_a_new_user
       create_authorization(auth)
     end
@@ -38,23 +39,20 @@ class User < ActiveRecord::Base
     # user
   end
 
-  def self.user_exist_and_already_has_authorization?(auth)
-    @authorization = Authorization.where(provider: auth.provider, uid: auth.uid.to_s).first
-    @user = @authorization.user if @authorization
-  end
+  # def self.new_with_session(params, session)
+  #   if session["devise.auth_attributes"]
+  #     new(params) do |user|
+  #       @provider = user.authorizations.find_by(provider: session['devise.auth_attributes'][:provider])
+  #     end
+  #   else
+  #     super
+  #   end
+  # end
 
-  def self.user_existed_but_has_no_authorization?
-    @user = User.where(email: @email).first
-  end
-
-  def self.create_a_new_user
-    password = Devise.friendly_token[0, 20]
-    @user = User.create!(email: @email, password: password, password_confirmation: password)
-  end
-
-  def self.create_authorization(auth)
-    @user.authorizations.create(provider: auth.provider, uid: auth.uid)
-  end
+  # def password_required?
+  #   # super && authorizations.blank?
+  #   super && authorizations.find_by(@provider).blank?
+  # end
 
   def author_of?(object)
     object.user_id == id
@@ -69,6 +67,24 @@ class User < ActiveRecord::Base
   end
 
   private
+
+  def self.user_exists_and_already_has_authorization?(auth)
+    @authorization = Authorization.where(provider: auth.provider, uid: auth.uid.to_s).first
+    @user = @authorization.user if @authorization
+  end
+
+  def self.user_exists_but_has_no_authorization?
+    @user = User.where(email: @email).first
+  end
+
+  def self.create_a_new_user
+    password = Devise.friendly_token[0, 20]
+    @user = User.create!(email: @email, password: password, password_confirmation: password)
+  end
+
+  def self.create_authorization(auth)
+    @user.authorizations.create(provider: auth.provider, uid: auth.uid)
+  end
 
   def not_author_of?(object)
     !author_of?(object)
