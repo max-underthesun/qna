@@ -16,6 +16,16 @@ feature 'USER SIGN_IN WITH TWITTER', %q(
     mock_auth_hash('twitter')
     click_on 'Sign in with Twitter'
 
+save_and_open_page
+    # find("input[name='email']").set('twitter@test.com')
+
+    fill_in 'email', with: 'twitter@test.com'
+    sleep(5)
+
+save_and_open_page
+    click_on 'Confirm email'
+
+    sleep(5)
     expect(page).to have_content 'Successfully authenticated from Twitter account'
   end
 end
