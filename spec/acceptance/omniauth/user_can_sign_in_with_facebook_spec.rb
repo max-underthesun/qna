@@ -5,8 +5,7 @@ feature 'USER SIGN_IN WITH FACEBOOK', %q(
 ) do
   scenario 'with invalid credentials sign_in fail' do
     visit new_user_session_path
-
-    mock_auth_hash_invalid
+    mock_auth_hash_invalid('facebook')
     click_on 'Sign in with Facebook'
 
     expect(page).to have_content 'Could not authenticate you from Facebook'
@@ -14,8 +13,7 @@ feature 'USER SIGN_IN WITH FACEBOOK', %q(
 
   scenario 'with valid credentials user successfully sign_in' do
     visit new_user_session_path
-
-    mock_auth_hash
+    mock_auth_hash('facebook')
     click_on 'Sign in with Facebook'
 
     expect(page).to have_content 'Successfully authenticated from Facebook account'
