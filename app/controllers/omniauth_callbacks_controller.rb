@@ -10,8 +10,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   private
 
   def authorize_user
-    return unless auth
-    @user = User.find_for_oauth(auth)
+    @user = OauthAuthenticator.new(auth).find_or_create_user
     if @user && @user.persisted?
       sign_in_user_with_choosen_provider
     else
@@ -20,9 +19,27 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def auth
-    return request.env['omniauth.auth'] if request.env['omniauth.auth']
-    auth_from_session_attributes
+    request.env['omniauth.auth'] || auth_from_session_attributes
+    # omni_auth = request.env['omniauth.auth']
+    # auth = { provider: omni_auth.provider, uid: omni_auth.uid }
+    # auth[:email] = omni_auth.info[:email] if omni_auth.info.try(:email)
+    # auth || auth_from_session_attributes
   end
+
+  # def authorize_user
+  #   return unless auth
+  #   @user = User.find_for_oauth(auth)
+  #   if @user && @user.persisted?
+  #     sign_in_user_with_choosen_provider
+  #   else
+  #     ask_user_to_provide_email_and_then_proceed
+  #   end
+  # end
+
+  # def auth
+  #   return request.env['omniauth.auth'] if request.env['omniauth.auth']
+  #   auth_from_session_attributes
+  # end
 
   def auth_from_session_attributes
     return unless session['devise.auth_attributes']
@@ -42,6 +59,6 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def ask_user_to_provide_email_and_then_proceed
     session['devise.auth_attributes'] = { provider: auth.provider, uid: auth.uid }
     flash[:info] = I18n.t('info.enter_email')
-    render 'omniauth_callbacks/enter_email', locals: { action: action_name }
+    render 'omniauth_callbacks/enter_email', locals: { action: auth.provider }
   end
 end
