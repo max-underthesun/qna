@@ -16,7 +16,11 @@ feature 'USER SIGN_IN WITH TWITTER', %q(
     mock_auth_hash('twitter')
     click_on 'Sign in with Twitter'
 
+    expect(page).to have_css('input#email')
+
     # find("input[name='email']").set('twitter@test.com')
+
+    # save_and_open_page
     fill_in 'email', with: 'twitter@test.com'
     click_on I18n.t('omniauth_callbacks.enter_email.submit_email')
 
