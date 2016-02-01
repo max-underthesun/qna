@@ -41,7 +41,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   def ask_user_to_provide_email_and_then_proceed
     session['devise.auth_attributes'] = { provider: auth.provider, uid: auth.uid }
-    flash[:info] = 'Please enter your email to finish the registration through Twitter'
+    flash[:info] = I18n.t('info.enter_email')
     render 'omniauth_callbacks/enter_email', locals: { action: action_name }
   end
 end

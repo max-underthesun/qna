@@ -18,7 +18,7 @@ feature 'USER SIGN_IN WITH TWITTER', %q(
 
     # find("input[name='email']").set('twitter@test.com')
     fill_in 'email', with: 'twitter@test.com'
-    click_on 'Confirm email'
+    click_on I18n.t('omniauth_callbacks.enter_email.submit_email')
 
     expect(page).to have_content 'Successfully authenticated from Twitter account'
   end
