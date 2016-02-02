@@ -9,9 +9,9 @@ class OauthAuthenticator < ActiveRecord::Base
   validates :provider, :uid, presence: true
 
   def find_or_create_user
-    if user_exists_and_already_has_authorization?
-      return @user
-    elsif user_exists_but_has_no_authorization?
+    return @user if user_exists_and_already_has_authorization?
+    return false unless email
+    if user_exists_but_has_no_authorization?
       create_authorization
     else
       return unless email
@@ -20,6 +20,19 @@ class OauthAuthenticator < ActiveRecord::Base
     end
     @user
   end
+
+  # def find_or_create_user
+  #   if user_exists_and_already_has_authorization?
+  #     return @user
+  #   elsif user_exists_but_has_no_authorization?
+  #     create_authorization
+  #   else
+  #     return unless email
+  #     create_new_user
+  #     create_authorization
+  #   end
+  #   @user
+  # end
 
   private
 
