@@ -84,7 +84,7 @@ RSpec.describe OauthAuthenticator, type: :model do
           let(:authenticator) { OauthAuthenticator.new(auth) }
 
           it "returns 'false' if 'email' is not exists" do
-            expect(authenticator.find_or_create_user).to eq false
+            expect(authenticator.find_or_create_user).to eq nil
           end
 
           it "not creates a new user" do

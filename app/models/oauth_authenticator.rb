@@ -1,46 +1,28 @@
-class OauthAuthenticator < ActiveRecord::Base
-  # def initialize(auth)
-  #   @provider = auth.provider
-  #   @uid = auth.uid
-  #   @email = auth.info[:email] if auth.info.try(:email)
-  # end
-  before_validation :assign_attributes
+class OauthAuthenticator # < ActiveRecord::Base
+  include ActiveModel::Validations
 
   validates :provider, :uid, presence: true
 
+  def initialize(auth)
+    return unless auth
+    @provider = auth.provider
+    @uid = auth.uid
+    @email = auth.info[:email] if auth.info.try(:email)
+  end
+
   def find_or_create_user
     return @user if user_exists_and_already_has_authorization?
-    return false unless email
+    return unless email
     if user_exists_but_has_no_authorization?
       create_authorization
     else
-      return unless email
       create_new_user
       create_authorization
     end
     @user
   end
 
-  # def find_or_create_user
-  #   if user_exists_and_already_has_authorization?
-  #     return @user
-  #   elsif user_exists_but_has_no_authorization?
-  #     create_authorization
-  #   else
-  #     return unless email
-  #     create_new_user
-  #     create_authorization
-  #   end
-  #   @user
-  # end
-
   private
-
-  def assign_attributes(attributes)
-    @provider = attributes.provider
-    @uid = attributes.uid
-    @email = attributes.info[:email] if attributes.info.try(:email)
-  end
 
   attr_reader :provider, :uid, :email
 
