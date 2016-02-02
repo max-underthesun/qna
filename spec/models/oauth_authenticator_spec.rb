@@ -43,35 +43,53 @@ RSpec.describe OauthAuthenticator, type: :model do
       end
 
       context "user does not exist" do
-        let(:auth) do
-          user_params = { provider: 'facebook', uid: '123456', info: { email: 'new@user.com' } }
-          OmniAuth::AuthHash.new(user_params)
+        context "with 'email' provided in 'auth'" do
+          let(:auth) do
+            user_params = { provider: 'facebook', uid: '123456', info: { email: 'new@user.com' } }
+            OmniAuth::AuthHash.new(user_params)
+          end
+          let(:authenticator) { OauthAuthenticator.new(auth) }
+
+          it "creates a new user" do
+            expect { authenticator.find_or_create_user }.to change(User, :count).by(1)
+          end
+
+          it "returns the user created" do
+            expect(authenticator.find_or_create_user).to be_a(User)
+          end
+
+          it "fills user email" do
+            expect(authenticator.find_or_create_user.email).to eq auth.info.email
+          end
+
+          it "creates authorization for user" do
+            user = authenticator.find_or_create_user
+            expect(user.authorizations).to_not be_empty
+          end
+
+          it "creates authorization with provider and uid equal to provided" do
+            user = authenticator.find_or_create_user
+            authorization = user.authorizations.first
+
+            expect(authorization.provider).to eq auth.provider
+            expect(authorization.uid).to eq auth.uid
+          end
         end
-        let(:authenticator) { OauthAuthenticator.new(auth) }
 
-        it "creates a new user" do
-          expect { authenticator.find_or_create_user }.to change(User, :count).by(1)
-        end
+        context "with no 'email' provided in 'auth'" do
+          let(:auth) do
+            user_params = { provider: 'facebook', uid: '123456' }
+            OmniAuth::AuthHash.new(user_params)
+          end
+          let(:authenticator) { OauthAuthenticator.new(auth) }
 
-        it "returns the user created" do
-          expect(authenticator.find_or_create_user).to be_a(User)
-        end
+          it "returns 'false' if 'email' is not exists" do
+            expect(authenticator.find_or_create_user).to eq false
+          end
 
-        it "fills user email" do
-          expect(authenticator.find_or_create_user.email).to eq auth.info.email
-        end
-
-        it "creates authorization for user" do
-          user = authenticator.find_or_create_user
-          expect(user.authorizations).to_not be_empty
-        end
-
-        it "creates authorization with provider and uid equal to provided" do
-          user = authenticator.find_or_create_user
-          authorization = user.authorizations.first
-
-          expect(authorization.provider).to eq auth.provider
-          expect(authorization.uid).to eq auth.uid
+          it "not creates a new user" do
+            expect { authenticator.find_or_create_user }.to_not change(User, :count)
+          end
         end
       end
     end
