@@ -13,17 +13,16 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     @user = OauthAuthenticator.new(auth).find_or_create_user
     if @user && @user.persisted?
       sign_in_user_with_choosen_provider
-    else
-      ask_user_to_provide_email_and_then_proceed(auth)
+    elsif @auth
+      ask_user_to_provide_email_and_then_proceed
+    # else
+    #   flash[:info] = "Could not authenticate you from choosen provider"
+    #   redirect_to new_user_session_path
     end
   end
 
   def auth
-    request.env['omniauth.auth'] || auth_from_session_attributes
-    # omni_auth = request.env['omniauth.auth']
-    # auth = { provider: omni_auth.provider, uid: omni_auth.uid }
-    # auth[:email] = omni_auth.info[:email] if omni_auth.info.try(:email)
-    # auth || auth_from_session_attributes
+    @auth = request.env['omniauth.auth'] || auth_from_session_attributes
   end
 
   # def authorize_user
@@ -52,12 +51,12 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   def sign_in_user_with_choosen_provider
     sign_in_and_redirect @user, event: :authentication
-    return unless is_navigational_format?
-    set_flash_message(:notice, :success, kind: auth.provider.capitalize)
+    provider_name = @auth.provider.capitalize
+    set_flash_message(:notice, :success, kind: provider_name) if is_navigational_format?
   end
 
-  def ask_user_to_provide_email_and_then_proceed(auth)
-    session['devise.auth_attributes'] = { provider: auth.provider, uid: auth.uid }
+  def ask_user_to_provide_email_and_then_proceed
+    session['devise.auth_attributes'] = { provider: @auth.provider, uid: @auth.uid }
     flash[:info] = I18n.t('info.enter_email')
     render 'omniauth_callbacks/enter_email', locals: { action: auth.provider }
   end
