@@ -1,13 +1,21 @@
 class OauthAuthenticator # < ActiveRecord::Base
+  extend ActiveModel::Callbacks
   include ActiveModel::Validations
+  # include ActiveModel::AttributeMethods
+  # include ActiveModel::AttributeAssignment
+  define_model_callbacks :initialize
+
+  before_initialize :validate_attributes
 
   validates :provider, :uid, presence: true
 
   def initialize(auth)
-    return unless auth
-    @provider = auth.provider
-    @uid = auth.uid
-    @email = auth.info[:email] if auth.info.try(:email)
+    @auth = auth
+    run_callbacks(:initialize) do
+      @provider = @auth.provider
+      @uid = @auth.uid
+      @email = @auth.info[:email] if @auth.info.try(:email)
+    end
   end
 
   def find_or_create_user
@@ -25,6 +33,11 @@ class OauthAuthenticator # < ActiveRecord::Base
   private
 
   attr_reader :provider, :uid, :email
+
+  def validate_attributes
+    @auth = OmniAuth::AuthHash.new unless @auth
+    # raise ArgumentError, "Attributes can't be nil." if @auth.nil?
+  end
 
   def user_exists_and_already_has_authorization?
     authorization = Authorization.where(provider: provider, uid: uid.to_s).first
