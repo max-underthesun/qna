@@ -12,7 +12,7 @@ feature 'REMOVE FILES FROM QUESTION', %q(
     visit question_path(question)
     within '.question' do
       expect(page).to have_link 'spec_helper.rb',
-                                href: '/uploads/attachment/file/1/spec_helper.rb'
+                                href: /\A#{"/uploads/attachment/file/"}\d+#{"/spec_helper.rb"}\z/
       expect(page).to_not have_link I18n.t('links.remove_file'),
                                     href: "#{attachment_path(attachment)}"
     end
@@ -24,7 +24,7 @@ feature 'REMOVE FILES FROM QUESTION', %q(
 
     within '.question' do
       expect(page).to have_link 'spec_helper.rb',
-                                href: '/uploads/attachment/file/2/spec_helper.rb'
+                                href: /\A#{"/uploads/attachment/file/"}\d+#{"/spec_helper.rb"}\z/
       expect(page).to_not have_link I18n.t('links.remove_file'),
                                     href: "#{attachment_path(attachment)}"
     end
@@ -36,12 +36,14 @@ feature 'REMOVE FILES FROM QUESTION', %q(
 
     within '.question' do
       expect(page).to have_link 'spec_helper.rb',
-                                href: '/uploads/attachment/file/3/spec_helper.rb'
+                                href: /\A#{"/uploads/attachment/file/"}\d+#{"/spec_helper.rb"}\z/
       find(
         "a[href='#{attachment_path(attachment)}']", text: /\A#{I18n.t('links.remove_file')}\z/
       ).click
-      expect(page).to_not have_link 'spec_helper.rb',
-                                    href: '/uploads/attachment/file/3/spec_helper.rb'
+      expect(page).to_not have_link(
+        'spec_helper.rb',
+        href: /\A#{"/uploads/attachment/file/"}\d+#{"/spec_helper.rb"}\z/
+      )
     end
   end
 end

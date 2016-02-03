@@ -82,7 +82,9 @@ feature 'ADD FILES TO QUESTION ON UPDATE', %q(
       within ".question" do
         expect(page).to have_content question.body
         expect(page).to have_link 'spec_helper.rb',
-                                  href: '/uploads/attachment/file/1/spec_helper.rb'
+                                  href: /\A#{"/uploads/attachment/file/"}\d+#{"/spec_helper.rb"}\z/
+        # expect(page).to have_link 'spec_helper.rb',
+        #                           href: '/uploads/attachment/file/1/spec_helper.rb'
 
         click_on I18n.t('links.edit')
         click_on I18n.t('links.add_file')

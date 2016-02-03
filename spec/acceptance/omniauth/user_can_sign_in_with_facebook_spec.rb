@@ -8,7 +8,7 @@ feature 'USER SIGN_IN WITH FACEBOOK', %q(
     mock_auth_hash_invalid('facebook')
     click_on 'Sign in with Facebook'
 
-    expect(page).to have_content 'Could not authenticate you from Facebook'
+    expect(page).to have_content "Could not authenticate you from choosen provider"
   end
 
   scenario 'with valid credentials user successfully sign_in' do
