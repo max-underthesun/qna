@@ -60,6 +60,9 @@ en:
   comments:
       new_comment: "new comment"
       submit_comment: "Submit comment"
+  omniauth_callbacks:
+    enter_email:
+      submit_email: "Submit email"
   confirmations:
     answers:
       create: "Answer was successfully created."
@@ -76,6 +79,8 @@ en:
       create: "You voted successfully"
     comment:
       create: "Your comment was successfully created."
+  info:
+    enter_email: 'Please enter your email to finish the registration through Twitter'
   failure:
     questions:
       destroy: "Your have no rights to destroy this question. Only author can do it."
