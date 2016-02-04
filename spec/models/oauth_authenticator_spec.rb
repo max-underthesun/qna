@@ -3,10 +3,11 @@ require 'rails_helper'
 RSpec.describe OauthAuthenticator, type: :model do
   describe ".find_or_create_user" do
     let!(:user) { create(:user) }
+    let(:authenticator) { OauthAuthenticator.new(auth) }
 
     context "user already has authorization" do
       let(:auth) { OmniAuth::AuthHash.new(provider: 'facebook', uid: '123456') }
-      let(:authenticator) { OauthAuthenticator.new(auth) }
+
       it "returns the user" do
         user.authorizations.create(provider: 'facebook', uid: '123456')
         expect(authenticator.find_or_create_user).to eq user
@@ -19,7 +20,6 @@ RSpec.describe OauthAuthenticator, type: :model do
           user_params = { provider: 'facebook', uid: '123456', info: { email: user.email } }
           OmniAuth::AuthHash.new(user_params)
         end
-        let(:authenticator) { OauthAuthenticator.new(auth) }
 
         it "should not create a new user" do
           expect { authenticator.find_or_create_user }.to_not change(User, :count)
@@ -48,7 +48,6 @@ RSpec.describe OauthAuthenticator, type: :model do
             user_params = { provider: 'facebook', uid: '123456', info: { email: 'new@user.com' } }
             OmniAuth::AuthHash.new(user_params)
           end
-          let(:authenticator) { OauthAuthenticator.new(auth) }
 
           it "creates a new user" do
             expect { authenticator.find_or_create_user }.to change(User, :count).by(1)
@@ -81,7 +80,6 @@ RSpec.describe OauthAuthenticator, type: :model do
             user_params = { provider: 'facebook', uid: '123456' }
             OmniAuth::AuthHash.new(user_params)
           end
-          let(:authenticator) { OauthAuthenticator.new(auth) }
 
           it "returns 'false' if 'email' is not exists" do
             expect(authenticator.find_or_create_user).to eq nil

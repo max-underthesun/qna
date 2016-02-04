@@ -96,6 +96,7 @@ en:
     title: " prohibited you from continuing"
     votes:
       self_vote: "You can't vote for yourself"
+    epmty_auth: "Sorry! Some error prevent you from authentication with choosen provider"
 
   activerecord:
     models:
