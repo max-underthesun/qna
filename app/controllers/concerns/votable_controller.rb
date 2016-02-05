@@ -6,6 +6,8 @@ module VotableController
   end
 
   def vote_up
+    authorize! :vote_up, @votable
+
     new_vote_with_value(1)
     respond_to do |format|
       if @vote.save
@@ -17,6 +19,8 @@ module VotableController
   end
 
   def vote_down
+    authorize! :vote_down, @votable
+
     new_vote_with_value(-1)
     respond_to do |format|
       if @vote.save
@@ -28,6 +32,8 @@ module VotableController
   end
 
   def vote_destroy
+    authorize! :vote_destroy, @votable
+
     @vote = @votable.votes.find_by(user: current_user)
     respond_to do |format|
       if @vote && @vote.destroy

@@ -22,6 +22,10 @@ RSpec.describe Ability, type: :model do
   describe "for user" do
     let(:user) { create :user }
     let(:other_user) { create :user }
+    let!(:question) { create :question, user: other_user }
+    let!(:vote) { create :vote, votable: question, user: user }
+    # let!(:other_question) { create :question, user: other_user }
+    # let!(:other_vote) { create :vote, votable: other_question, user: other_user }
 
     it { should be_able_to :read, :all }
     it { should_not be_able_to :manage, :all }
@@ -39,5 +43,16 @@ RSpec.describe Ability, type: :model do
     it { should_not be_able_to :destroy, create(:question, user: other_user), user: user }
     it { should be_able_to :destroy, create(:answer, user: user), user: user }
     it { should_not be_able_to :destroy, create(:answer, user: other_user), user: user }
+
+    it { should be_able_to :vote_up, create(:question, user: other_user), user: user }
+    it { should_not be_able_to :vote_up, create(:question, user: user), user: user }
+    it { should be_able_to :vote_down, create(:question, user: other_user), user: user }
+    it { should_not be_able_to :vote_down, create(:question, user: user), user: user }
+
+    # it { should be_able_to :vote_destroy, question, user: user }
+    # it { should_not be_able_to :vote_destroy, question, user: other_user }
+
+    it { should be_able_to :destroy, vote, user: user }
+    it { should_not be_able_to :destroy, vote, user: other_user }
   end
 end

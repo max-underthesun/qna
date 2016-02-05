@@ -187,11 +187,11 @@ RSpec.describe QuestionsController, type: :controller do
     end
   end
 
-  # describe 'for vote actions' do
-  #   let(:resource_author) { create(:user) }
-  #   let(:user) { create(:user) }
-  #   let(:resource) { create(:question, user: resource_author) }
+  describe 'for vote actions' do
+    let(:resource_author) { create(:user) }
+    let(:user) { create(:user) }
+    let(:resource) { create(:question, user: resource_author) }
 
-  #   it_behaves_like "votable_controller"
-  # end
+    it_behaves_like "votable_controller"
+  end
 end
