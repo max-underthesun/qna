@@ -6,6 +6,8 @@ module VotableController
   end
 
   def vote_up
+    authorize! :vote_up, @votable
+
     new_vote_with_value(1)
     respond_to do |format|
       if @vote.save
@@ -17,6 +19,8 @@ module VotableController
   end
 
   def vote_down
+    authorize! :vote_down, @votable
+
     new_vote_with_value(-1)
     respond_to do |format|
       if @vote.save
@@ -28,16 +32,19 @@ module VotableController
   end
 
   def vote_destroy
+    authorize! :vote_destroy, @votable
+
     @vote = @votable.votes.find_by(user: current_user)
+    @vote.destroy
     respond_to do |format|
-      if @vote && @vote.destroy
+      # if @vote && @vote.destroy
         format.json { render json: { id: @votable.id, rating: @votable.rating } }
-      else
-        format.json do
-          render json: { id: @votable.id, rating: @votable.rating },
-                 status: :unprocessable_entity
-        end
-      end
+      # else
+      #   format.json do
+      #     render json: { id: @votable.id, rating: @votable.rating },
+      #            status: :unprocessable_entity
+      #   end
+      # end
     end
   end
 
