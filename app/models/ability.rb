@@ -37,6 +37,8 @@ class Ability
       # answer.question.user == user
     end
 
+    can :destroy, Attachment, attachable: { user_id: user.id }
+
     # can :vote_destroy, [Question] { |question| true if question.votes.find_by(user: @user) }
 
     # can :destroy, Vote, user: user
@@ -55,7 +57,6 @@ class Ability
 
     # can :destroy, [Attachment], question: { user: user }
     # can :destroy, [Attachment], answer: { user: user }
-    # can :destroy, Attachment, attachable: { user: user }
     # can :manage, [Attachment], attachable: { user: user }
 
     # can :destroy, Attachment do |attachment|

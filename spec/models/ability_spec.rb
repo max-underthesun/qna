@@ -72,26 +72,13 @@ RSpec.describe Ability, type: :model do
     it { should be_able_to :vote_down, question_of_other_user, user: user }
     it { should_not be_able_to :vote_down, question_of_user, user: user }
 
-    # it { should be_able_to :vote_destroy, question, user: user }
-    # it { should_not be_able_to :vote_destroy, question, user: other_user }
     it { should be_able_to :vote_destroy, question_of_other_user, user: user }
-    # it { should_not be_able_to :vote_destroy, question, user: other_user }
-
-    # it { should be_able_to :destroy, vote, user: user }
-    # it { should_not be_able_to :destroy, vote, user: other_user }
 
     it { should be_able_to :best, answer_of_other_user, user: user }
 
-    # it { should be_able_to :destroy, question_attachment, user: question_author }
-    # it { should be_able_to :destroy, answer_attachment, user: answer_author }
-    # it { should be_able_to :destroy, create(:attachment, attachable: create(:question, user: question_author)), user: question_author }
-    # it { should be_able_to :destroy, create(:attachment, attachable: create(:question, user: user)), user: user }
-    # it { should be_able_to :destroy, create(:attachment, attachable: question), user: question_author }
-
-    # it { should be_able_to :destroy, question_of_user_attachment, user: user }
-    # it { should be_able_to :destroy, answer_of_user_attachment, user: user }
-
-    # it { should_not be_able_to :destroy, question_of_other_user_attachment, user: user }
-    # it { should_not be_able_to :destroy, answer_of_other_user_attachment, user: user }
+    it { should be_able_to :destroy, question_of_user_attachment, user: user }
+    it { should be_able_to :destroy, answer_of_user_attachment, user: user }
+    it { should_not be_able_to :destroy, question_of_other_user_attachment, user: user }
+    it { should_not be_able_to :destroy, answer_of_other_user_attachment, user: user }
   end
 end
