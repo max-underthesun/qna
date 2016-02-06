@@ -2,12 +2,15 @@ class CommentsController < ApplicationController
   before_action :authenticate_user!
   before_action :commentable_class
   before_action :load_commentable
-  skip_authorization_check
+
+  respond_to :js
+
+  authorize_resource
 
   def create
-    @comment = @commentable.comments.new(comment_params)
-    @comment.user = current_user
-    publish && flash[:notice] = I18n.t('confirmations.comment.create') if @comment.save
+    respond_with(
+      @comment = @commentable.comments.create(comment_params.merge!(user_id: current_user.id)))
+    publish
   end
 
   private

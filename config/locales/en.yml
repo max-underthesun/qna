@@ -78,7 +78,7 @@ en:
     votes:
       create: "You voted successfully"
     comment:
-      create: "Your comment was successfully created."
+      create: "Comment was successfully created."
   info:
     enter_email: 'Please enter your email to finish the registration through Twitter'
   failure:
