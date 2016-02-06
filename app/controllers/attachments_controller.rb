@@ -1,6 +1,7 @@
 class AttachmentsController < ApplicationController
   before_action :authenticate_user!
   respond_to :js
+  skip_authorization_check
   # authorize_resource
 
   def destroy

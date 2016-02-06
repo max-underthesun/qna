@@ -2,6 +2,7 @@ class CommentsController < ApplicationController
   before_action :authenticate_user!
   before_action :commentable_class
   before_action :load_commentable
+  skip_authorization_check
 
   def create
     @comment = @commentable.comments.new(comment_params)
