@@ -9,7 +9,7 @@ feature 'EDIT QUESTION', %q(
   given(:updated_question) { build(:question) }
   given(:invalid_question) { build(:invalid_question) }
 
-  scenario '- unauthenticated user could not edit question' do
+  scenario '- unauthenticated user could not edit question (have no link)' do
     visit question_path(question)
 
     within '.question' do
@@ -17,7 +17,7 @@ feature 'EDIT QUESTION', %q(
     end
   end
 
-  scenario '- authenticated user could not edit question of other user' do
+  scenario '- authenticated user could not edit question of other user (have no link)' do
     sign_in(other_user)
     visit question_path(question)
 
