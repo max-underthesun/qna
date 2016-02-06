@@ -37,14 +37,7 @@ module VotableController
     @vote = @votable.votes.find_by(user: current_user)
     @vote.destroy
     respond_to do |format|
-      # if @vote && @vote.destroy
-        format.json { render json: { id: @votable.id, rating: @votable.rating } }
-      # else
-      #   format.json do
-      #     render json: { id: @votable.id, rating: @votable.rating },
-      #            status: :unprocessable_entity
-      #   end
-      # end
+      format.json { render json: { id: @votable.id, rating: @votable.rating } }
     end
   end
 
