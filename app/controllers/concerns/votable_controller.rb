@@ -35,15 +35,16 @@ module VotableController
     authorize! :vote_destroy, @votable
 
     @vote = @votable.votes.find_by(user: current_user)
+    @vote.destroy
     respond_to do |format|
-      if @vote && @vote.destroy
+      # if @vote && @vote.destroy
         format.json { render json: { id: @votable.id, rating: @votable.rating } }
-      else
-        format.json do
-          render json: { id: @votable.id, rating: @votable.rating },
-                 status: :unprocessable_entity
-        end
-      end
+      # else
+      #   format.json do
+      #     render json: { id: @votable.id, rating: @votable.rating },
+      #            status: :unprocessable_entity
+      #   end
+      # end
     end
   end
 

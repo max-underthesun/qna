@@ -23,33 +23,51 @@ class Ability
   def user_abilities
     guest_abilities
     can :create, [Question, Answer, Comment]
-    can :update, [Question, Answer], user: @user
-    can :destroy, [Question, Answer], user: @user
-    can :vote_up, [Question, Answer] { |votable| !@user.author_of?(votable) }
-    can :vote_down, [Question, Answer] { |votable| !@user.author_of?(votable) }
+    can :update, [Question, Answer], user: user
+    can :destroy, [Question, Answer], user: user
+    can :vote_up, [Question, Answer] { |votable| !user.author_of?(votable) }
+    can :vote_down, [Question, Answer] { |votable| !user.author_of?(votable) }
 
-    # can :vote_destroy, [Question, Answer] do |votable|
-    #   votable.votes.find_by(user: @user)
-    # end
+    can :vote_destroy, [Question, Answer] do |votable|
+      votable.votes.find_by(user: user)
+    end
 
-    can :destroy, Vote, user: @user
+    can :best, Answer do |answer|
+      user.author_of?(answer.question)
+      # answer.question.user == user
+    end
 
-    # can :vote_destroy, [Question, Answer] do |votable|
-    #   true if votable.votes.find_by(user: @user)
-    #   #   true
-    #   # else
-    #   #   false
-    #   # end
-    #   # @user.author_of?(vote)
-    # end
+    # can :vote_destroy, [Question] { |question| true if question.votes.find_by(user: @user) }
 
-    # cannot :vote_destroy, [Question, Answer] { |votable| true if votable.votes.find_by(user: @user).nil? }
+    # can :destroy, Vote, user: user
+    # can :destroy, [Vote] { |vote| user.author_of?(vote) }
 
-    # cannot :vote_destroy, [Question, Answer] { |votable| votable.votes.find_by(user: @user).nil? }
-    #  do |votable|
     #   # Vote.exists?(user: @user, votable: votable)
     #   # votable.votes.find_by(user: @user) #.persisted?
     #   # @user.author_of?(vote)
+
+    # can :best, Answer, question: { user: user }
+    # can :best, [Answer] { |answer| user.author_of?(answer.question) }
+
+
+    # can :destroy, [Attachment] { |attachment| user.author_of?(attachment.attachable) }
+    # cannot :destroy, [Attachment] { |attachment| !user.author_of?(attachment.attachable) }
+
+    # can :destroy, [Attachment], question: { user: user }
+    # can :destroy, [Attachment], answer: { user: user }
+    # can :destroy, Attachment, attachable: { user: user }
+    # can :manage, [Attachment], attachable: { user: user }
+
+    # can :destroy, Attachment do |attachment|
+    #   # user.author_of?(attachment.attachable)
+    #   # attachment.attachable.user == user
+    #   attachment.attachable.user_id == user.id
+    # end
+ 
+    # cannot :destroy, Attachment do |attachment|
+    #   # user.author_of?(attachment.attachable)
+    #   # attachment.attachable.user == user
+    #   attachment.attachable.user_id != user.id
     # end
   end
 end
