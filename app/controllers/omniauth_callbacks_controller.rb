@@ -10,14 +10,13 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   private
 
   def authorize_user
+    epmty_auth = I18n.t('errors.epmty_auth')
+    redirect_to(new_user_session_path, alert: epmty_auth) && return unless auth
     @user = OauthAuthenticator.new(auth).find_or_create_user
     if @user && @user.persisted?
       sign_in_user_with_choosen_provider
-    elsif auth
-      ask_user_to_provide_email_and_then_proceed
     else
-      flash[:info] = "Could not authenticate you from choosen provider"
-      redirect_to new_user_session_path
+      ask_user_to_provide_email_and_then_proceed
     end
   end
 

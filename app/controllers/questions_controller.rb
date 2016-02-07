@@ -6,6 +6,8 @@ class QuestionsController < ApplicationController
 
   respond_to :js, only: :update
 
+  authorize_resource
+
   def index
     respond_with(@questions = Question.all)
   end
@@ -14,56 +16,26 @@ class QuestionsController < ApplicationController
     @answer = @question.answers.new
     gon.current_user_id = current_user.id if current_user
     gon.question_user_id = @question.user.id
-    # respond_with(@question)
+
+    respond_with(@question)
   end
 
   def new
-    @question = Question.new
-    # respond_with(@question = Question.new)
+    respond_with(@question = Question.new)
   end
 
   def create
-    @question = current_user.questions.new(question_params)
-    if @question.save
-      flash[:notice] = I18n.t('confirmations.questions.create')
-      publish
-      redirect_to @question
-    else
-      render :new
-    end
-
-    # respond_with(@question = current_user.questions.create(question_params))
-    # publish
+    respond_with(@question = current_user.questions.create(question_params))
+    publish
   end
 
   def update
-    if current_user.author_of?(@question)
-      @question.update(question_params) &&
-        flash[:notice] = I18n.t('confirmations.questions.update')
-    else
-      flash[:alert] = I18n.t('failure.questions.update')
-      render status: :forbidden
-    end
-
-    # @question.update(question_params) if current_user.author_of?(@question)
-    # respond_with(@question)
+    @question.update(question_params)
+    respond_with(@question)
   end
 
   def destroy
-    if current_user.author_of?(@question)
-      @question.destroy
-      flash[:warning] = I18n.t('confirmations.questions.destroy')
-    else
-      flash[:alert] = I18n.t('failure.questions.destroy')
-    end
-    redirect_to questions_path
-
-    # respond_with(@question.destroy) if current_user.author_of?(@question)
-
-    # @question.destroy if current_user.author_of?(@question)
-    # respond_with(@question) do |format|
-    #   format.html { redirect_to questions_path }
-    # end
+    respond_with(@question.destroy)
   end
 
   private
@@ -78,7 +50,7 @@ class QuestionsController < ApplicationController
   end
 
   def publish
-    # return if @question.errors.any?
+    return if @question.errors.any?
     PrivatePub.publish_to "/questions",
                           question: @question.to_json,
                           author: @question.user.email.to_json

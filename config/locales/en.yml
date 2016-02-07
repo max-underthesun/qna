@@ -66,19 +66,19 @@ en:
   confirmations:
     answers:
       create: "Answer was successfully created."
-      destroy: "Your answer was successfully destroyed."
+      destroy: "Answer was successfully destroyed."
       update: "Your answer was successfully updated"
       best: "The answer was successfully choosen as best answer"
     questions:
       create: "Question was successfully created."
-      destroy: "Your question was successfully destroyed."
+      destroy: "Question was successfully destroyed."
       update: "Your question was successfully updated"
     attachment:
       destroy: "Attachment was successfully removed"
     votes:
       create: "You voted successfully"
     comment:
-      create: "Your comment was successfully created."
+      create: "Comment was successfully created."
   info:
     enter_email: 'Please enter your email to finish the registration through Twitter'
   failure:
@@ -96,6 +96,7 @@ en:
     title: " prohibited you from continuing"
     votes:
       self_vote: "You can't vote for yourself"
+    epmty_auth: "Sorry! Some error prevent you from authentication with choosen provider"
 
   activerecord:
     models:

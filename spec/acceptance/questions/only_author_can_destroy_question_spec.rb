@@ -24,7 +24,7 @@ feature 'DESTROY QUESTION', %q(
     expect(page).to have_content I18n.t('confirmations.questions.destroy')
   end
 
-  scenario '- user trying to destroy question of other user' do
+  scenario '- user can not destroy question of other user (have no link)' do
     sign_in(other_user)
 
     visit questions_path

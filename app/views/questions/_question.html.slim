@@ -16,7 +16,7 @@ p.question-title
   .right
     = link_to t('links.back'), questions_path
 
-  - if current_user && current_user.author_of?(@question)
+  - if can?(:edit, @question) && can?(:destroy, @question)
     = render 'common/edit_destroy_links', resource: @question, remote: false
 
 .col-lg-12.top-buffer
