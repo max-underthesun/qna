@@ -11,11 +11,9 @@
         = t('common.author')
         = answer.user ? answer.user.email : t('common.not_defined')
 
-      / - if current_user && current_user.author_of?(answer)
       - if can?(:edit, answer) && can?(:destroy, answer)
         = render 'common/edit_destroy_links', resource: answer, remote: true
 
-      / - if current_user && current_user.author_of?(answer.question)
       - if can?(:best, answer)
         .right.top-buffer
           = button_to t('buttons.best_answer'), best_answer_path(answer), method: :patch,

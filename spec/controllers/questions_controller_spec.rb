@@ -182,7 +182,7 @@ RSpec.describe QuestionsController, type: :controller do
 
       it 'redirect to questions path' do
         delete :destroy, id: question
-        expect(response).to redirect_to root_url # questions_path
+        expect(response).to redirect_to root_url
       end
     end
   end

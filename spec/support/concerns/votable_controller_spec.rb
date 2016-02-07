@@ -58,7 +58,6 @@ RSpec.shared_examples "votable_controller" do
 
       it '- should return 422 (unprocessable_entity) status' do
         patch :vote_up, id: resource, format: :json
-        # expect(response).to have_http_status(:unprocessable_entity)
         expect(response).to have_http_status(:forbidden)
       end
     end
@@ -121,7 +120,6 @@ RSpec.shared_examples "votable_controller" do
 
       it '- should return 422 (unprocessable_entity) status' do
         patch :vote_down, id: resource, format: :json
-        # expect(response).to have_http_status(:unprocessable_entity)
         expect(response).to have_http_status(:forbidden)
       end
     end
@@ -177,7 +175,6 @@ RSpec.shared_examples "votable_controller" do
 
       it '- should return 422 (unprocessable_entity) status' do
         delete :vote_destroy, id: resource, vote_id: vote, format: :json
-        # expect(response).to have_http_status(:unprocessable_entity)
         expect(response).to have_http_status(:forbidden)
       end
     end

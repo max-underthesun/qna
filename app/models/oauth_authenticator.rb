@@ -1,4 +1,4 @@
-class OauthAuthenticator # < ActiveRecord::Base
+class OauthAuthenticator
   include ActiveModel::Validations
 
   validates :provider, :uid, presence: true

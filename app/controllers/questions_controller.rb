@@ -6,7 +6,7 @@ class QuestionsController < ApplicationController
 
   respond_to :js, only: :update
 
-  authorize_resource # only: [:update]
+  authorize_resource
 
   def index
     respond_with(@questions = Question.all)
@@ -22,51 +22,20 @@ class QuestionsController < ApplicationController
 
   def new
     respond_with(@question = Question.new)
-    # @question = Question.new
   end
 
   def create
     respond_with(@question = current_user.questions.create(question_params))
     publish
-
-    # @question = current_user.questions.new(question_params)
-    # if @question.save
-    #   flash[:notice] = I18n.t('confirmations.questions.create')
-    #   publish
-    #   redirect_to @question
-    # else
-    #   render :new
-    # end
   end
 
   def update
-    @question.update(question_params) # if current_user.author_of?(@question)
+    @question.update(question_params)
     respond_with(@question)
-
-    # if current_user.author_of?(@question)
-    #   @question.update(question_params) &&
-    #     flash[:notice] = I18n.t('confirmations.questions.update')
-    # else
-    #   flash[:alert] = I18n.t('failure.questions.update')
-    #   render status: :forbidden
-    # end
   end
 
   def destroy
-    respond_with(@question.destroy) # if current_user.author_of?(@question)
-
-    # if current_user.author_of?(@question)
-    #   @question.destroy
-    #   flash[:warning] = I18n.t('confirmations.questions.destroy')
-    # else
-    #   flash[:alert] = I18n.t('failure.questions.destroy')
-    # end
-    # redirect_to questions_path
-
-    # @question.destroy if current_user.author_of?(@question)
-    # respond_with(@question) do |format|
-    #   format.html { redirect_to questions_path }
-    # end
+    respond_with(@question.destroy)
   end
 
   private
