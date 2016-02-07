@@ -60,6 +60,8 @@ gem 'omniauth-twitter'
 
 gem 'cancancan'
 
+gem 'doorkeeper'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
@@ -80,6 +82,8 @@ end
 
 group :test do
   gem 'shoulda-matchers'
+
+  gem 'json_spec'
 end
 
 group :development do
