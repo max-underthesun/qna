@@ -9,12 +9,10 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   rescue_from CanCan::AccessDenied do |exception|
-    if request.format == 'text/javascript'
-      render status: :forbidden, alert: exception.message
-    elsif request.format == 'application/json'
-      render json: { errors: exception.message }, status: :forbidden
-    else
-      redirect_to root_url, alert: exception.message
+    respond_to do |format|
+      format.js { render status: :forbidden, alert: exception.message }
+      format.json { render json: { errors: exception.message }, status: :forbidden }
+      format.html { redirect_to root_url, alert: exception.message }
     end
   end
 
