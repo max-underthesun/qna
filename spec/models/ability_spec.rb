@@ -62,5 +62,7 @@ RSpec.describe Ability, type: :model do
     it { should be_able_to :destroy, answer_of_user_attachment, user: user }
     it { should_not be_able_to :destroy, question_of_other_user_attachment, user: user }
     it { should_not be_able_to :destroy, answer_of_other_user_attachment, user: user }
+
+    it { should be_able_to :me}
   end
 end

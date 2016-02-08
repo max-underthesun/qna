@@ -21,6 +21,14 @@ Rails.application.routes.draw do
 
   resources :attachments, only: :destroy
 
+  namespace :api do
+    namespace :v1 do
+      resource :profiles do
+        get :me, on: :collection
+      end
+    end
+  end
+
   root to: 'questions#index'
 
   # The priority is based upon order of creation: first created -> highest priority.
