@@ -52,4 +52,37 @@ describe 'Profile API' do
       # end
     end
   end
+
+  describe 'GET /all_except_current' do
+    context 'unauthorized' do
+      it "returns 'unauthorized' (401) status if there is no access_token" do
+        get "/api/v1/profiles/all_except_current", format: :json
+        expect(response.status).to eq 401
+      end
+
+      it "returns 'unauthorized' (401) status if an access_token is not valid" do
+        get "/api/v1/profiles/all_except_current", format: :json, access_token: '1234'
+        expect(response.status).to eq 401
+      end
+    end
+
+    context 'authorized' do
+      let!(:all) { create_list(:user, 5) }
+      let!(:me) { all.sample }
+      let(:access_token) { create(:access_token, resource_owner_id: me.id) }
+      before do
+        all.delete(me)
+        get "/api/v1/profiles/all_except_current", format: :json,
+                                                   access_token: access_token.token
+      end
+
+      it "returns 'success' (200) status with valid access_token" do
+        expect(response).to be_success
+      end
+
+      it "contains list of users except current_user" do
+        expect(response.body).to be_json_eql(all.to_json)
+      end
+    end
+  end
 end

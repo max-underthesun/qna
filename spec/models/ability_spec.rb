@@ -63,6 +63,10 @@ RSpec.describe Ability, type: :model do
     it { should_not be_able_to :destroy, question_of_other_user_attachment, user: user }
     it { should_not be_able_to :destroy, answer_of_other_user_attachment, user: user }
 
-    it { should be_able_to :me}
+    it { should be_able_to :me, user, user: user }
+    it { should_not be_able_to :me, other_user, user: user }
+
+    it { should be_able_to :all_except_current, user, user: user }
+    it { should_not be_able_to :all_except_current, other_user, user: user }
   end
 end

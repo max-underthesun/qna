@@ -37,5 +37,8 @@ class Ability
     end
 
     can :destroy, Attachment, attachable: { user_id: user.id }
+
+    can :me, User, id: user.id
+    can :all_except_current, User, id: user.id
   end
 end
