@@ -43,4 +43,13 @@ RSpec.describe User do
       expect(answer_author.can_vote?(answer)).to eq false
     end
   end
+
+  describe ".all_except" do
+    let(:users) { create_list(:user, 5) }
+    it " - return all users except user passed as attribute" do
+      users.each do |user|
+        expect(User.all_except(user).include?(user)).to eq false
+      end
+    end
+  end
 end

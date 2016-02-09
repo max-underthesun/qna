@@ -10,6 +10,8 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable,
          :omniauthable, omniauth_providers: [:facebook, :twitter]
 
+  scope :all_except, ->(user) { where.not(id: user) }
+
   def author_of?(object)
     object.user_id == id
   end

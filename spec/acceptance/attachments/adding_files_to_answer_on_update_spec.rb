@@ -28,7 +28,7 @@ feature 'ADD FILES TO ANSWER ON UPDATE', %q{
       within '.answers' do
         expect(page).to have_content answer.body
         expect(page).to have_link 'spec_helper.rb',
-                                  href: '/uploads/attachment/file/1/spec_helper.rb'
+                                  href: /\A#{"/uploads/attachment/file/"}\d+#{"/spec_helper.rb"}\z/
 
         click_on I18n.t('links.edit')
         fill_in I18n.t('activerecord.attributes.answer.body'), with: updated_answer.body
@@ -51,7 +51,7 @@ feature 'ADD FILES TO ANSWER ON UPDATE', %q{
       within '.answers' do
         expect(page).to have_content answer.body
         expect(page).to have_link 'spec_helper.rb',
-                                  href: '/uploads/attachment/file/1/spec_helper.rb'
+                                  href: /\A#{"/uploads/attachment/file/"}\d+#{"/spec_helper.rb"}\z/
 
         click_on I18n.t('links.edit')
         click_on I18n.t('links.add_file')
@@ -60,8 +60,10 @@ feature 'ADD FILES TO ANSWER ON UPDATE', %q{
         click_on I18n.t('answers.form.update_answer')
 
         expect(page).to_not have_css('textarea#answer_body')
-        expect(page).to have_link 'rails_helper.rb',
-                                  href: '/uploads/attachment/file/2/rails_helper.rb'
+        expect(page).to have_link(
+          'rails_helper.rb',
+          href: /\A#{"/uploads/attachment/file/"}\d+#{"/rails_helper.rb"}\z/
+        )
       end
     end
   end
@@ -76,7 +78,7 @@ feature 'ADD FILES TO ANSWER ON UPDATE', %q{
       within "#answer_#{answer.id}" do
         expect(page).to have_content answer.body
         expect(page).to have_link 'spec_helper.rb',
-                                  href: '/uploads/attachment/file/1/spec_helper.rb'
+                                  href: /\A#{"/uploads/attachment/file/"}\d+#{"/spec_helper.rb"}\z/
 
         click_on I18n.t('links.edit')
         click_on I18n.t('links.add_file')
@@ -97,7 +99,7 @@ feature 'ADD FILES TO ANSWER ON UPDATE', %q{
       within "#answer_#{answer.id}" do
         expect(page).to have_content answer.body
         expect(page).to have_link 'spec_helper.rb',
-                                  href: '/uploads/attachment/file/1/spec_helper.rb'
+                                  href: /\A#{"/uploads/attachment/file/"}\d+#{"/spec_helper.rb"}\z/
 
         click_on I18n.t('links.edit')
         click_on I18n.t('links.add_file')
@@ -106,8 +108,10 @@ feature 'ADD FILES TO ANSWER ON UPDATE', %q{
         click_on I18n.t('answers.form.update_answer')
 
         expect(page).to_not have_selector 'textarea'
-        expect(page).to have_link 'rails_helper.rb',
-                                  href: '/uploads/attachment/file/2/rails_helper.rb'
+        expect(page).to have_link(
+          'rails_helper.rb',
+          href: /\A#{"/uploads/attachment/file/"}\d+#{"/rails_helper.rb"}\z/
+        )
 
         click_on I18n.t('links.edit')
         click_on I18n.t('links.add_file')
@@ -117,7 +121,7 @@ feature 'ADD FILES TO ANSWER ON UPDATE', %q{
 
         expect(page).to_not have_css('textarea#answer_body')
         expect(page).to have_link 'README.rdoc',
-                                  href: '/uploads/attachment/file/3/README.rdoc'
+                                  href: /\A#{"/uploads/attachment/file/"}\d+#{"/README.rdoc"}\z/
       end
     end
   end
@@ -133,7 +137,7 @@ feature 'ADD FILES TO ANSWER ON UPDATE', %q{
       within "#answer_#{answer.id}" do
         expect(page).to have_content answer.body
         expect(page).to have_link 'spec_helper.rb',
-                                  href: '/uploads/attachment/file/1/spec_helper.rb'
+                                  href: /\A#{"/uploads/attachment/file/"}\d+#{"/spec_helper.rb"}\z/
 
         click_on I18n.t('links.edit')
         click_on I18n.t('links.add_file')

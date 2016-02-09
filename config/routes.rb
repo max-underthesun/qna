@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  use_doorkeeper
   devise_for :users, controllers: { omniauth_callbacks: 'omniauth_callbacks' }
 
   concern :votable do
@@ -11,14 +12,23 @@ Rails.application.routes.draw do
 
   resources :questions, concerns: [:votable] do
     resources :answers, concerns: [:votable], shallow: true do
-      resources :comments
+      resources :comments, only: [:create]
       patch :best, on: :member
     end
 
-    resources :comments
+    resources :comments, only: [:create]
   end
 
   resources :attachments, only: :destroy
+
+  namespace :api do
+    namespace :v1 do
+      resource :profiles, only: [:index] do
+        get :me, on: :collection
+        get :all_except_current, on: :collection
+      end
+    end
+  end
 
   root to: 'questions#index'
 
