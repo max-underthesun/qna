@@ -56,7 +56,6 @@ describe 'Profile API' do
       let(:access_token) { create(:access_token, resource_owner_id: me.id) }
 
       before do
-        all.delete(me)
         get "/api/v1/profiles/all_except_current", format: :json,
                                                    access_token: access_token.token
       end
@@ -66,7 +65,8 @@ describe 'Profile API' do
       end
 
       it "contains list of all users except current_user" do
-        expect(response.body).to be_json_eql(all.to_json)
+        users = all - [me]
+        expect(response.body).to be_json_eql(users.to_json)
       end
     end
   end
