@@ -3,7 +3,7 @@ class Api::V1::ProfilesController < ApplicationController
   respond_to :json
 
   def me
-    authorize! :me, current_resource_owner
+    authorize! :me, User
 
     respond_with current_resource_owner
   end
