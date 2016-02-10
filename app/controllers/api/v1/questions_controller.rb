@@ -8,6 +8,11 @@ class Api::V1::QuestionsController < Api::V1::BaseController
     respond_with @questions # .to_json(include: :answers)
   end
 
+  def show
+    @question = Question.find(params[:id])
+    respond_with @question, serializer: QuestionShowSerializer
+  end
+
   # def me
   #   authorize! :me, User
 
