@@ -136,13 +136,6 @@ describe 'Questions API' do
     let(:access_token) { create(:access_token, resource_owner_id: user.id) }
     let!(:question_attributes) { attributes_for(:question, user: user) }
 
-    subject do
-      post "/api/v1/questions",
-           question: question_attributes,
-           format: :json,
-           access_token: access_token.token
-    end
-
     context 'unauthorized' do
       it "returns 'unauthorized' (401) status if there is no access_token" do
         post "/api/v1/questions", question: question_attributes, format: :json
@@ -157,55 +150,57 @@ describe 'Questions API' do
     end
 
     context 'authorized' do
-      # let!(:questions) { create_list(:question, 2) }
-      # let(:question) { questions.first }
-      # let!(:comments) { create_list(:comment, 3, commentable: question) }
-      # let(:comment) { comments.first }
-      # let!(:attachments) { create_list(:attachment, 3, attachable: question) }
-      # let(:attachment) { attachments.first }
-
-      # before do
-      #   post "/api/v1/questions", format: :json, access_token: access_token.token
-      # end
+      subject do
+        post "/api/v1/questions",
+             question: question_attributes,
+             format: :json,
+             access_token: access_token.token
+      end
 
       it "returns 'success' (200) status with valid access_token" do
         subject
-        # post "/api/v1/questions",
-        #      question: attributes_for(:question, user: user),
-        #      format: :json,
-        #      access_token: access_token.token
         expect(response).to be_success
       end
 
-      it 'saves a new question to the database' do
-        expect { subject }.to change(user.questions, :count).by(1)
+      context 'with valid attributes' do
+        it 'saves a new question to the database' do
+          expect { subject }.to change(user.questions, :count).by(1)
+        end
 
-        # expect { post "/api/v1/questions",
-        #               question: attributes_for(:question, user: user),
-        #               format: :json, access_token: access_token.token
-        # }.to change(user.questions, :count).by(1)
-      end
-
-      it "returns one question in json" do
-        subject
-        expect(response.body).to have_json_size(1) # .at_path("question")
-      end
-
-      %w(title body).each do |attr|
-        it "returned json contains right #{attr}" do
+        it "returns one question in json" do
           subject
-          # puts question_params
-          # puts response.body
-          expect(response.body)
-            .to be_json_eql(question_attributes[attr.to_sym].to_json)
-            .at_path("question_show/#{attr}")
+          expect(response.body).to have_json_size(1)
+        end
+
+        %w(title body).each do |attr|
+          it "returned json contains right #{attr}" do
+            subject
+            # puts question_params
+            # puts response.body
+            expect(response.body)
+              .to be_json_eql(question_attributes[attr.to_sym].to_json)
+              .at_path("question_show/#{attr}")
+          end
         end
       end
 
-      # it 'redirect to show' do
-      #   post :create, question: attributes_for(:question)
-      #   expect(response).to redirect_to question_path(assigns(:question))
-      # end
+      context 'with invalid attributes' do
+        subject do
+          post "/api/v1/questions",
+               question: attributes_for(:invalid_question),
+               format: :json,
+               access_token: access_token.token
+        end
+
+        it 'does not save a new question to the database' do
+          expect { subject }.to_not change(Question, :count)
+        end
+
+        it 'returns 422 status' do
+          subject
+          expect(response.status).to eq 422
+        end
+      end
     end
   end
 end
