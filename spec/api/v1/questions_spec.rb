@@ -130,4 +130,82 @@ describe 'Questions API' do
       end
     end
   end
+
+  describe "POST /create" do
+    let(:user) { create(:user) }
+    let(:access_token) { create(:access_token, resource_owner_id: user.id) }
+    let!(:question_attributes) { attributes_for(:question, user: user) }
+
+    subject do
+      post "/api/v1/questions",
+           question: question_attributes,
+           format: :json,
+           access_token: access_token.token
+    end
+
+    context 'unauthorized' do
+      it "returns 'unauthorized' (401) status if there is no access_token" do
+        post "/api/v1/questions", question: question_attributes, format: :json
+        expect(response.status).to eq 401
+      end
+
+      it "returns 'unauthorized' (401) status if an access_token is not valid" do
+        post "/api/v1/questions", question: question_attributes,
+                                  format: :json, access_token: '1234'
+        expect(response.status).to eq 401
+      end
+    end
+
+    context 'authorized' do
+      # let!(:questions) { create_list(:question, 2) }
+      # let(:question) { questions.first }
+      # let!(:comments) { create_list(:comment, 3, commentable: question) }
+      # let(:comment) { comments.first }
+      # let!(:attachments) { create_list(:attachment, 3, attachable: question) }
+      # let(:attachment) { attachments.first }
+
+      # before do
+      #   post "/api/v1/questions", format: :json, access_token: access_token.token
+      # end
+
+      it "returns 'success' (200) status with valid access_token" do
+        subject
+        # post "/api/v1/questions",
+        #      question: attributes_for(:question, user: user),
+        #      format: :json,
+        #      access_token: access_token.token
+        expect(response).to be_success
+      end
+
+      it 'saves a new question to the database' do
+        expect { subject }.to change(user.questions, :count).by(1)
+
+        # expect { post "/api/v1/questions",
+        #               question: attributes_for(:question, user: user),
+        #               format: :json, access_token: access_token.token
+        # }.to change(user.questions, :count).by(1)
+      end
+
+      it "returns one question in json" do
+        subject
+        expect(response.body).to have_json_size(1) # .at_path("question")
+      end
+
+      %w(title body).each do |attr|
+        it "returned json contains right #{attr}" do
+          subject
+          # puts question_params
+          # puts response.body
+          expect(response.body)
+            .to be_json_eql(question_attributes[attr.to_sym].to_json)
+            .at_path("question_show/#{attr}")
+        end
+      end
+
+      # it 'redirect to show' do
+      #   post :create, question: attributes_for(:question)
+      #   expect(response).to redirect_to question_path(assigns(:question))
+      # end
+    end
+  end
 end
