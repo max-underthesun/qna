@@ -65,7 +65,7 @@ describe 'Profile API' do
       end
 
       it "contains list of all users except current_user" do
-        expect(response.body).to be_json_eql((all - [me]).to_json)
+        expect(response.body).to be_json_eql((all - [me]).to_json).at_path('profiles')
       end
     end
   end

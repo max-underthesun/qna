@@ -21,7 +21,7 @@ feature 'ADD FILES TO QUESTION ON UPDATE', %q(
       within ".question" do
         expect(page).to have_content question.body
         expect(page).to have_link 'spec_helper.rb',
-                                  href: '/uploads/attachment/file/1/spec_helper.rb'
+                                  href: /\A#{"/uploads/attachment/file/"}\d+#{"/spec_helper.rb"}\z/
 
         click_on I18n.t('links.edit')
         click_on I18n.t('links.add_file')
@@ -31,8 +31,10 @@ feature 'ADD FILES TO QUESTION ON UPDATE', %q(
 
         expect(page).to_not have_css('input#question_title')
         expect(page).to_not have_css('textarea#question_body')
-        expect(page).to have_link 'rails_helper.rb',
-                                  href: '/uploads/attachment/file/2/rails_helper.rb'
+        expect(page).to have_link(
+          'rails_helper.rb',
+          href: /\A#{"/uploads/attachment/file/"}\d+#{"/rails_helper.rb"}\z/
+        )
 
         click_on I18n.t('links.edit')
         fill_in I18n.t('activerecord.attributes.question.title'), with: updated_question.title
@@ -50,7 +52,7 @@ feature 'ADD FILES TO QUESTION ON UPDATE', %q(
       within ".question" do
         expect(page).to have_content question.body
         expect(page).to have_link 'spec_helper.rb',
-                                  href: '/uploads/attachment/file/1/spec_helper.rb'
+                                  href: /\A#{"/uploads/attachment/file/"}\d+#{"/spec_helper.rb"}\z/
 
         click_on I18n.t('links.edit')
         click_on I18n.t('links.add_file')
@@ -60,8 +62,10 @@ feature 'ADD FILES TO QUESTION ON UPDATE', %q(
 
         expect(page).to_not have_css('input#question_title')
         expect(page).to_not have_css('textarea#question_body')
-        expect(page).to have_link 'rails_helper.rb',
-                                  href: '/uploads/attachment/file/2/rails_helper.rb'
+        expect(page).to have_link(
+          'rails_helper.rb',
+          href: /\A#{"/uploads/attachment/file/"}\d+#{"/rails_helper.rb"}\z/
+        )
 
         click_on I18n.t('links.edit')
         click_on I18n.t('links.add_file')
@@ -71,8 +75,10 @@ feature 'ADD FILES TO QUESTION ON UPDATE', %q(
 
         expect(page).to_not have_css('input#question_title')
         expect(page).to_not have_css('textarea#question_body')
-        expect(page).to have_link 'README.rdoc',
-                                  href: '/uploads/attachment/file/3/README.rdoc'
+        expect(page).to have_link(
+          'README.rdoc',
+          href: /\A#{"/uploads/attachment/file/"}\d+#{"/README.rdoc"}\z/
+        )
       end
     end
   end
