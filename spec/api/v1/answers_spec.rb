@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe 'Answers API' do
   let!(:question) { create(:question) }
-  let(:access_token) { create(:access_token) } # , resource_owner_id: user.id) }
+  let(:access_token) { create(:access_token) }
 
   describe 'GET /index' do
     context 'unauthorized' do
@@ -18,10 +18,8 @@ describe 'Answers API' do
     end
 
     context 'authorized' do
-      # let(:user) { create(:user) }
       let!(:answers) { create_list(:answer, 3, question: question) }
       let!(:answer) { answers.first }
-      # let!(:answer) { create(:answer, question: question) }
 
       subject do
         get "/api/v1/questions/#{question.id}/answers",
@@ -29,7 +27,6 @@ describe 'Answers API' do
             access_token: access_token.token
       end
 
-      # before { get "/api/v1/questions", format: :json, access_token: access_token.token }
       before { subject }
 
       it "returns 'success' (200) status with valid access_token" do
@@ -70,10 +67,6 @@ describe 'Answers API' do
     end
 
     context 'authorized' do
-      # let(:user) { create(:user) }
-      # let(:access_token) { create(:access_token) }
-      # let!(:questions) { create_list(:question, 2) }
-      # let(:question) { questions.first }
       let!(:comments) { create_list(:comment, 3, commentable: answer) }
       let(:comment) { comments.first }
       let!(:attachments) { create_list(:attachment, 3, attachable: answer) }
@@ -87,16 +80,12 @@ describe 'Answers API' do
 
       before { subject }
 
-      # before do
-      #   get "/api/v1/questions/#{question.id}", format: :json, access_token: access_token.token
-      # end
-
       it "returns 'success' (200) status with valid access_token" do
         expect(response).to be_success
       end
 
       it "returns one answer" do
-        expect(response.body).to have_json_size(1) # .at_path("question")
+        expect(response.body).to have_json_size(1)
       end
 
       %w(body id updated_at created_at).each do |attr|

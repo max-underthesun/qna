@@ -15,8 +15,7 @@ describe 'Questions API' do
     end
 
     context 'authorized' do
-      # let(:user) { create(:user) }
-      let(:access_token) { create(:access_token) } # , resource_owner_id: user.id) }
+      let(:access_token) { create(:access_token) }
       let!(:questions) { create_list(:question, 2) }
       let(:question) { questions.first }
       let!(:answer) { create(:answer, question: question) }
@@ -90,7 +89,7 @@ describe 'Questions API' do
       end
 
       it "returns one question" do
-        expect(response.body).to have_json_size(1) # .at_path("question")
+        expect(response.body).to have_json_size(1)
       end
 
       %w(title body id updated_at created_at).each do |attr|
@@ -175,8 +174,6 @@ describe 'Questions API' do
         %w(title body).each do |attr|
           it "returned json contains right #{attr}" do
             subject
-            # puts question_params
-            # puts response.body
             expect(response.body)
               .to be_json_eql(question_attributes[attr.to_sym].to_json)
               .at_path("question_show/#{attr}")
