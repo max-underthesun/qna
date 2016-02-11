@@ -1,8 +1,8 @@
 class Api::V1::AnswersController < Api::V1::BaseController
+  before_action :load_question, only: [:index, :create]
   authorize_resource
 
   def index
-    @question = Question.find(params[:question_id])
     @answers = @question.answers
     respond_with @answers, each_serializer: AnswersSerializer
   end
@@ -12,14 +12,18 @@ class Api::V1::AnswersController < Api::V1::BaseController
     respond_with @answer
   end
 
-  # def create
-  #   @question = current_resource_owner.questions.create(question_params)
-  #   respond_with @question, serializer: QuestionShowSerializer
-  # end
+  def create
+    @answer = @question.answers.create(answer_params.merge(user: current_resource_owner))
+    respond_with @answer
+  end
 
-  # private
+  private
 
-  # def question_params
-  #   params.require(:question).permit(:title, :body)
-  # end
+  def answer_params
+    params.require(:answer).permit(:body)
+  end
+
+  def load_question
+    @question = Question.find(params[:question_id])
+  end
 end
