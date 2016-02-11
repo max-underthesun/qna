@@ -71,7 +71,6 @@ describe 'Questions API' do
     end
 
     context 'authorized' do
-      # let(:user) { create(:user) }
       let(:access_token) { create(:access_token) }
       let!(:questions) { create_list(:question, 2) }
       let(:question) { questions.first }
