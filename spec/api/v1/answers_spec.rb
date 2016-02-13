@@ -37,16 +37,11 @@ describe 'Answers API' do
         expect(response.body).to have_json_size(3).at_path("answers")
       end
 
-      %w(body id).each do |attr|
+      %w(body id user_id).each do |attr|
         it "contains #{attr}" do
           expect(response.body)
             .to be_json_eql(answer.send(attr.to_sym).to_json).at_path("answers/2/#{attr}")
         end
-      end
-
-      it "answer object contains user email" do
-        expect(response.body).to be_json_eql(answer.user.email.to_json)
-          .at_path("answers/2/user")
       end
     end
   end
@@ -88,16 +83,11 @@ describe 'Answers API' do
         expect(response.body).to have_json_size(1)
       end
 
-      %w(body id updated_at created_at).each do |attr|
+      %w(body id updated_at created_at user_id).each do |attr|
         it "contains #{attr}" do
           expect(response.body)
             .to be_json_eql(answer.send(attr.to_sym).to_json).at_path("answer/#{attr}")
         end
-      end
- 
-      it "answer object contains user email" do
-        expect(response.body).to be_json_eql(answer.user.email.to_json)
-          .at_path("answer/user")
       end
 
       context 'comments' do
@@ -105,16 +95,11 @@ describe 'Answers API' do
           expect(response.body).to have_json_size(3).at_path("answer/comments")
         end
 
-        %w(body id).each do |attr|
+        %w(body id user_id).each do |attr|
           it "contains #{attr}" do
             expect(response.body).to be_json_eql(comment.send(attr.to_sym).to_json)
-              .at_path("answer/comments/2/#{attr}")
+              .at_path("answer/comments/0/#{attr}")
           end
-        end
-
-        it "comment object contains user" do
-          expect(response.body).to be_json_eql(comment.user.email.to_json)
-            .at_path("answer/comments/2/user")
         end
       end
 
@@ -125,7 +110,7 @@ describe 'Answers API' do
 
         it "attachment object contains url" do
           expect(response.body).to be_json_eql(attachment.file.url.to_json)
-            .at_path("answer/attachments/2/url")
+            .at_path("answer/attachments/0/url")
         end
       end
     end

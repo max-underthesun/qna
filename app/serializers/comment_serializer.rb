@@ -1,7 +1,3 @@
 class CommentSerializer < ActiveModel::Serializer
-  attributes :id, :body, :user
-
-  def user
-    object.user.email
-  end
+  attributes :id, :body, :user_id
 end

@@ -103,16 +103,11 @@ describe 'Questions API' do
           expect(response.body).to have_json_size(3).at_path("question_show/comments")
         end
 
-        %w(body id).each do |attr|
+        %w(body id user_id).each do |attr|
           it "contains #{attr}" do
             expect(response.body).to be_json_eql(comment.send(attr.to_sym).to_json)
-              .at_path("question_show/comments/2/#{attr}")
+              .at_path("question_show/comments/0/#{attr}")
           end
-        end
-
-        it "comment object contains user" do
-          expect(response.body).to be_json_eql(comment.user.email.to_json)
-            .at_path("question_show/comments/2/user")
         end
       end
 
@@ -123,7 +118,7 @@ describe 'Questions API' do
 
         it "attachment object contains url" do
           expect(response.body).to be_json_eql(attachment.file.url.to_json)
-            .at_path("question_show/attachments/2/url")
+            .at_path("question_show/attachments/0/url")
         end
       end
     end
