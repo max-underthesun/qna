@@ -2,8 +2,8 @@ require 'rails_helper'
 
 describe 'Profile API' do
   describe 'GET /me' do
-    # let(:api_path) { "/api/v1/profiles/me" }
     it_behaves_like "API Authenticable"
+    # let(:api_path) { "/api/v1/profiles/me" }
 
     # context 'unauthorized' do
     #   it "returns 'unauthorized' (401) status if there is no access_token" do
@@ -38,20 +38,26 @@ describe 'Profile API' do
         end
       end
     end
+
+    def do_request(options = {})
+      get "/api/v1/profiles/me", { format: :json }.merge(options)
+    end
   end
 
   describe 'GET /all_except_current' do
-    context 'unauthorized' do
-      it "returns 'unauthorized' (401) status if there is no access_token" do
-        get "/api/v1/profiles/all_except_current", format: :json
-        expect(response.status).to eq 401
-      end
+    it_behaves_like "API Authenticable"
 
-      it "returns 'unauthorized' (401) status if an access_token is not valid" do
-        get "/api/v1/profiles/all_except_current", format: :json, access_token: '1234'
-        expect(response.status).to eq 401
-      end
-    end
+    # context 'unauthorized' do
+    #   it "returns 'unauthorized' (401) status if there is no access_token" do
+    #     get "/api/v1/profiles/all_except_current", format: :json
+    #     expect(response.status).to eq 401
+    #   end
+
+    #   it "returns 'unauthorized' (401) status if an access_token is not valid" do
+    #     get "/api/v1/profiles/all_except_current", format: :json, access_token: '1234'
+    #     expect(response.status).to eq 401
+    #   end
+    # end
 
     context 'authorized' do
       let!(:all) { create_list(:user, 5) }
@@ -71,9 +77,9 @@ describe 'Profile API' do
         expect(response.body).to be_json_eql((all - [me]).to_json).at_path('profiles')
       end
     end
-  end
 
-  def do_request(options = {})
-    get "/api/v1/profiles/me", { format: :json }.merge(options)
+    def do_request(options = {})
+      get "/api/v1/profiles/all_except_current", { format: :json }.merge(options)
+    end
   end
 end
