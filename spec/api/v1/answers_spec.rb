@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe 'Answers API' do
   let!(:question) { create(:question) }
-  let(:access_token) { create(:access_token) } # , resource_owner_id: user.id) }
+  let(:access_token) { create(:access_token) }
 
   describe 'GET /index' do
     context 'unauthorized' do
@@ -18,10 +18,8 @@ describe 'Answers API' do
     end
 
     context 'authorized' do
-      # let(:user) { create(:user) }
       let!(:answers) { create_list(:answer, 3, question: question) }
       let!(:answer) { answers.first }
-      # let!(:answer) { create(:answer, question: question) }
 
       subject do
         get "/api/v1/questions/#{question.id}/answers",
@@ -29,7 +27,6 @@ describe 'Answers API' do
             access_token: access_token.token
       end
 
-      # before { get "/api/v1/questions", format: :json, access_token: access_token.token }
       before { subject }
 
       it "returns 'success' (200) status with valid access_token" do
@@ -40,16 +37,11 @@ describe 'Answers API' do
         expect(response.body).to have_json_size(3).at_path("answers")
       end
 
-      %w(body id).each do |attr|
+      %w(body id user_id).each do |attr|
         it "contains #{attr}" do
           expect(response.body)
             .to be_json_eql(answer.send(attr.to_sym).to_json).at_path("answers/2/#{attr}")
         end
-      end
-
-      it "answer object contains user email" do
-        expect(response.body).to be_json_eql(answer.user.email.to_json)
-          .at_path("answers/2/user")
       end
     end
   end
@@ -70,10 +62,6 @@ describe 'Answers API' do
     end
 
     context 'authorized' do
-      # let(:user) { create(:user) }
-      # let(:access_token) { create(:access_token) }
-      # let!(:questions) { create_list(:question, 2) }
-      # let(:question) { questions.first }
       let!(:comments) { create_list(:comment, 3, commentable: answer) }
       let(:comment) { comments.first }
       let!(:attachments) { create_list(:attachment, 3, attachable: answer) }
@@ -87,28 +75,19 @@ describe 'Answers API' do
 
       before { subject }
 
-      # before do
-      #   get "/api/v1/questions/#{question.id}", format: :json, access_token: access_token.token
-      # end
-
       it "returns 'success' (200) status with valid access_token" do
         expect(response).to be_success
       end
 
       it "returns one answer" do
-        expect(response.body).to have_json_size(1) # .at_path("question")
+        expect(response.body).to have_json_size(1)
       end
 
-      %w(body id updated_at created_at).each do |attr|
+      %w(body id updated_at created_at user_id).each do |attr|
         it "contains #{attr}" do
           expect(response.body)
             .to be_json_eql(answer.send(attr.to_sym).to_json).at_path("answer/#{attr}")
         end
-      end
- 
-      it "answer object contains user email" do
-        expect(response.body).to be_json_eql(answer.user.email.to_json)
-          .at_path("answer/user")
       end
 
       context 'comments' do
@@ -116,16 +95,11 @@ describe 'Answers API' do
           expect(response.body).to have_json_size(3).at_path("answer/comments")
         end
 
-        %w(body id).each do |attr|
+        %w(body id user_id).each do |attr|
           it "contains #{attr}" do
             expect(response.body).to be_json_eql(comment.send(attr.to_sym).to_json)
-              .at_path("answer/comments/2/#{attr}")
+              .at_path("answer/comments/0/#{attr}")
           end
-        end
-
-        it "comment object contains user" do
-          expect(response.body).to be_json_eql(comment.user.email.to_json)
-            .at_path("answer/comments/2/user")
         end
       end
 
@@ -136,7 +110,7 @@ describe 'Answers API' do
 
         it "attachment object contains url" do
           expect(response.body).to be_json_eql(attachment.file.url.to_json)
-            .at_path("answer/attachments/2/url")
+            .at_path("answer/attachments/0/url")
         end
       end
     end
