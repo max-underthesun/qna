@@ -1,4 +1,4 @@
-require 'rails_helper'
+# require 'rails_helper'
 
 RSpec.shared_examples "commentable" do
   let(:model) { described_class }

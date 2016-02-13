@@ -1,4 +1,4 @@
-require 'rails_helper'
+# require 'rails_helper'
 
 RSpec.shared_examples "votable" do
   let(:model) { described_class }
