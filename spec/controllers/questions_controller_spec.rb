@@ -61,6 +61,7 @@ RSpec.describe QuestionsController, type: :controller do
       end
 
       let(:channel) { "/questions" }
+
       it_behaves_like "PrivatePub Publishable"
     end
 
@@ -97,94 +98,6 @@ RSpec.describe QuestionsController, type: :controller do
     end
 
     it_behaves_like "updatable resource"
-
-    # let(:resource_author) { create(:user) }
-    # let(:question) { create(:question, user: question_author) }
-    # let(:updated_question) { build(:question) }
-
-    # let (:request) do
-    #   patch :update,
-    #         id: question,
-    #         question: { title: updated_question.title, body: updated_question.body },
-    #         format: :js
-    # end
-
-    # describe 'for not signed in user: ' do
-    #   it '- should not update question' do
-    #     original_question = question
-    #     request
-    #     expect(question.reload).to eq original_question
-    #   end
-
-    #   it '- should return 401 (unauthorized) status' do
-    #     request
-    #     expect(response).to have_http_status(:unauthorized)
-    #   end
-    # end
-
-    # describe 'for user signed in but not the author: ' do
-    #   sign_in_user
-
-    #   it '- should not update question' do
-    #     original_question = question
-    #     request
-    #     expect(question.reload).to eq original_question
-    #   end
-
-    #   it '- should return 403 (forbidden) status' do
-    #     request
-    #     expect(response).to have_http_status(:forbidden)
-    #   end
-    # end
-
-    # describe 'for user signed in and author: ' do
-    #   sign_in_user
-
-    #   context 'with valid attributes' do
-    #     let(:question) { create(:question, user: @user) }
-
-    #     it '- assigns question to @question' do
-    #       request
-    #       # patch :update, id: question, question: attributes_for(:question), format: :js
-    #       expect(assigns(:question)).to eq question
-    #     end
-
-    #     it '- change the question title' do
-    #       request
-    #       question.reload
-    #       expect(assigns(:question).title).to eq updated_question.title
-    #     end
-
-    #     it '- change the question body' do
-    #       request
-    #       question.reload
-    #       expect(assigns(:question).body).to eq updated_question.body
-    #     end
-
-    #     it '- render question update template' do
-    #       request
-    #       expect(response).to render_template :update
-    #     end
-    #   end
-
-    #   context 'with invalid attributes' do
-    #     let (:request_with_invalid_attributes) do
-    #       patch :update, id: question, question: attributes_for(:invalid_question), format: :js
-    #     end
-
-
-    #     it '- should not update question' do
-    #       original_question = question
-    #       request_with_invalid_attributes
-    #       expect(assigns(:question)).to eq original_question
-    #     end
-
-    #     it '- render question update template' do
-    #       request_with_invalid_attributes
-    #       expect(response).to render_template :update
-    #     end
-    #   end
-    # end
   end
 
   describe 'DELETE #destroy' do

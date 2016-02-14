@@ -34,6 +34,7 @@ RSpec.describe CommentsController, type: :controller do
       end
 
       let(:channel) { "/questions/#{question.id}/comments" }
+
       it_behaves_like "PrivatePub Publishable"
     end
   end
