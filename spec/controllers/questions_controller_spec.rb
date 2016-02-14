@@ -52,30 +52,27 @@ RSpec.describe QuestionsController, type: :controller do
       subject { post :create, question: attributes_for(:question, user: @user) }
 
       it 'saves a new question to the database' do
-        # expect { post :create, question: attributes_for(:question, user: @user) }
         expect { subject }.to change(@user.questions, :count).by(1)
       end
 
       it 'redirect to show' do
-        # post :create, question: attributes_for(:question)
         subject
         expect(response).to redirect_to question_path(assigns(:question))
       end
 
-      # let(:question_attributes) { attributes_for(:question, user: @user) }
       let(:channel) { "/questions" }
-      # let(:args) { { question: question.to_json, author: question.user.email.to_json } }
       it_behaves_like "PrivatePub Publishable"
     end
 
     context 'with invalid attributes' do
+      subject { post :create, question: attributes_for(:invalid_question, user: @user) }
+
       it 'does not save the question in the database' do
-        expect { post :create, question: attributes_for(:invalid_question, user: @user) }
-          .to_not change(Question, :count)
+        expect { subject }.to_not change(Question, :count)
       end
 
       it 'render new view' do
-        post :create, question: attributes_for(:invalid_question)
+        subject
         expect(response).to render_template :new
       end
     end

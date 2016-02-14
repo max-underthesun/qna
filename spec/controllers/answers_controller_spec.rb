@@ -11,14 +11,12 @@ RSpec.describe AnswersController, type: :controller do
       subject { post :create, question_id: question, answer: attributes_for(:answer), format: :js }
 
       it 'saves a new answer to the database' do
-        expect {
-          post :create, question_id: question, answer: attributes_for(:answer), format: :js
-        }.to change(question.answers, :count).by(1)
+        expect { subject }.to change(question.answers, :count).by(1)
         expect(assigns(:answer).user).to eq @user
       end
 
       it 'render create template' do
-        post :create, question_id: question, answer: attributes_for(:answer), format: :js
+        subject
         expect(response).to render_template :create
       end
 
@@ -27,19 +25,21 @@ RSpec.describe AnswersController, type: :controller do
     end
 
     context 'with invalid attributes' do
-      it 'puts the question to the variable @question' do
+      subject do
         post :create, question_id: question, answer: attributes_for(:invalid_answer), format: :js
+      end
+
+      it 'puts the question to the variable @question' do
+        subject
         expect(assigns(:question)).to eq question
       end
 
       it 'does not save an answer' do
-        expect {
-          post :create, question_id: question, answer: attributes_for(:invalid_answer), format: :js
-        }.to_not change(Answer, :count)
+        expect { subject }.to_not change(Answer, :count)
       end
 
       it 'redirect to question show view' do
-        post :create, question_id: question, answer: attributes_for(:invalid_answer), format: :js
+        subject
         expect(response).to render_template :create
       end
     end
