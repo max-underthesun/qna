@@ -1,5 +1,3 @@
-# require 'rails_helper'
-
 RSpec.shared_examples "votable" do
   let(:model) { described_class }
   let(:user) { create(:user) }

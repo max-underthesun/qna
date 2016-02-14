@@ -7,18 +7,6 @@ describe 'Answers API' do
   describe 'GET /index' do
     it_behaves_like "API Authenticable"
 
-    # context 'unauthorized' do
-    #   it "returns 'unauthorized' (401) status if there is no access_token" do
-    #     get "/api/v1/questions/#{question.id}/answers", format: :json
-    #     expect(response.status).to eq 401
-    #   end
-
-    #   it "returns 'unauthorized' (401) status if an access_token is not valid" do
-    #     get "/api/v1/questions/#{question.id}/answers", format: :json, access_token: '1234'
-    #     expect(response.status).to eq 401
-    #   end
-    # end
-
     context 'authorized' do
       let!(:answers) { create_list(:answer, 3, question: question) }
       let!(:answer) { answers.first }
@@ -56,18 +44,6 @@ describe 'Answers API' do
     let!(:answer) { create(:answer, question: question) }
 
     it_behaves_like "API Authenticable"
-
-    # context 'unauthorized' do
-    #   it "returns 'unauthorized' (401) status if there is no access_token" do
-    #     get "/api/v1/answers/#{answer.id}", format: :json
-    #     expect(response.status).to eq 401
-    #   end
-
-    #   it "returns 'unauthorized' (401) status if an access_token is not valid" do
-    #     get "/api/v1/answers/#{answer.id}", format: :json, access_token: '1234'
-    #     expect(response.status).to eq 401
-    #   end
-    # end
 
     context 'authorized' do
       let!(:comments) { create_list(:comment, 3, commentable: answer) }
@@ -134,19 +110,6 @@ describe 'Answers API' do
     let!(:answer_attributes) { attributes_for(:answer, user: user) }
 
     it_behaves_like "API Authenticable"
-
-    # context 'unauthorized' do
-    #   it "returns 'unauthorized' (401) status if there is no access_token" do
-    #     post "/api/v1/questions/#{question.id}/answers", answer: answer_attributes, format: :json
-    #     expect(response.status).to eq 401
-    #   end
-
-    #   it "returns 'unauthorized' (401) status if an access_token is not valid" do
-    #     post "/api/v1/questions/#{question.id}/answers",
-    #          answer: answer_attributes, format: :json, access_token: '1234'
-    #     expect(response.status).to eq 401
-    #   end
-    # end
 
     context 'authorized' do
       subject do
