@@ -58,6 +58,12 @@ RSpec.describe QuestionsController, type: :controller do
         post :create, question: attributes_for(:question)
         expect(response).to redirect_to question_path(assigns(:question))
       end
+
+      # let(:question_attributes) { attributes_for(:question, user: @user) }
+      subject { post :create, question: attributes_for(:question, user: @user) }
+      let(:path) { "/questions" }
+      # let(:args) { { question: question.to_json, author: question.user.email.to_json } }
+      it_behaves_like "PrivatePub Publishable"
     end
 
     context 'with invalid attributes' do
