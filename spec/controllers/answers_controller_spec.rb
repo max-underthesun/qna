@@ -11,14 +11,12 @@ RSpec.describe AnswersController, type: :controller do
       subject { post :create, question_id: question, answer: attributes_for(:answer), format: :js }
 
       it 'saves a new answer to the database' do
-        expect {
-          post :create, question_id: question, answer: attributes_for(:answer), format: :js
-        }.to change(question.answers, :count).by(1)
+        expect { subject }.to change(question.answers, :count).by(1)
         expect(assigns(:answer).user).to eq @user
       end
 
       it 'render create template' do
-        post :create, question_id: question, answer: attributes_for(:answer), format: :js
+        subject
         expect(response).to render_template :create
       end
 
@@ -27,19 +25,21 @@ RSpec.describe AnswersController, type: :controller do
     end
 
     context 'with invalid attributes' do
-      it 'puts the question to the variable @question' do
+      subject do
         post :create, question_id: question, answer: attributes_for(:invalid_answer), format: :js
+      end
+
+      it 'puts the question to the variable @question' do
+        subject
         expect(assigns(:question)).to eq question
       end
 
       it 'does not save an answer' do
-        expect {
-          post :create, question_id: question, answer: attributes_for(:invalid_answer), format: :js
-        }.to_not change(Answer, :count)
+        expect { subject }.to_not change(Answer, :count)
       end
 
       it 'redirect to question show view' do
-        post :create, question_id: question, answer: attributes_for(:invalid_answer), format: :js
+        subject
         expect(response).to render_template :create
       end
     end
@@ -47,73 +47,90 @@ RSpec.describe AnswersController, type: :controller do
 
   describe 'PATCH #update' do
     let(:answer_author) { create(:user) }
-    let(:answer) { create(:answer, question: question, user: answer_author) }
-    let(:updated_answer) { build(:answer) }
+    let(:resource) { create(:answer, question: question, user: answer_author) }
+    # let(:resource) { create(:question, user: question_author) }
+    let(:updated_resource) { build(:answer) }
+    let(:resource_name ) { 'answer' }
+    let(:resource_attributes) { %w(body) }
 
-    describe 'for not signed in user: ' do
-      it '- should not update answer' do
-        original_answer = answer
-        patch :update, id: answer, answer: { body: updated_answer.body }, format: :js
-        expect(answer.reload).to eq original_answer
-      end
-
-      it '- should return 401 (unauthorized) status' do
-        patch :update, id: answer, answer: { body: updated_answer.body }, format: :js
-        expect(response).to have_http_status(:unauthorized)
-      end
+    let (:request) do
+      patch :update, id: resource, answer: { body: updated_resource.body }, format: :js
     end
 
-    describe 'for user signed in but not the author: ' do
-      sign_in_user
-
-      it '- should not update answer' do
-        original_answer = answer
-        patch :update, id: answer, answer: { body: updated_answer.body }, format: :js
-        expect(answer.reload).to eq original_answer
-      end
-
-      it '- should return 403 (forbidden) status' do
-        patch :update, id: answer, answer: { body: updated_answer.body }, format: :js
-        expect(response).to have_http_status(:forbidden)
-      end
+    let (:request_with_invalid_attributes) do
+      patch :update, id: resource, answer: attributes_for(:invalid_answer), format: :js
     end
 
-    describe 'for user signed in and author: ' do
-      sign_in_user
+    it_behaves_like "updatable resource"
 
-      context 'with valid attributes' do
-        let(:answer) { create(:answer, question: question, user: @user) }
+    # let(:answer_author) { create(:user) }
+    # let(:answer) { create(:answer, question: question, user: answer_author) }
+    # let(:updated_answer) { build(:answer) }
 
-        it '- assigns answer to @answer' do
-          patch :update, id: answer, answer: { body: updated_answer.body }, format: :js
-          expect(assigns(:answer)).to eq answer
-        end
+    # describe 'for not signed in user: ' do
+    #   it '- should not update answer' do
+    #     original_answer = answer
+    #     patch :update, id: answer, answer: { body: updated_answer.body }, format: :js
+    #     expect(answer.reload).to eq original_answer
+    #   end
 
-        it '- change the answer body' do
-          patch :update, id: answer, answer: { body: updated_answer.body }, format: :js
-          answer.reload
-          expect(assigns(:answer).body).to eq updated_answer.body
-        end
+    #   it '- should return 401 (unauthorized) status' do
+    #     patch :update, id: answer, answer: { body: updated_answer.body }, format: :js
+    #     expect(response).to have_http_status(:unauthorized)
+    #   end
+    # end
 
-        it '- render answer update template' do
-          patch :update, id: answer, answer: { body: updated_answer.body }, format: :js
-          expect(response).to render_template :update
-        end
-      end
+    # describe 'for user signed in but not the author: ' do
+    #   sign_in_user
 
-      context 'with invalid attributes' do
-        it '- should not update answer' do
-          original_answer = answer
-          patch :update, id: answer, answer: attributes_for(:invalid_answer), format: :js
-          expect(assigns(:answer)).to eq original_answer
-        end
+    #   it '- should not update answer' do
+    #     original_answer = answer
+    #     patch :update, id: answer, answer: { body: updated_answer.body }, format: :js
+    #     expect(answer.reload).to eq original_answer
+    #   end
 
-        it '- render answer update template' do
-          patch :update, id: answer, answer: attributes_for(:invalid_answer), format: :js
-          expect(response).to render_template :update
-        end
-      end
-    end
+    #   it '- should return 403 (forbidden) status' do
+    #     patch :update, id: answer, answer: { body: updated_answer.body }, format: :js
+    #     expect(response).to have_http_status(:forbidden)
+    #   end
+    # end
+
+    # describe 'for user signed in and author: ' do
+    #   sign_in_user
+
+    #   context 'with valid attributes' do
+    #     let(:answer) { create(:answer, question: question, user: @user) }
+
+    #     it '- assigns answer to @answer' do
+    #       patch :update, id: answer, answer: { body: updated_answer.body }, format: :js
+    #       expect(assigns(:answer)).to eq answer
+    #     end
+
+    #     it '- change the answer body' do
+    #       patch :update, id: answer, answer: { body: updated_answer.body }, format: :js
+    #       answer.reload
+    #       expect(assigns(:answer).body).to eq updated_answer.body
+    #     end
+
+    #     it '- render answer update template' do
+    #       patch :update, id: answer, answer: { body: updated_answer.body }, format: :js
+    #       expect(response).to render_template :update
+    #     end
+    #   end
+
+    #   context 'with invalid attributes' do
+    #     it '- should not update answer' do
+    #       original_answer = answer
+    #       patch :update, id: answer, answer: attributes_for(:invalid_answer), format: :js
+    #       expect(assigns(:answer)).to eq original_answer
+    #     end
+
+    #     it '- render answer update template' do
+    #       patch :update, id: answer, answer: attributes_for(:invalid_answer), format: :js
+    #       expect(response).to render_template :update
+    #     end
+    #   end
+    # end
   end
 
   describe 'DELETE #destroy' do
