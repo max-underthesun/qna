@@ -8,6 +8,8 @@ RSpec.describe AnswersController, type: :controller do
     sign_in_user
 
     context 'with valid attributes' do
+      subject { post :create, question_id: question, answer: attributes_for(:answer), format: :js }
+
       it 'saves a new answer to the database' do
         expect {
           post :create, question_id: question, answer: attributes_for(:answer), format: :js
@@ -19,6 +21,9 @@ RSpec.describe AnswersController, type: :controller do
         post :create, question_id: question, answer: attributes_for(:answer), format: :js
         expect(response).to render_template :create
       end
+
+      let(:channel) { "/questions/#{question.id}/answers" }
+      it_behaves_like "PrivatePub Publishable"
     end
 
     context 'with invalid attributes' do

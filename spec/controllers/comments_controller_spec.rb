@@ -7,6 +7,8 @@ RSpec.describe CommentsController, type: :controller do
     let(:comment) { create(:comment, commentable: question) }
     before { comment }
 
+    subject { post :create, question_id: question, comment: attributes_for(:comment), format: :js }
+
     describe 'for not signed in user: ' do
       it '- it should not add a comment to the database' do
         expect {
@@ -34,6 +36,9 @@ RSpec.describe CommentsController, type: :controller do
         post :create, question_id: question, comment: attributes_for(:comment), format: :js
         expect(response).to render_template :create
       end
+
+      let(:channel) { "/questions/#{question.id}/comments" }
+      it_behaves_like "PrivatePub Publishable"
     end
   end
 end
