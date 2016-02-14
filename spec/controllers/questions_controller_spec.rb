@@ -49,19 +49,21 @@ RSpec.describe QuestionsController, type: :controller do
     sign_in_user
 
     context 'with valid attributes' do
+      subject { post :create, question: attributes_for(:question, user: @user) }
+
       it 'saves a new question to the database' do
-        expect { post :create, question: attributes_for(:question, user: @user) }
-          .to change(@user.questions, :count).by(1)
+        # expect { post :create, question: attributes_for(:question, user: @user) }
+        expect { subject }.to change(@user.questions, :count).by(1)
       end
 
       it 'redirect to show' do
-        post :create, question: attributes_for(:question)
+        # post :create, question: attributes_for(:question)
+        subject
         expect(response).to redirect_to question_path(assigns(:question))
       end
 
       # let(:question_attributes) { attributes_for(:question, user: @user) }
-      subject { post :create, question: attributes_for(:question, user: @user) }
-      let(:path) { "/questions" }
+      let(:channel) { "/questions" }
       # let(:args) { { question: question.to_json, author: question.user.email.to_json } }
       it_behaves_like "PrivatePub Publishable"
     end
