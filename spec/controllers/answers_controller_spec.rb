@@ -62,7 +62,6 @@ RSpec.describe AnswersController, type: :controller do
     end
 
     it_behaves_like "updatable resource"
-
   end
 
   describe 'DELETE #destroy' do
