@@ -1,5 +1,3 @@
-# require 'rails_helper'
-
 RSpec.shared_examples "votable_controller" do
   describe 'PATCH #vote_up' do
     describe 'for not signed in user: ' do

@@ -1,9 +1,13 @@
 shared_examples_for "updatable resource" do
   describe 'for not signed in user: ' do
-    it "- should not update resource" do
+    it "- should not update resource attributes" do
       original_resource = resource
       request
       expect(resource.reload).to eq original_resource
+      resource_attributes.each do |attribute|
+        expect(resource.reload.send(attribute.to_sym))
+          .to eq original_resource.send(attribute.to_sym)
+      end
     end
 
     it '- should return 401 (unauthorized) status' do
@@ -15,10 +19,14 @@ shared_examples_for "updatable resource" do
   describe 'for user signed in but not the author: ' do
     sign_in_user
 
-    it "- should not update resource" do
+    it "- should not update resource attributes" do
       original_resource = resource
       request
       expect(resource.reload).to eq original_resource
+      resource_attributes.each do |attribute|
+        expect(resource.reload.send(attribute.to_sym))
+          .to eq original_resource.send(attribute.to_sym)
+      end
     end
 
     it '- should return 403 (forbidden) status' do
@@ -35,7 +43,6 @@ shared_examples_for "updatable resource" do
 
       it "- assigns resource to @resource" do
         request
-        # patch :update, id: question, question: attributes_for(:question), format: :js
         expect(assigns(resource_name.to_sym)).to eq resource
       end
 
@@ -48,12 +55,6 @@ shared_examples_for "updatable resource" do
         end
       end
 
-      # it "- change the resource body" do
-      #   request
-      #   resource.reload
-      #   expect(assigns(resource_name.to_sym).body).to eq updated_resource.body
-      # end
-
       it "- render resource update template" do
         request
         expect(response).to render_template :update
@@ -61,11 +62,6 @@ shared_examples_for "updatable resource" do
     end
 
     context 'with invalid attributes' do
-      # let (:request_with_invalid_attributes) do
-      #   patch :update, id: question, question: attributes_for(:invalid_question), format: :js
-      # end
-
-
       it '- should not update resource' do
         original_resource = resource
         request_with_invalid_attributes

@@ -21,6 +21,7 @@ RSpec.describe AnswersController, type: :controller do
       end
 
       let(:channel) { "/questions/#{question.id}/answers" }
+
       it_behaves_like "PrivatePub Publishable"
     end
 
@@ -48,7 +49,6 @@ RSpec.describe AnswersController, type: :controller do
   describe 'PATCH #update' do
     let(:answer_author) { create(:user) }
     let(:resource) { create(:answer, question: question, user: answer_author) }
-    # let(:resource) { create(:question, user: question_author) }
     let(:updated_resource) { build(:answer) }
     let(:resource_name ) { 'answer' }
     let(:resource_attributes) { %w(body) }
@@ -63,74 +63,6 @@ RSpec.describe AnswersController, type: :controller do
 
     it_behaves_like "updatable resource"
 
-    # let(:answer_author) { create(:user) }
-    # let(:answer) { create(:answer, question: question, user: answer_author) }
-    # let(:updated_answer) { build(:answer) }
-
-    # describe 'for not signed in user: ' do
-    #   it '- should not update answer' do
-    #     original_answer = answer
-    #     patch :update, id: answer, answer: { body: updated_answer.body }, format: :js
-    #     expect(answer.reload).to eq original_answer
-    #   end
-
-    #   it '- should return 401 (unauthorized) status' do
-    #     patch :update, id: answer, answer: { body: updated_answer.body }, format: :js
-    #     expect(response).to have_http_status(:unauthorized)
-    #   end
-    # end
-
-    # describe 'for user signed in but not the author: ' do
-    #   sign_in_user
-
-    #   it '- should not update answer' do
-    #     original_answer = answer
-    #     patch :update, id: answer, answer: { body: updated_answer.body }, format: :js
-    #     expect(answer.reload).to eq original_answer
-    #   end
-
-    #   it '- should return 403 (forbidden) status' do
-    #     patch :update, id: answer, answer: { body: updated_answer.body }, format: :js
-    #     expect(response).to have_http_status(:forbidden)
-    #   end
-    # end
-
-    # describe 'for user signed in and author: ' do
-    #   sign_in_user
-
-    #   context 'with valid attributes' do
-    #     let(:answer) { create(:answer, question: question, user: @user) }
-
-    #     it '- assigns answer to @answer' do
-    #       patch :update, id: answer, answer: { body: updated_answer.body }, format: :js
-    #       expect(assigns(:answer)).to eq answer
-    #     end
-
-    #     it '- change the answer body' do
-    #       patch :update, id: answer, answer: { body: updated_answer.body }, format: :js
-    #       answer.reload
-    #       expect(assigns(:answer).body).to eq updated_answer.body
-    #     end
-
-    #     it '- render answer update template' do
-    #       patch :update, id: answer, answer: { body: updated_answer.body }, format: :js
-    #       expect(response).to render_template :update
-    #     end
-    #   end
-
-    #   context 'with invalid attributes' do
-    #     it '- should not update answer' do
-    #       original_answer = answer
-    #       patch :update, id: answer, answer: attributes_for(:invalid_answer), format: :js
-    #       expect(assigns(:answer)).to eq original_answer
-    #     end
-
-    #     it '- render answer update template' do
-    #       patch :update, id: answer, answer: attributes_for(:invalid_answer), format: :js
-    #       expect(response).to render_template :update
-    #     end
-    #   end
-    # end
   end
 
   describe 'DELETE #destroy' do
