@@ -24,21 +24,28 @@ class Ability
     guest_abilities
 
     can :create, [Question, Answer, Comment]
-    can :update, [Question, Answer], user_id: user.id
-    can :destroy, [Question, Answer], user_id: user.id
-    can :vote_up, [Question, Answer] { |votable| !user.author_of?(votable) }
-    can :vote_down, [Question, Answer] { |votable| !user.author_of?(votable) }
+    can [:update, :destroy], [Question, Answer], user_id: user.id
+    can :destroy, Attachment, attachable: { user_id: user.id }
 
+    can_manage_votes
+    can_choose_best_answer
+    can_get_profiles
+  end
+
+  def can_manage_votes
+    can [:vote_up, :vote_down], [Question, Answer] { |votable| !user.author_of?(votable) }
     can :vote_destroy, [Question, Answer] do |votable|
       votable.votes.find_by(user: user)
     end
+  end
 
+  def can_choose_best_answer
     can :best, Answer do |answer|
       user.author_of?(answer.question)
     end
+  end
 
-    can :destroy, Attachment, attachable: { user_id: user.id }
-
+  def can_get_profiles
     can :me, User, id: user.id
     can :all_except_current, User, id: user.id
   end
