@@ -1,9 +1,13 @@
 shared_examples_for "updatable resource" do
   describe 'for not signed in user: ' do
-    it "- should not update resource" do
+    it "- should not update resource attributes" do
       original_resource = resource
       request
       expect(resource.reload).to eq original_resource
+      resource_attributes.each do |attribute|
+        expect(resource.reload.send(attribute.to_sym))
+          .to eq original_resource.send(attribute.to_sym)
+      end
     end
 
     it '- should return 401 (unauthorized) status' do
@@ -15,10 +19,14 @@ shared_examples_for "updatable resource" do
   describe 'for user signed in but not the author: ' do
     sign_in_user
 
-    it "- should not update resource" do
+    it "- should not update resource attributes" do
       original_resource = resource
       request
       expect(resource.reload).to eq original_resource
+      resource_attributes.each do |attribute|
+        expect(resource.reload.send(attribute.to_sym))
+          .to eq original_resource.send(attribute.to_sym)
+      end
     end
 
     it '- should return 403 (forbidden) status' do
