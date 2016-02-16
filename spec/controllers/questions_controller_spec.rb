@@ -61,7 +61,9 @@ RSpec.describe QuestionsController, type: :controller do
       end
 
       let(:channel) { "/questions" }
-
+      # let(:resource_klass) { Question }
+      # let(:resource) { question }
+      # let(:args) { { question: question.to_json, author: @user.email.to_json } }
       it_behaves_like "PrivatePub Publishable"
     end
 
