@@ -10,4 +10,19 @@ class Question < ActiveRecord::Base
   validates :title, length: { maximum: 150 }
 
   accepts_nested_attributes_for :attachments, reject_if: :all_blank, allow_destroy: true
+
+  after_create :update_reputation
+
+  protected
+
+  def update_reputation
+    CalculateReputationJob.perform_later(self)
+    # delay.calculate_reputation
+    # calculate_reputation
+  end
+
+  # def calculate_reputation
+  #   reputation = Reputation.calculate(self)
+  #   user.update(reputation: reputation)
+  # end
 end

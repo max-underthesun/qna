@@ -10,7 +10,15 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable,
          :omniauthable, omniauth_providers: [:facebook, :twitter]
 
+  # default_scope { order(id: :asc) }
+
   scope :all_except, ->(user) { where.not(id: user) }
+
+  def self.send_daily_digest
+    find_each.each do |user|
+      DailyMailer.digest(user).deliver_later
+    end
+  end
 
   def author_of?(object)
     object.user_id == id

@@ -14,6 +14,8 @@ class Answer < ActiveRecord::Base
 
   accepts_nested_attributes_for :attachments, reject_if: :all_blank, allow_destroy: true
 
+  # after_create :calculate_rating
+
   def choose_best
     ActiveRecord::Base.transaction do
       old_best_answer = question.answers.find_by(best: true)
@@ -30,7 +32,19 @@ class Answer < ActiveRecord::Base
     attachments_info
   end
 
+  after_create :update_reputation
+
+  protected
+
+  def update_reputation
+    CalculateReputationJob.perform_later(self)
+  end
+
   # private
+
+  # def calculate_rating
+  #   Reputation.delay.calculate(self)
+  # end
 
   # def if_updating_by_author
   #   errors.add(:base, 'Only author can update') if Answer.find(id).user_id != user_id
