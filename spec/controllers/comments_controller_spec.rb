@@ -34,6 +34,9 @@ RSpec.describe CommentsController, type: :controller do
       end
 
       let(:channel) { "/questions/#{question.id}/comments" }
+      let(:resource_klass) { Comment }
+      let(:resource) { comment }
+      let(:args) { { comment: comment.to_json, author: @user.email.to_json } }
 
       it_behaves_like "PrivatePub Publishable"
     end

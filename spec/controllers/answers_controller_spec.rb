@@ -21,6 +21,12 @@ RSpec.describe AnswersController, type: :controller do
       end
 
       let(:channel) { "/questions/#{question.id}/answers" }
+      let(:answer) { create(:answer, question: question) }
+      let(:resource_klass) { Answer }
+      let(:resource) { answer }
+      let(:args) do
+        { answer: answer.to_json, rating: "0", author: @user.email.to_json, attachments: "[]" }
+      end
 
       it_behaves_like "PrivatePub Publishable"
     end
@@ -50,14 +56,14 @@ RSpec.describe AnswersController, type: :controller do
     let(:answer_author) { create(:user) }
     let(:resource) { create(:answer, question: question, user: answer_author) }
     let(:updated_resource) { build(:answer) }
-    let(:resource_name ) { 'answer' }
+    let(:resource_name) { 'answer' }
     let(:resource_attributes) { %w(body) }
 
-    let (:request) do
+    let(:request) do
       patch :update, id: resource, answer: { body: updated_resource.body }, format: :js
     end
 
-    let (:request_with_invalid_attributes) do
+    let(:request_with_invalid_attributes) do
       patch :update, id: resource, answer: attributes_for(:invalid_answer), format: :js
     end
 
