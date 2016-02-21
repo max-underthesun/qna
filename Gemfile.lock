@@ -167,6 +167,8 @@ GEM
       less (~> 2.6.0)
       sprockets (> 2, < 4)
       tilt
+    letter_opener (1.4.1)
+      launchy (~> 2.2)
     libv8 (3.16.14.13)
     listen (3.0.5)
       rb-fsevent (>= 0.9.3)
@@ -389,6 +391,7 @@ DEPENDENCIES
   jquery-turbolinks
   json_spec
   launchy
+  letter_opener
   oj
   oj_mimic_json
   omniauth

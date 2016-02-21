@@ -1,0 +1,12 @@
+= @greeting
+br
+ol
+  - if @questions.any?
+    | New questions asked during the previous day:
+    br
+    - @questions.each do |question|
+      li
+        = link_to question.title, question
+      br
+  - else
+    | There was no new questions asked yesterday.
