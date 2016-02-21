@@ -46,6 +46,7 @@ RSpec.describe User do
 
   describe ".all_except" do
     let(:users) { create_list(:user, 5) }
+
     it " - return all users except user passed as attribute" do
       users.each do |user|
         expect(User.all_except(user).include?(user)).to eq false

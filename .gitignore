@@ -22,3 +22,5 @@ qna.sublime-project
 config/database.yml
 
 questions.txt
+
+*.rdb

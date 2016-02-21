@@ -10,8 +10,6 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable,
          :omniauthable, omniauth_providers: [:facebook, :twitter]
 
-  # default_scope { order(id: :asc) }
-
   scope :all_except, ->(user) { where.not(id: user) }
 
   def self.send_daily_digest
