@@ -13,6 +13,8 @@ class Question < ActiveRecord::Base
 
   after_create :update_reputation
 
+  scope :created_yesterday, -> { where(created_at: 1.day.ago.all_day) }
+
   protected
 
   def update_reputation
