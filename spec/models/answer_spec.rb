@@ -60,4 +60,12 @@ RSpec.describe Answer, type: :model do
 
   it_behaves_like "votable"
   it_behaves_like "commentable"
+
+  describe 'reputation' do
+    let(:user) { create(:user) }
+    let(:question) { create(:question) }
+    subject { build(:answer, question: question, user: user) }
+
+    it_behaves_like "reputation calculatable"
+  end
 end

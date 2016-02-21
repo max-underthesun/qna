@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe User do
-  let!(:user) { create(:user) }
+  let(:user) { create(:user) }
 
   it 'validates uniqueness of email' do
     expect(build(:user, email: user.email)).to_not be_valid
@@ -46,10 +46,20 @@ RSpec.describe User do
 
   describe ".all_except" do
     let(:users) { create_list(:user, 5) }
+
     it " - return all users except user passed as attribute" do
       users.each do |user|
         expect(User.all_except(user).include?(user)).to eq false
       end
+    end
+  end
+
+  describe '.send_daily_digest' do
+    let(:users) { create_list(:user, 2) }
+
+    it 'should send daily digest to all users' do
+      users.each { |user| expect(DailyMailer).to receive(:digest).with(user).and_call_original }
+      User.send_daily_digest
     end
   end
 end
