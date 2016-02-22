@@ -1,0 +1,9 @@
+= @greeting
+br
+| New answer was given (or update of old one been made):
+=< link_to @answer.body.truncate(50), @answer
+br
+| to your question
+=< link_to @question.title, @question
+
+

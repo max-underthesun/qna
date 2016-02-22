@@ -8,13 +8,12 @@ class Answer < ActiveRecord::Base
 
   validates :body, :question_id, :user_id, presence: true
 
-  # validate :if_updating_by_author, on: :update
-
-  scope :best_first, -> { order(best: :desc, created_at: :asc) }
+  after_create :update_reputation, :notify_question_author
+  # after_commit :notify_question_author
 
   accepts_nested_attributes_for :attachments, reject_if: :all_blank, allow_destroy: true
 
-  # after_create :calculate_rating
+  scope :best_first, -> { order(best: :desc, created_at: :asc) }
 
   def choose_best
     ActiveRecord::Base.transaction do
@@ -32,21 +31,13 @@ class Answer < ActiveRecord::Base
     attachments_info
   end
 
-  after_create :update_reputation
-
   protected
 
   def update_reputation
     CalculateReputationJob.perform_later(self)
   end
 
-  # private
-
-  # def calculate_rating
-  #   Reputation.delay.calculate(self)
-  # end
-
-  # def if_updating_by_author
-  #   errors.add(:base, 'Only author can update') if Answer.find(id).user_id != user_id
-  # end
+  def notify_question_author
+    NewAnswerNotificationMailer.notify_question_author(self).deliver_later
+  end
 end
