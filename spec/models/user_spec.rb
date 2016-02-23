@@ -16,6 +16,10 @@ RSpec.describe User do
   it { should have_many :answers }
   it { should have_many :votes }
 
+  it { should have_many :subscriptions }
+
+  it { should have_many :subscribed_questions }
+
   let(:answer_author) { create(:user) }
   let(:answer) { create(:answer, user: answer_author) }
 

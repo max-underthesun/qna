@@ -5,6 +5,8 @@ class Question < ActiveRecord::Base
   belongs_to :user
   has_many :answers, dependent: :destroy
   has_many :attachments, as: :attachable, dependent: :destroy
+  has_many :subscriptions, dependent: :destroy
+  has_many :subscribers, through: :subscriptions, source: :user # class_name: 'User'
 
   validates :user_id, :title, :body, presence: true
   validates :title, length: { maximum: 150 }
