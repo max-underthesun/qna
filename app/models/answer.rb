@@ -8,7 +8,7 @@ class Answer < ActiveRecord::Base
 
   validates :body, :question_id, :user_id, presence: true
 
-  after_create :update_reputation, :notify_question_author
+  after_create :update_reputation, :notify_question_author, :notify_subscribers
   # after_commit :notify_question_author
 
   accepts_nested_attributes_for :attachments, reject_if: :all_blank, allow_destroy: true
@@ -39,5 +39,11 @@ class Answer < ActiveRecord::Base
 
   def notify_question_author
     NewAnswerNotificationMailer.notify_question_author(self).deliver_later
+  end
+
+  def notify_subscribers
+    question.subscribers.find_each do |subscriber|
+      NewAnswerNotificationMailer.notify_subscribers(self, subscriber).deliver_later
+    end
   end
 end

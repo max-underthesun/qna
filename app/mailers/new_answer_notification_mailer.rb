@@ -18,7 +18,7 @@ class NewAnswerNotificationMailer < ApplicationMailer
   #
   #   en.new_answer_notification_mailer.notify_subscribers.subject
   #
-  def notify_subscribers
+  def notify_subscribers(answer, subscriber)
     @greeting = "Hi"
 
     mail to: "to@example.org"
