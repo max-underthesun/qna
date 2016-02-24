@@ -23,6 +23,7 @@ Rails.application.routes.draw do
     end
 
     resources :comments, only: [:create]
+    resources :subscriptions, only: [:create, :destroy], shallow: true
   end
 
   resources :attachments, only: :destroy

@@ -1,0 +1,7 @@
+<% if @subscription.errors.present? %>
+  errors.html('<%= render_errors_for(@subscription, remotipart_submitted?) %>');
+<% else %>
+<% end %>
+
+$('.flash').html('<%= bootstrap_flash %>');
+<% flash.discard %>
