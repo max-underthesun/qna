@@ -30,6 +30,9 @@ class Ability
     can_manage_votes
     can_choose_best_answer
     can_get_profiles
+
+    can :create, Subscription
+    can :destroy, Subscription, user_id: user.id
   end
 
   def can_manage_votes
