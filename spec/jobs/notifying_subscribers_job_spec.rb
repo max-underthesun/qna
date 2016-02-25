@@ -1,15 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe NotifyingSubscribersJob, type: :job do
-  # pending "add some examples to (or delete) #{__FILE__}"
-
   describe "#notify_subscribers" do
     let(:question_author) { create(:user) }
     let(:question) { create(:question, user: question_author) }
-    # let(:subscribers) { create_list(:user, 3) }
     let(:subscriptions) { create_list(:subscription, 3, question: question) }
-    # subject { build(:answer, question: question) }
     let(:answer) { create(:answer, question: question) }
+
     subject { NotifyingSubscribersJob.perform_now(answer) }
 
     it "should send an email to every user subscribed to the question after answer create" do
@@ -19,7 +16,6 @@ RSpec.describe NotifyingSubscribersJob, type: :job do
           .to receive(:notify_subscribers).with(answer, subscriber).and_call_original
       end
       subject
-      # subject.save!
     end
   end
 end

@@ -32,7 +32,6 @@ class Ability
     can_get_profiles
 
     can :create, Subscription
-    # can :create, Subscription, :question => { :user => user }
     # can :create, Subscription do |subscription|
     #   user.not_author_of?(subscription.question)
     # end
