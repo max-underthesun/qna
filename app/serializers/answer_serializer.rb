@@ -4,10 +4,10 @@ class AnswerSerializer < ActiveModel::Serializer
   # has_many :attachments
 
   def attachments
-    object.attachments.order_by_creation_asc.map {|att| AttachmentSerializer.new(att, root: false)}
+    object.attachments.order_by_creation_asc.map { |a| AttachmentSerializer.new(a, root: false) }
   end
 
   def comments
-    object.comments.order_by_creation_asc.map {|att| CommentSerializer.new(att, root: false)}
+    object.comments.order_by_creation_asc.map { |a| CommentSerializer.new(a, root: false) }
   end
 end

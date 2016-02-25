@@ -30,10 +30,17 @@ class Ability
     can_manage_votes
     can_choose_best_answer
     can_get_profiles
+
+    can :create, Subscription
+    # can :create, Subscription, :question => { :user => user }
+    # can :create, Subscription do |subscription|
+    #   user.not_author_of?(subscription.question)
+    # end
+    can :destroy, Subscription, user_id: user.id
   end
 
   def can_manage_votes
-    can [:vote_up, :vote_down], [Question, Answer] { |votable| !user.author_of?(votable) }
+    can [:vote_up, :vote_down], [Question, Answer] { |votable| user.not_author_of?(votable) }
     can :vote_destroy, [Question, Answer] do |votable|
       votable.votes.find_by(user: user)
     end

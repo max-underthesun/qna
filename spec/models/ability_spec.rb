@@ -29,8 +29,11 @@ RSpec.describe Ability, type: :model do
     let!(:vote) { create :vote, votable: question_of_other_user, user: user }
     let!(:question_of_user_attachment) { create :attachment, attachable: question_of_user }
     let!(:answer_of_user_attachment) { create :attachment, attachable: answer_of_user }
-    let!(:question_of_other_user_attachment) { create :attachment, attachable: question_of_other_user }
+    let!(:question_of_other_user_attachment) do
+      create :attachment, attachable: question_of_other_user
+    end
     let!(:answer_of_other_user_attachment) { create :attachment, attachable: answer_of_other_user }
+    let(:subscription) { create(:subscription, user: user) }
 
     it { should be_able_to :read, :all }
     it { should_not be_able_to :manage, :all }
@@ -68,5 +71,8 @@ RSpec.describe Ability, type: :model do
 
     it { should be_able_to :all_except_current, user, user: user }
     it { should_not be_able_to :all_except_current, other_user, user: user }
+
+    it { should be_able_to :create, Subscription } # ??? how to check user is not question author ?
+    it { should be_able_to :destroy, subscription, user: user }
   end
 end

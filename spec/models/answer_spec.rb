@@ -68,4 +68,42 @@ RSpec.describe Answer, type: :model do
 
     it_behaves_like "reputation calculatable"
   end
+
+  describe "#notify_question_author" do
+    let(:question_author) { create(:user) }
+    let(:question) { create(:question, user: question_author) }
+    subject { build(:answer, question: question) }
+
+    it "should send an email to the answer.question author after answer create" do
+      expect(NewAnswerNotificationMailer).to receive(:notify_question_author).with(subject)
+        .and_call_original
+      subject.save!
+    end
+  end
+
+  describe "#notify_subscribers" do
+    let(:user) { create(:user) }
+    let(:question) { create(:question) }
+    subject { build(:answer, question: question, user: user) }
+
+    it 'should notify subscribers after creating' do
+      expect(NotifyingSubscribersJob).to receive(:perform_later).with(subject)
+      subject.save!
+    end
+
+    # let(:question_author) { create(:user) }
+    # let(:question) { create(:question, user: question_author) }
+    # # let(:subscribers) { create_list(:user, 3) }
+    # let(:subscriptions) { create_list(:subscription, 3, question: question) }
+    # subject { build(:answer, question: question) }
+
+    # it "should send an email to every user subscribed to the question after answer create" do
+    #   subscriptions.each do |subscription|
+    #     subscriber = subscription.user
+    #     expect(NewAnswerNotificationMailer)
+    #       .to receive(:notify_subscribers).with(subject, subscriber).and_call_original
+    #   end
+    #   subject.save!
+    # end
+  end
 end
