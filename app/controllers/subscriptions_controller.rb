@@ -1,10 +1,12 @@
 class SubscriptionsController < ApplicationController
   before_action :authenticate_user!
   # before_action :load_subscription, only: :destroy
+  # before_action :load_question, only: :create
+  # authorize_resource
+  # load_and_authorize_resource #:through => :question
 
   respond_to :js
 
-  # authorize_resource
 
   def create
     authorize! :create, Subscription
@@ -19,6 +21,7 @@ class SubscriptionsController < ApplicationController
     @subscription = Subscription.find(params[:id])
     authorize! :destroy, @subscription
 
+    @question = @subscription.question
     respond_with(@subscription.destroy)
   end
 
@@ -30,7 +33,7 @@ class SubscriptionsController < ApplicationController
   # end
 
   # def load_question
-  #   # @question = Question.find(:id)
+  #   @question = Question.find(params[:question_id])
   # end
 
   # def comment_params

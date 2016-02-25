@@ -32,11 +32,12 @@ class User < ActiveRecord::Base
     (votes.where(votable: object)).present?
   end
 
-  private
-
   def not_author_of?(object)
     !author_of?(object)
   end
+
+  private
+
 
   def not_voted_yet_for?(object)
     !voted_for?(object)

@@ -22,3 +22,17 @@ p.question-title
 .col-lg-12.top-buffer
   .question-errors
   = render 'form', hidden: true, remote: true
+
+.col-lg-1
+.col-lg-11
+  .subscription
+    - if can?(:destroy, Subscription) && @question.subscriptions.find_by(user_id: current_user.id)
+      = link_to 'unsubscribe',
+                subscription_path(@question.subscriptions.find_by(user_id: current_user.id)),
+                method: :delete,
+                remote: true
+    - elsif can?(:create, Subscription) && current_user.not_author_of?(@question)
+      = link_to 'subscribe',
+                question_subscriptions_path(@question),
+                method: :post,
+                remote: true
