@@ -38,7 +38,6 @@ class User < ActiveRecord::Base
 
   private
 
-
   def not_voted_yet_for?(object)
     !voted_for?(object)
   end

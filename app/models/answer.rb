@@ -42,8 +42,10 @@ class Answer < ActiveRecord::Base
   end
 
   def notify_subscribers
-    question.subscribers.find_each do |subscriber|
-      NewAnswerNotificationMailer.notify_subscribers(self, subscriber).deliver_later
-    end
+    NotifyingSubscribersJob.perform_later(self)
+
+    # question.subscribers.find_each do |subscriber|
+    #   NewAnswerNotificationMailer.notify_subscribers(self, subscriber).deliver_later
+    # end
   end
 end

@@ -7,12 +7,17 @@ class SubscriptionsController < ApplicationController
 
   respond_to :js
 
-
   def create
+    @question = Question.find(params[:question_id])
     authorize! :create, Subscription
 
-    @question = Question.find(params[:question_id])
     respond_with(@subscription = @question.subscriptions.create(user: current_user))
+
+    # @subscription = Subscription.new(question: @question, user: current_user)
+    # authorize! :create, @subscription
+
+    # @subscription.save
+    # respond_with @subscription
     # @subscription = @question.subscriptions.new(user: current_user)
     # @subscription.save
   end

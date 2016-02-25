@@ -13,8 +13,15 @@ feature 'SUBSCRIBE FOR THE QUESTION', %q(
 
     scenario '-- can not subscribe  (have no link)' do
       within ".question" do
-        expect(page).to_not have_content 'subscribe'
-        expect(page).to_not have_css "a[href='#{question_subscriptions_path(question)}']"
+        # expect(page).to_not have_content 'subscribe'
+        # expect(page).to_not have_css "a[href='#{question_subscriptions_path(question)}']"
+        expect(page).to_not have_link 'subscribe', href: "#{question_subscriptions_path(question)}"
+      end
+    end
+
+    scenario '-- can not unsubscribe (have no link)' do
+      within ".question" do
+        expect(page).to_not have_link 'unsubscribe', href: /\A#{"/subscriptions/"}\d+\z/
       end
     end
   end
@@ -27,8 +34,9 @@ feature 'SUBSCRIBE FOR THE QUESTION', %q(
 
     scenario '-- can not subscribe (have no link)', js: true do
       within ".question" do
-        expect(page).to_not have_content 'subscribe'
-        expect(page).to_not have_css "a[href='#{question_subscriptions_path(question)}']"
+        # expect(page).to_not have_content 'subscribe'
+        # expect(page).to_not have_css "a[href='#{question_subscriptions_path(question)}']"
+        expect(page).to_not have_link 'subscribe', href: "#{question_subscriptions_path(question)}"
       end
     end
 
