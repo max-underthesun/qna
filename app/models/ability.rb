@@ -31,11 +31,13 @@ class Ability
     can_choose_best_answer
     can_get_profiles
 
-    can :create, Subscription
-    # can :create, Subscription, :question => { :user => user }
+    # can :create, Subscription
     # can :create, Subscription do |subscription|
     #   user.not_author_of?(subscription.question)
     # end
+    can :subscribe, Question do |question|
+      user.not_author_of?(question)
+    end
     can :destroy, Subscription, user_id: user.id
   end
 

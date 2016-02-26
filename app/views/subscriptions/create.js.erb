@@ -1,7 +1,8 @@
+<% url = subscription_path(@subscription) %>
 <% if @subscription.errors.present? %>
   errors.html('<%= render_errors_for(@subscription, remotipart_submitted?) %>');
 <% else %>
-  $('.subscription').html('<%= link_to('unsubscribe', subscription_path(@subscription), method: :delete, remote: true) %>');
+  $('.subscription').html('<%= link_to('unsubscribe', url, method: :delete, remote: true) %>');
 <% end %>
 
 $('.flash').html('<%= bootstrap_flash %>');

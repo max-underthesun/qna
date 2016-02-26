@@ -13,8 +13,6 @@ feature 'SUBSCRIBE FOR THE QUESTION', %q(
 
     scenario '-- can not subscribe  (have no link)' do
       within ".question" do
-        # expect(page).to_not have_content 'subscribe'
-        # expect(page).to_not have_css "a[href='#{question_subscriptions_path(question)}']"
         expect(page).to_not have_link 'subscribe', href: "#{question_subscriptions_path(question)}"
       end
     end
@@ -34,8 +32,6 @@ feature 'SUBSCRIBE FOR THE QUESTION', %q(
 
     scenario '-- can not subscribe (have no link)', js: true do
       within ".question" do
-        # expect(page).to_not have_content 'subscribe'
-        # expect(page).to_not have_css "a[href='#{question_subscriptions_path(question)}']"
         expect(page).to_not have_link 'subscribe', href: "#{question_subscriptions_path(question)}"
       end
     end
@@ -56,7 +52,6 @@ feature 'SUBSCRIBE FOR THE QUESTION', %q(
 
       scenario '--- can subscribe for the question (have a link)', js: true do
         within ".question" do
-          # expect(page).to have_link 'subscribe', href: "#{question_subscriptions_path(question)}"
           find("a[href='#{question_subscriptions_path(question)}']", text: 'subscribe').click
 
           expect(page).to have_link 'unsubscribe', href: /\A#{"/subscriptions/"}\d+\z/
@@ -74,14 +69,8 @@ feature 'SUBSCRIBE FOR THE QUESTION', %q(
 
       scenario '--- can unsubscribe from the question (have a link)', js: true do
         within ".question" do
-          # expect(page).to have_content 'unsubscribe'
-          # expect(page).to have_css "a[href='#{subscription_path(subscription)}']"
-          # expect(page).to have_link 'unsubscribe', href: "#{subscription_path(subscription)}"
-          # expect(page).to have_link 'unsubscribe', href: /\A#{"/subscriptions/"}\d+\z/
           find("a[href='#{subscription_path(subscription)}']", text: 'unsubscribe').click
 
-          # expect(page).to have_content 'subscribe'
-          # expect(page).to have_css "a[href='#{question_subscriptions_path(question)}']"
           expect(page).to have_link 'subscribe', href: "#{question_subscriptions_path(question)}"
         end
       end
