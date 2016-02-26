@@ -22,3 +22,17 @@ p.question-title
 .col-lg-12.top-buffer
   .question-errors
   = render 'form', hidden: true, remote: true
+
+.col-lg-1
+.col-lg-11
+  .subscription
+    - if can?(:destroy, @subscription)
+      = link_to 'unsubscribe',
+                subscription_path(@subscription),
+                method: :delete,
+                remote: true
+    - elsif can?(:subscribe, @question)
+      = link_to 'subscribe',
+                question_subscriptions_path(@question),
+                method: :post,
+                remote: true

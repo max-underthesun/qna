@@ -17,6 +17,7 @@ class QuestionsController < ApplicationController
     gon.current_user_id = current_user.id if current_user
     gon.question_user_id = @question.user.id
 
+    load_subscription if current_user
     respond_with(@question)
   end
 
@@ -47,6 +48,10 @@ class QuestionsController < ApplicationController
 
   def load_question
     @question = Question.find(params[:id])
+  end
+
+  def load_subscription
+    @subscription = @question.subscriptions.find_by(user_id: current_user.id)
   end
 
   def publish

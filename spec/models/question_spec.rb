@@ -15,4 +15,15 @@ RSpec.describe Question, type: :model do
 
   it_behaves_like "votable"
   it_behaves_like "commentable"
+
+  it { should have_many :subscriptions }
+
+  it { should have_many :subscribers }
+
+  describe 'reputation' do
+    let(:user) { create(:user) }
+    subject { build(:question, user: user) }
+
+    it_behaves_like "reputation calculatable"
+  end
 end

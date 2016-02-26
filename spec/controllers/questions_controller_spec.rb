@@ -61,6 +61,9 @@ RSpec.describe QuestionsController, type: :controller do
       end
 
       let(:channel) { "/questions" }
+      let(:resource_klass) { Question }
+      let(:resource) { question }
+      let(:args) { { question: question.to_json, author: @user.email.to_json } }
 
       it_behaves_like "PrivatePub Publishable"
     end
@@ -83,17 +86,17 @@ RSpec.describe QuestionsController, type: :controller do
     let(:question_author) { create(:user) }
     let(:resource) { create(:question, user: question_author) }
     let(:updated_resource) { build(:question) }
-    let(:resource_name ) { 'question' }
+    let(:resource_name) { 'question' }
     let(:resource_attributes) { %w(title body) }
 
-    let (:request) do
+    let(:request) do
       patch :update,
             id: resource,
             question: { title: updated_resource.title, body: updated_resource.body },
             format: :js
     end
 
-    let (:request_with_invalid_attributes) do
+    let(:request_with_invalid_attributes) do
       patch :update, id: resource, question: attributes_for(:invalid_question), format: :js
     end
 
