@@ -5,7 +5,7 @@ class SubscriptionsController < ApplicationController
 
   def create
     @question = Question.find(params[:question_id])
-    authorize! :create, Subscription
+    authorize! :subscribe, @question
 
     respond_with(@subscription = @question.subscriptions.create(user: current_user))
   end

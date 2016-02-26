@@ -5,7 +5,6 @@ RSpec.describe SubscriptionsController, type: :controller do
     let(:question_author) { create(:user) }
     let(:question) { create(:question, user: question_author) }
     let(:subscription) { create(:subscription, question: question) }
-    # before { comment }
 
     subject do
       post :create, question_id: question, subscription: attributes_for(:subscription), format: :js
@@ -22,7 +21,22 @@ RSpec.describe SubscriptionsController, type: :controller do
       end
     end
 
-    describe 'for user signed in: ' do
+    describe 'for user signed in and author of the question: ' do
+      sign_in_user
+
+      let(:question) { create(:question, user: @user) }
+
+      it '- add a subscription to the question subscriptions' do
+        expect { subject }.to_not change(Subscription, :count)
+      end
+
+      it '- should return 403 (forbidden) status' do
+        subject
+        expect(response).to have_http_status(:forbidden)
+      end
+    end
+
+    describe 'for user signed in and not an author of the question: ' do
       sign_in_user
 
       it '- add a subscription to the question subscriptions' do

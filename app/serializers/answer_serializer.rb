@@ -1,5 +1,8 @@
+# require 'attachment_serializable'
+
 class AnswerSerializer < ActiveModel::Serializer
-  attributes :id, :body, :updated_at, :created_at, :user_id, :attachments, :comments
+  # include AttachmentSerializable
+  attributes :id, :body, :updated_at, :created_at, :user_id, :comments, :attachments
   # has_many :comments
   # has_many :attachments
 

@@ -72,7 +72,9 @@ RSpec.describe Ability, type: :model do
     it { should be_able_to :all_except_current, user, user: user }
     it { should_not be_able_to :all_except_current, other_user, user: user }
 
-    it { should be_able_to :create, Subscription } # ??? how to check user is not question author ?
+    # it { should be_able_to :create, Subscription }
+    it { should be_able_to :subscribe, question_of_other_user, user: user }
+    it { should_not be_able_to :subscribe, question_of_user, user: user }
     it { should be_able_to :destroy, subscription, user: user }
   end
 end

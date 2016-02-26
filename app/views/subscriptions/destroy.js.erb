@@ -1,5 +1,6 @@
+<% url = question_subscriptions_path(@question) %>
 <% if response.status == 200 %>
-  $('.subscription').html('<%= link_to('subscribe', question_subscriptions_path(@question), method: :post, remote: true) %>');
+  $('.subscription').html('<%= link_to('subscribe', url, method: :post, remote: true) %>');
 <% end %>
 
 $('.flash').html('<%= bootstrap_flash %>');
