@@ -1,0 +1,13 @@
+h5 You were looking for:
+h4 =< @query
+h5 You were searching in:
+h4 = @scope == ThinkingSphinx ? 'Everywhere' : @scope.to_s
+br
+.search-result
+  - if @result.any?
+    = will_paginate @result
+    - @result.each do |resource|
+      .resource
+        = render "#{resource.class.to_s.downcase}", resource: resource
+  - else
+    | Nothing was found. Try to spesify your query.

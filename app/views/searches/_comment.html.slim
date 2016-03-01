@@ -1,0 +1,13 @@
+| Comment:
+strong =< truncate(resource.body, length: 100)
+br
+| Author:
+=< resource.user.email
+br
+.comment-anchor
+- if resource.commentable.class == Question
+  = link_to "link to the comment #{resource.id}",
+            [resource.commentable, anchor: dom_id(resource)]
+- elsif resource.commentable.class == Answer
+  = link_to "link to the comment #{resource.id}",
+            [resource.commentable.question, anchor: dom_id(resource)]

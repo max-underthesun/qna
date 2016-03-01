@@ -1,0 +1,10 @@
+| Question:
+strong =< truncate(resource.title, length: 100)
+br
+/ = truncate(resource.body, length: 100)
+= resource.body
+br
+| Author:
+=< resource.user.email
+br
+= link_to "link to the question #{resource.id}", resource
