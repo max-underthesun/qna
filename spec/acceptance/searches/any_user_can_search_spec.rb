@@ -21,12 +21,12 @@ feature 'CAN SEARCH THROUGH QnA RESOURCES', %q(
 
   %w(question answer comment user).each do |resource|
     scenario "- user can find any #{resource} in all resources", js: true do
-      v = {'question' => question, 'answer' => answer, 'comment' => comment, 'user' => user }
-      query = resource == 'user' ? v[resource].email : v[resource].body
+      vars = { 'question' => question, 'answer' => answer, 'comment' => comment, 'user' => user }
+      query = resource == 'user' ? vars[resource].email : vars[resource].body
       within '.search' do
         # expect(page).to have_css('input[value="Search"]')
         # expect(page).to have_button "Search"
-        # expect(page).to have_css("input#query")
+        expect(page).to have_css("input#query")
 
         fill_in 'query', with: query
         click_button "Search"
@@ -40,8 +40,6 @@ feature 'CAN SEARCH THROUGH QnA RESOURCES', %q(
 
   scenario '- user can find a question in questions', js: true do
     within '.search' do
-      # expect(page).to have_css('input[value="Search"]')
-      # expect(page).to have_button "Search"
       expect(page).to have_css("input#query")
       expect(page).to have_css("select#resource")
 
@@ -59,8 +57,6 @@ feature 'CAN SEARCH THROUGH QnA RESOURCES', %q(
 
   scenario '- user can find an answer in answers', js: true do
     within '.search' do
-      # expect(page).to have_css('input[value="Search"]')
-      # expect(page).to have_button "Search"
       expect(page).to have_css("input#query")
       expect(page).to have_css("select#resource")
 
@@ -71,15 +67,12 @@ feature 'CAN SEARCH THROUGH QnA RESOURCES', %q(
 
     within '.search-result' do
       expect(page).to have_content answer.body
-      # expect(page).to have_content answer.title
       expect(page).to have_content answer.user.email
     end
   end
 
   scenario '- user can find a comment in comments', js: true do
     within '.search' do
-      # expect(page).to have_css('input[value="Search"]')
-      # expect(page).to have_button "Search"
       expect(page).to have_css("input#query")
       expect(page).to have_css("select#resource")
 
@@ -90,15 +83,12 @@ feature 'CAN SEARCH THROUGH QnA RESOURCES', %q(
 
     within '.search-result' do
       expect(page).to have_content comment.body
-      # expect(page).to have_content answer.title
       expect(page).to have_content comment.user.email
     end
   end
 
   scenario '- user can find a user in users', js: true do
     within '.search' do
-      # expect(page).to have_css('input[value="Search"]')
-      # expect(page).to have_button "Search"
       expect(page).to have_css("input#query")
       expect(page).to have_css("select#resource")
 
@@ -108,8 +98,6 @@ feature 'CAN SEARCH THROUGH QnA RESOURCES', %q(
     end
 
     within '.search-result' do
-      # expect(page).to have_content answer.body
-      # expect(page).to have_content answer.title
       expect(page).to have_content user.email
     end
   end
