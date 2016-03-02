@@ -3,9 +3,9 @@ class SearchesController < ApplicationController
 
   def show
     @query = params[:query]
-    redirect_to root_path if @query.blank?
-    @scope = params[:resource].constantize
+    return redirect_to root_path if @query.blank?
 
-    @result = @scope.search @query, :page => params[:page], :per_page => 5
+    @scope = params[:resource].constantize
+    @result = @scope.search(Riddle.escape(@query), page: params[:page], per_page: 5)
   end
 end

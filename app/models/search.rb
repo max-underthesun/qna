@@ -10,5 +10,5 @@ class Search < ActiveRecord::Base
     %w(Users User)
   ]
 
-  attr_accessor :query
+  # attr_accessor :query
 end
