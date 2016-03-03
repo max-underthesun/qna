@@ -4,3 +4,10 @@
   .right
     = t('common.author')
     = comment.user ? comment.user.email : t('common.not_defined')
+    .comment-anchor
+      - if comment.commentable.class == Question
+        = link_to "link to the comment #{comment.id}",
+                  [comment.commentable, anchor: dom_id(comment)]
+      - elsif comment.commentable.class == Answer
+        = link_to "link to the comment #{comment.id}",
+                  [comment.commentable.question, anchor: dom_id(comment)]

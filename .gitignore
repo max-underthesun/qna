@@ -23,4 +23,9 @@ config/database.yml
 
 questions.txt
 
-/*.rdb
+dump.rdb
+
+Procfile
+
+config/*.sphinx.conf
+db/sphinx

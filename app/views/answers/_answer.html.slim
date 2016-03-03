@@ -22,4 +22,7 @@
       .answer-errors id="errors-answer-#{answer.id}"
       = render 'answers/form', answer: answer, hidden: true, remote: true
 
+      .answer-anchor
+        = link_to "link to the answer #{answer.id}", [answer.question, anchor: dom_id(answer)]
+
   = render 'comments/comments', commentable: answer
