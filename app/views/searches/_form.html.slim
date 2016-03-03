@@ -5,8 +5,8 @@
     = text_field_tag :query, nil, placeholder: "Enter here", class: 'form-control'
 
   .form-group
-    = label :resource, "Where to search?"
-    = select_tag :resource, options_for_select(Search::RESOURCES), class: 'form-control'
+    = label :scope, "Where to search?"
+    = select_tag :scope, options_for_select(Search::RESOURCES.keys), class: 'form-control'
 
   .right
     = submit_tag "Search", class: 'btn btn-primary'
