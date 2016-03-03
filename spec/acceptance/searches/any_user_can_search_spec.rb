@@ -41,10 +41,10 @@ feature 'CAN SEARCH THROUGH QnA RESOURCES', %q(
   scenario '- user can find a question in questions', js: true do
     within '.search' do
       expect(page).to have_css("input#query")
-      expect(page).to have_css("select#resource")
+      expect(page).to have_css("select#scope")
 
       fill_in 'query', with: question.body
-      select('Questions', from: 'resource')
+      select('Questions', from: 'scope')
       click_button "Search"
     end
 
@@ -58,10 +58,10 @@ feature 'CAN SEARCH THROUGH QnA RESOURCES', %q(
   scenario '- user can find an answer in answers', js: true do
     within '.search' do
       expect(page).to have_css("input#query")
-      expect(page).to have_css("select#resource")
+      expect(page).to have_css("select#scope")
 
       fill_in 'query', with: answer.body
-      select('Answers', from: 'resource')
+      select('Answers', from: 'scope')
       click_button "Search"
     end
 
@@ -74,10 +74,10 @@ feature 'CAN SEARCH THROUGH QnA RESOURCES', %q(
   scenario '- user can find a comment in comments', js: true do
     within '.search' do
       expect(page).to have_css("input#query")
-      expect(page).to have_css("select#resource")
+      expect(page).to have_css("select#scope")
 
       fill_in 'query', with: comment.body
-      select('Comments', from: 'resource')
+      select('Comments', from: 'scope')
       click_button "Search"
     end
 
@@ -90,10 +90,10 @@ feature 'CAN SEARCH THROUGH QnA RESOURCES', %q(
   scenario '- user can find a user in users', js: true do
     within '.search' do
       expect(page).to have_css("input#query")
-      expect(page).to have_css("select#resource")
+      expect(page).to have_css("select#scope")
 
       fill_in 'query', with: user.email
-      select('Users', from: 'resource')
+      select('Users', from: 'scope')
       click_button "Search"
     end
 

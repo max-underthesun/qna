@@ -14,7 +14,7 @@ RSpec.describe SearchesController, type: :controller do
         end
         let(:query) { resource == 'User' ? objects[resource].email : objects[resource].body }
 
-        subject { get :show, query: query, resource: resource, format: :js }
+        subject { get :show, query: query, scope: resource.pluralize, format: :js }
 
         it "- expect #{resource} to receive call for 'search'" do
           expect(resource.constantize).to receive(:search).with(Riddle.escape(query), anything)
@@ -28,7 +28,7 @@ RSpec.describe SearchesController, type: :controller do
       end
 
       describe "for any user with empty query to #{resource}: " do
-        subject { get :show, query: '', resource: resource, format: :js }
+        subject { get :show, query: '', scope: resource, format: :js }
 
         it "- expect #{resource} to NOT receive call for 'search'" do
           expect(resource.constantize).to_not receive(:search)
@@ -37,7 +37,8 @@ RSpec.describe SearchesController, type: :controller do
 
         it '- redirect to root path' do
           subject
-          expect(response).to redirect_to :root
+          # expect(response).to redirect_to :root
+          expect(response).to render_template :show
         end
       end
     end
