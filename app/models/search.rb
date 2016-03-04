@@ -1,5 +1,6 @@
 class Search
-  include ActiveModel::Validations
+  # include ActiveModel::Validations
+  include ActiveModel::Model
 
   RESOURCES = {
     'Everywhere' => ThinkingSphinx,
