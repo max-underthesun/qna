@@ -20,6 +20,7 @@ qna.sublime-workspace
 qna.sublime-project
 
 config/database.yml
+config/private_pub.yml
 
 questions.txt
 
