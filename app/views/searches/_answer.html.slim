@@ -1,0 +1,7 @@
+|Answer:
+strong =< truncate(resource.body, length: 100)
+br
+| Author:
+=< resource.user.email
+br
+= link_to "link to the answer #{resource.id}", [resource.question, anchor: dom_id(resource)]
