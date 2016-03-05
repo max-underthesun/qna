@@ -4,7 +4,9 @@ rails-nginx-passenger-ubuntu
 Установка и настройка production server на Ubuntu 14.04
 RVM Nginx Passenger PostgreSQL Redis SphinxSearch
 
-Пользователи, rsa-ключи и права доступа
+при выборе сервера необходимо учесть, что сервер должен иметь **не менее 1Gb RAM**
+
+пользователи, rsa-ключи и права доступа
 -----------------------------------------------------------
   заходим на сервер под root
   
@@ -18,8 +20,12 @@ RVM Nginx Passenger PostgreSQL Redis SphinxSearch
   
     sudo visudo
 
-  найти строчку root ALL=(ALL:ALL) ALL и после нее добавить
-  
+  найти строчку
+
+    root ALL=(ALL:ALL) ALL
+
+  и после нее добавить
+
     deployer ALL=(ALL:ALL) ALL
 
   меняем порт подключения по SSH
@@ -66,104 +72,105 @@ RVM Nginx Passenger PostgreSQL Redis SphinxSearch
   
     ssh deployer@192.168.0.100 -p 4321
 
-Update and upgrade
+update and upgrade
 ------------------
 
     sudo apt-get update
     sudo apt-get upgrade
     sudo reboot
     
-  после перезагрузки заходим на сервер под deployer
+после перезагрузки заходим на сервер под deployer
+
     ssh deployer@192.168.0.100 -p 4321
 
-Тайм зона
+тайм зона
 --------------
 
-  комфигурируем тайм зону
+комфигурируем тайм зону
   
     sudo dpkg-reconfigure tzdata
   
-  выбираем регион
+выбираем регион
   
     Europe
   
-  выбираем город
+выбираем город
   
     Kiev
   
-  убелиться что таймзона изменилась
+убелиться что таймзона изменилась
   
     date
 
-Устанавливка RVM
+устанавливка RVM
 ------------------------
 
-  устанавливаем curl
+устанавливаем curl
     
     sudo apt-get install curl
   
-  устанавливаем RVM
+устанавливаем RVM
     
     curl -L https://get.rvm.io | sudo bash -s stable
   
-  загружаем RVM в текущую сесию
+загружаем RVM в текущую сесию
     
     source /etc/profile.d/rvm.sh
 
-  перезайти на сервер под deployer
-  
-  exit
-  ssh deployer@192.168.0.100 -p 4321
-  
-  устанавливаем пакеты нужны для установки RVM
+перезайти на сервер под deployer
+
+    exit
+    ssh deployer@192.168.0.100 -p 4321
+
+устанавливаем пакеты нужны для установки RVM
+
+    rvm requirements
+
+или
     
-  rvm requirements
-  
-  или
-    
-  rvmsudo /usr/bin/apt-get install build-essential openssl libreadline6 libreadline6-dev curl git-core zlib1g zlib1g-dev libssl-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt-dev autoconf libc6-dev ncurses-dev automake libtool bison subversion
-   
-  устанавливаем ruby
-    
+    rvmsudo /usr/bin/apt-get install build-essential openssl libreadline6 libreadline6-dev curl git-core zlib1g zlib1g-dev libssl-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt-dev autoconf libc6-dev ncurses-dev automake libtool bison subversion
+
+устанавливаем ruby
+
     rvm install 2.2.3
-  
-  указываем что эта версия ruby будет использоваться по умолчанию
-    
+
+указываем что эта версия ruby будет использоваться по умолчанию
+
     rvm use 2.2.3 --default
-  
-  проверяем версию ruby
-    
+
+проверяем версию ruby
+
     ruby -v
-  
-  устанавливаем bundler
-  
+
+устанавливаем bundler
+
     gem install bundler
 
-Устанавливка PostgreSQL
+устанавливка PostgreSQL
 -------------------------------
 
-  устанавливаем PostgreSQL
-  
+устанавливаем PostgreSQL
+
     sudo apt-get install postgresql postgresql-contrib postgresql-server-dev-9.3
-  
-  устанавливаем пароль для postgres
-  
+
+устанавливаем пароль для postgres
+
     sudo -u postgres psql
-  
+
     alter user postgres with password 'qwerty';
     \q
       
 GIT
 ---
 
-  уставливаем git
+уставливаем git
   
     sudo apt-get install git-core
 
 Nginx
 -----
 
-  устанавливаем passenger + nginx
+устанавливаем passenger + nginx
 
     gem install passenger
   
@@ -171,32 +178,34 @@ Nginx
   
     rvmsudo passenger-install-nginx-module
 
-  1. жмем просто Enter
-  2. Стрелочками переходим на Python снмаем галочку нажатием Space, убедились что выделен только Ruby и жмем Enter
-  3. Жмем 1 и далее Enter
-  4. Жмем Enter
-  5. Завершаем установку Жмем Enter
+в устновщике:
 
-  в процессе компилляции Nginx может возникнуть ошибка с такой строчкой ближе к концу лога:
+  1.  жмем просто Enter
+  2.  Стрелочками переходим на Python снмаем галочку нажатием Space, убедились что выделен только Ruby и жмем Enter
+  3.  Жмем 1 и далее Enter
+  4.  Жмем Enter
+  5.  Завершаем установку Жмем Enter
+
+в процессе компилляции Nginx может возникнуть ошибка с такой строчкой ближе к концу лога:
 
     Could not create Makefile due to some reason, probably lack of necessary
     libraries and/or headers.  Check the mkmf.log file for more details.
 
-  помогает доустановка следующих библиотек:
+помогает доустановка следующих библиотек:
 
     sudo apt-get install libgmp-dev
 
-  или
+или
 
     sudo apt-get install libgmp3-dev
 
 
-  открываем конфигурационный файл nginx
+открываем конфигурационный файл nginx
   
     sudo nano /opt/nginx/conf/nginx.conf
   
-  редактируем блок server
-  
+редактируем блок server
+
       gzip on;
 
       server {
@@ -212,50 +221,77 @@ Nginx
         }
       }
 
-  загружаем скрипт управления nginx
-  
+загружаем скрипт управления nginx (из этого или другого репозитория)
+
     git clone https://github.com/sanyco86/rails-nginx-passenger-ubuntu.git
-  
-  копируем скрипт
-  
+
+копируем скрипт
+
     sudo cp rails-nginx-passenger-ubuntu/nginx/nginx /etc/init.d/
-  
-  даем скрипту права на запуск 
-  
+
+даем скрипту права на запуск 
+
     sudo chmod +x /etc/init.d/nginx
-  
-  удаляем загруженный скрипт
-  
+
+удаляем загруженный скрипт
+
     rm -rf rails-nginx-passenger-ubuntu/
-  
-  запускаем nginx
-  
+
+запускаем nginx
+
     sudo /etc/init.d/nginx start
-  
-  проверяем на локальном компьютере что сервер доступен
-  
+
+проверяем на локальном компьютере что сервер доступен
+
     http://192.168.0.100
 
 Redis
 -----
 
-  устанавливаем redis для sidekiq
+устанавливаем redis для sidekiq
   
     sudo apt-get install redis-server
-  
-  конфигурируем redis
-  
+
+конфигурируем redis
+
     sudo cp /etc/redis/redis.conf /etc/redis/redis.conf.default
-  
-  перезапускаем redis
-  
+
+перезапускаем redis
+
     sudo service redis-server restart
 
 Sphinx
 ------
 
-  устанавливаем sphinx
-    
+устанавливаем sphinx
+
     sudo apt-get install sphinxsearch
-    
-    
+
+SMTP-server
+-----------
+устанавливаем сервер
+
+    sudo apt-get install exim4-daemon-light mailutils
+
+запускаем конфигуратор:
+
+    sudo dpkg-reconfigure exim4-config
+
+в конфигураторе выбираем на каждом из последующих экранов:
+
+1. выбираем `internet site` (первая строка)
+2. добавляем имя домена с которого будут приходить письма
+3. Ok (... IP-addresses to listen on for incoming SMTP connections:)
+4. Ok (... Other destinations for wich mail is accepted:)
+5. Ok (... Domains to relay mail for:)
+6. Ok (... Machines to relay mail for:)
+7. NO (... Keep number of DNS-queries minimal (Dial-up-Demand)?)
+8. выбираем `Maildir format in home directory` (последняя строка)
+9. NO (... Split configuration into small files?)
+
+можно проверить работоспособность сервера, отправив тестовое письмо командой:
+
+    echo "This is a test" | mail -s Testing max.underthesun@gmail.com
+
+(возможно попадет в спам!)
+
