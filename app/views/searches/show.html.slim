@@ -1,7 +1,7 @@
 h5 You were looking for:
-h4 =< @query
+h4 =< @search.query
 h5 You were searching in:
-h4 = @scope == ThinkingSphinx ? 'Everywhere' : @scope.to_s
+h4 = @search.scope == ThinkingSphinx ? 'Everywhere' : Search::RESOURCES.key(@search.scope)
 br
 .search-result
   - if @result.any?

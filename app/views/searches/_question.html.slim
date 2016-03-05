@@ -1,8 +1,7 @@
 | Question:
 strong =< truncate(resource.title, length: 100)
 br
-/ = truncate(resource.body, length: 100)
-= resource.body
+= truncate(resource.body, length: 100)
 br
 | Author:
 =< resource.user.email

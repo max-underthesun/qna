@@ -2,37 +2,36 @@ require 'rails_helper'
 
 RSpec.describe SearchesController, type: :controller do
   describe 'GET #show' do
-    # let(:question_author) { create(:user) }
-    # let(:question) { create(:question, user: question_author) }
-    # let(:subscription) { create(:subscription, question: question) }
-
-    # let!(:questions) { create_list(:question, 5) }
-    # let!(:answers) { create_list(:answer, 5) }
-    # let!(:comments) { create_list(:comment, 5, commentable: question) }
-    # let!(:users) { create_list(:user, 5) }
-
     let(:question) { create(:question) }
     let(:answer) { create(:answer) }
     let(:comment) { create(:comment, commentable: question) }
     let(:user) { create(:user) }
 
-    # let(:question) { questions.sample }
-    # let(:answer) { answers.sample }
-    # let(:comment) { comments.sample }
-    # let(:user) { users.sample }
-
     %w(Question Answer Comment User).each do |resource|
-      describe "for any user with non-empty query to #{resource}: " do
-        let(:objects) do
-          { 'Question' => question, 'Answer' => answer, 'Comment' => comment, 'User' => user }
-        end
-        let(:query) { resource == 'User' ? objects[resource].email : objects[resource].body }
-        # let(:query) { resource == 'User' ? objects[resource].email.insert(objects[resource].email.index("@"), "\\") : user_queryRiddle.escape }
-        subject { get :show, query: query, resource: resource, format: :js }
+      let(:query) { resource == 'User' ? objects[resource].email : objects[resource].body }
+      let(:scope) { resource.pluralize }
+      let(:objects) do
+        { 'Question' => question, 'Answer' => answer, 'Comment' => comment, 'User' => user }
+      end
 
-        it "- expect #{resource} to receive call for 'search'" do
-          # puts query
-          expect(resource.constantize).to receive(:search).with(Riddle.escape(query), anything)
+      describe "for any user with non-empty query to #{resource}: " do
+        let(:search) { Search.new(scope: scope, query: query) }
+        let(:params) do
+          { query: query, scope: scope, format: "js", controller: "searches", action: "show" }
+        end
+
+        subject { get :show, query: query, scope: scope, format: :js }
+
+        it "- expect to assigns a new valid instance of Search to @search" do
+          subject
+          expect(assigns(:search)).to be_a(Search)
+          expect(assigns(:search)).to_not be_persisted
+          expect(assigns(:search)).to be_valid
+        end
+
+        it "- expect Search.new to receive #search_with call" do
+          allow(Search).to receive(:new).with(params).and_return(search)
+          expect(search).to receive(:search_with)
           subject
         end
 
@@ -43,16 +42,29 @@ RSpec.describe SearchesController, type: :controller do
       end
 
       describe "for any user with empty query to #{resource}: " do
-        subject { get :show, query: '', resource: resource, format: :js }
+        let(:invalid_search) { Search.new(scope: scope, query: '') }
+        let(:invalid_params) do
+          { query: '', scope: scope, format: "js", controller: "searches", action: "show" }
+        end
 
-        it "- expect #{resource} to NOT receive call for 'search'" do
-          expect(resource.constantize).to_not receive(:search)
+        subject { get :show, query: '', scope: scope, format: :js }
+
+        it "- expect to assigns a new invalid instance of Search to @search" do
+          subject
+          expect(assigns(:search)).to be_a(Search)
+          expect(assigns(:search)).to_not be_persisted
+          expect(assigns(:search)).to_not be_valid
+        end
+
+        it "- expect Search.new to not receive #search_with call" do
+          allow(Search).to receive(:new).with(invalid_params).and_return(invalid_search)
+          expect(invalid_search).to_not receive(:search_with)
           subject
         end
 
-        it '- redirect to root path' do
+        it '- render show template' do
           subject
-          expect(response).to redirect_to :root
+          expect(response).to render_template :show
         end
       end
     end

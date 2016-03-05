@@ -1,14 +1,26 @@
-class Search < ActiveRecord::Base
-  # RESOURCES = [['Everywhere'], ['Questions'], ['Answers'], ['Comments'], ['Users']]
-  # RESOURCES = [['Everywhere', 'ThinkingSphinx'], ['Questions', 'Question'], ['Answers', 'Answer'], ['Comments', 'Comment'], ['Users', 'User']]
+class Search
+  # include ActiveModel::Validations
+  include ActiveModel::Model
 
-  RESOURCES = [
-    %w(Everywhere ThinkingSphinx),
-    %w(Questions Question),
-    %w(Answers Answer),
-    %w(Comments Comment),
-    %w(Users User)
-  ]
+  RESOURCES = {
+    'Everywhere' => ThinkingSphinx,
+    'Questions' => Question,
+    'Answers' => Answer,
+    'Comments' => Comment,
+    'Users' => User
+  }
 
-  # attr_accessor :query
+  attr_accessor :query, :scope
+
+  validates :query, :scope, presence: true
+  validates :scope, inclusion: RESOURCES.values
+
+  def initialize(params)
+    @query = params[:query]
+    @scope = RESOURCES[params[:scope]]
+  end
+
+  def search_with(params)
+    @scope.search(Riddle.escape(@query), params)
+  end
 end
