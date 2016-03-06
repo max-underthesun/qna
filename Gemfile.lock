@@ -46,6 +46,19 @@ GEM
     builder (3.2.2)
     byebug (8.2.2)
     cancancan (1.13.1)
+    capistrano (3.4.0)
+      i18n
+      rake (>= 10.0.0)
+      sshkit (~> 1.3)
+    capistrano-bundler (1.1.4)
+      capistrano (~> 3.1)
+      sshkit (~> 1.2)
+    capistrano-rails (1.1.6)
+      capistrano (~> 3.1)
+      capistrano-bundler (~> 1.1)
+    capistrano-rvm (0.1.2)
+      capistrano (~> 3.0)
+      sshkit (~> 1.2)
     capybara (2.6.2)
       addressable
       mime-types (>= 1.16)
@@ -88,6 +101,9 @@ GEM
     diff-lcs (1.2.5)
     doorkeeper (3.1.0)
       railties (>= 3.2)
+    dotenv (1.0.2)
+    dotenv-deployment (0.3.0)
+      dotenv (~> 1.0)
     em-http-request (1.1.3)
       addressable (>= 2.3.4)
       cookiejar (<= 0.3.0)
@@ -191,6 +207,9 @@ GEM
     multipart-post (2.0.0)
     mysql2 (0.4.3)
     nenv (0.3.0)
+    net-scp (1.2.1)
+      net-ssh (>= 2.6.5)
+    net-ssh (3.0.2)
     nokogiri (1.6.7.2)
       mini_portile2 (~> 2.0.0.rc2)
     notiffany (0.0.8)
@@ -336,6 +355,9 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
+    sshkit (1.8.1)
+      net-scp (>= 1.1.2)
+      net-ssh (>= 2.8.0)
     temple (0.7.6)
     therubyracer (0.12.2)
       libv8 (~> 3.16.14.0)
@@ -389,6 +411,10 @@ DEPENDENCIES
   active_model_serializers
   byebug
   cancancan
+  capistrano
+  capistrano-bundler
+  capistrano-rails
+  capistrano-rvm
   capybara
   capybara-webkit
   carrierwave
@@ -397,6 +423,8 @@ DEPENDENCIES
   database_cleaner
   devise
   doorkeeper
+  dotenv
+  dotenv-deployment
   factory_girl_rails
   gon
   guard-rspec
