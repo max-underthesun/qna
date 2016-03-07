@@ -30,3 +30,6 @@ Procfile
 
 config/*.sphinx.conf
 db/sphinx
+
+wiki_deploy-capistrano.markdown
+wiki_server-setting-passenger.markdown
