@@ -33,3 +33,4 @@ db/sphinx
 
 wiki_deploy-capistrano.markdown
 wiki_server-setting-passenger.markdown
+wiki_advanced-server-setting-unicorn.markdown
