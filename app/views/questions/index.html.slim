@@ -8,12 +8,13 @@ table class='table table-hover'
       th colspan="2"
 
   tbody
-    - @questions.each do |question|
-      tr
-        td = question.title
-        td = question.user ? question.user.email : t('common.not_defined')
-        td = link_to t('links.show'), question
-        td
+    - cache collection_cache_key_for :question do
+      - @questions.each do |question|
+        tr
+          td = question.title
+          td = question.user ? question.user.email : t('common.not_defined')
+          td = link_to t('links.show'), question
+          td
 br
 
 = link_to t('.new'), new_question_path
